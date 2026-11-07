@@ -1,90 +1,340 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#171416"><title>شعيبيه | SHUAIBIYA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#171416;--rose:#e9a4b5;--rose-pale:#fff1f4;--gold:#b58b55;--muted:#81777b;--line:#eee7e8;--paper:#fffdfc}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font-family:"IBM Plex Sans Arabic","Tajawal",Tahoma,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
-.promo{background:var(--ink);color:#fff;text-align:center;padding:9px 12px;font-size:12px}
-header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 16px #21101808}
-.header-main{max-width:1240px;margin:auto;padding:13px 22px;display:flex;align-items:center;gap:20px}
-.brand{display:flex;align-items:center;gap:10px;min-width:180px}.logo{width:46px;height:46px;border:1px solid var(--gold);border-radius:14px;background:linear-gradient(145deg,#fff,#fff0f3);display:grid;place-items:center;color:var(--ink)}.logo svg{width:25px;height:25px}.brand strong{display:block;font-family:"Tajawal",sans-serif;font-size:23px;font-weight:800;line-height:1.1}.brand small{display:block;color:var(--gold);letter-spacing:3px;font-size:10px;margin-top:4px}
-.search{flex:1;position:relative}.search input{width:100%;height:46px;border:1px solid var(--line);border-radius:25px;padding:0 45px 0 16px;background:#fff;font-size:14px;outline:none}.search:before{content:"⌕";position:absolute;right:17px;top:3px;font-size:27px;color:#655c60}
-.actions{display:flex;gap:8px}.iconbtn{height:42px;min-width:44px;border:1px solid var(--line);border-radius:24px;background:#fff;padding:0 13px;color:var(--ink)}.iconbtn:hover{background:var(--rose-pale)}
-nav{max-width:1240px;margin:auto;padding:0 20px 10px;display:flex;gap:7px;overflow:auto;scrollbar-width:none}nav button{border:0;background:transparent;padding:9px 17px;border-radius:22px;white-space:nowrap;color:#62585d;font-weight:600;font-size:14px}nav button.active,nav button:hover{background:var(--ink);color:white}
-main{max-width:1240px;margin:auto;padding:22px}
-.hero{min-height:255px;border-radius:24px;padding:34px 42px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;color:white;background:radial-gradient(circle at 83% 18%,#f7dfe6 0 11%,transparent 11.5%),linear-gradient(112deg,#171416 0%,#382832 60%,#9c7180 100%);position:relative}.hero:after{content:"✧";position:absolute;left:8%;top:12%;font-size:110px;color:#ffffff20}.hero-copy{position:relative;z-index:1}.hero h1{font-family:"Tajawal",sans-serif;font-size:clamp(29px,4vw,45px);margin:0 0 9px;font-weight:800}.hero p{color:#f8e9ed;line-height:1.9;margin:0 0 20px;font-size:15px}.hero-art{font-family:serif;font-size:105px;color:#f4dce3;padding:0 55px;text-shadow:0 12px 25px #0005}
-.primary{border:0;background:var(--rose);color:#21151a;padding:13px 25px;border-radius:28px;font-weight:700;font-size:15px}.primary:hover{filter:brightness(.97)}
-.category-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin:24px 0 30px}.category-tile{border:1px solid var(--line);border-radius:16px;padding:16px 8px;background:#fff;display:grid;justify-items:center;gap:8px;color:var(--ink);transition:.2s}.category-tile:hover{border-color:var(--rose);transform:translateY(-3px);box-shadow:0 8px 20px #25151a0d}.category-tile svg{width:29px;height:29px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.category-tile b{font-size:14px}
-.section-title{display:flex;justify-content:space-between;align-items:end;margin:29px 0 15px}.section-title h2{margin:0;font-family:"Tajawal",sans-serif;font-size:22px;font-weight:800}.section-title p{margin:0;color:var(--muted);font-size:13px}
-.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.product-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:white;transition:.2s;min-width:0}.product-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px #21101812}.product-image{height:230px;background:linear-gradient(145deg,#f8eff1,#eee6e7);display:grid;place-items:center;position:relative;cursor:pointer;overflow:hidden;color:#81777b}.product-image .placeholder{width:70px;height:70px;border:1px solid #d9cbd0;border-radius:50%;display:grid;place-items:center}.product-image svg{width:32px;height:32px;stroke:#655b60;fill:none;stroke-width:1.3}.product-image img{width:100%;height:100%;object-fit:cover}.tag{position:absolute;top:10px;right:10px;background:var(--ink);color:white;padding:5px 10px;border-radius:20px;font-size:11px}.fav{position:absolute;top:9px;left:10px;width:34px;height:34px;border:0;border-radius:50%;background:#ffffffed;color:#332a2e;font-size:19px}
-.product-info{padding:12px}.product-info h3{font-size:14px;font-weight:600;margin:0 0 7px;cursor:pointer}.price{font-size:15px;font-weight:700}.old{font-size:11px;color:#aaa;text-decoration:line-through;margin-right:7px}.product-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.product-meta small{font-size:11px;color:var(--muted)}.smallbtn{border:0;border-radius:20px;background:var(--rose-pale);padding:8px 12px;font-size:11px;color:var(--ink)}
-footer{margin-top:42px;background:var(--ink);color:#fff;text-align:center;padding:28px 15px}footer p{color:#cbbfc3;font-size:12px}
-.overlay{display:none;position:fixed;inset:0;background:#17141699;z-index:30;align-items:center;justify-content:center;padding:14px}.overlay.show{display:flex}.modal{background:#fff;border-radius:22px;max-width:900px;width:100%;max-height:94vh;overflow:auto;padding:22px;position:relative;box-shadow:0 20px 70px #0003}.close{position:sticky;top:0;float:left;z-index:2;border:0;background:#f6edef;border-radius:50%;width:35px;height:35px;font-size:22px;color:var(--ink)}
-.detail-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:25px;clear:both}.detail-photo{height:410px;border-radius:15px;background:linear-gradient(145deg,#f8eff1,#eee6e7);display:grid;place-items:center;overflow:hidden}.detail-photo img{width:100%;height:100%;object-fit:cover}.detail-photo svg{width:65px;height:65px;stroke:#74676d;fill:none;stroke-width:1.2}.detail h2{font-family:"Tajawal",sans-serif;font-size:25px;margin:5px 0 8px}.muted{color:var(--muted);font-size:13px;line-height:1.9}.detail-price{font-size:22px;font-weight:800;margin:16px 0}.option-label{font-weight:700;font-size:14px;margin-top:17px}.choice{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 15px}.choice button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;min-width:48px}.choice button.selected{border:2px solid var(--ink);background:var(--rose-pale);padding:8px 13px}.qty{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0 13px}.wide{width:100%;border:0;border-radius:12px;padding:14px;background:var(--ink);color:#fff;font-weight:700;font-size:15px}.wide:hover{background:#352a30}
-.related{border-top:1px solid var(--line);margin-top:25px;padding-top:18px}.related h3{font-family:"Tajawal",sans-serif;font-size:19px;margin:0 0 13px}.related-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.related-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer}.related-card .rel-img{height:115px;background:#f6eef0;display:grid;place-items:center}.related-card .rel-img svg{width:28px;stroke:#71666b;fill:none}.related-card p{font-size:12px;margin:8px}.related-card b{font-size:12px;margin:0 8px 9px;display:block}
-.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:13px;font-weight:600}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none}.location-btn{width:100%;border:1px solid var(--ink);background:#fff;border-radius:11px;padding:13px;font-weight:700;color:var(--ink)}.location-status{font-size:12px;color:var(--muted);line-height:1.8;margin-top:8px}.location-link{display:none;color:#2864ad;font-size:12px;word-break:break-all}
-.admin-button{display:none!important}.admin{display:none}.admin.show{display:block}.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#fff6f8;border:1px solid var(--line);border-radius:13px;padding:15px}.stat b{font-size:23px;display:block}.notice{background:#fff7e9;border:1px solid #f0dfbf;border-radius:12px;padding:12px;font-size:12px;line-height:1.8;margin:12px 0}.cart-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:12px 0;font-size:13px}
-@media(max-width:760px){.header-main{padding:10px 12px;gap:9px;flex-wrap:wrap}.brand{min-width:0;flex:1}.brand strong{font-size:20px}.search{order:3;flex-basis:100%}.actions .admin-button{display:none}nav{padding:0 10px 9px}.hero{min-height:210px;padding:22px}.hero-art{font-size:65px;padding:0 8px}.hero p{font-size:13px}.category-strip{grid-template-columns:repeat(5,minmax(75px,1fr));overflow:auto;gap:9px}.category-tile{padding:13px 5px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-image{height:185px}.product-info{padding:10px}.product-info h3{font-size:13px}.detail-grid{grid-template-columns:1fr;gap:14px}.detail-photo{height:280px}.modal{padding:15px}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.related-card .rel-img{height:105px}main{padding:13px}.admin-grid{grid-template-columns:1fr 1fr}}
-</style></head>
-<body>
-<div class="promo">عروض شعيبيه · اكتشفي منتجاتك المفضلة بأسعار مميزة</div>
-<header><div class="header-main">
-<div class="brand"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg></div><div><strong>شعيبيه</strong><small>SHUAIBIYA</small></div></div>
-<div class="search"><input id="search" placeholder="ابحثي عن منتج أو قسم..." oninput="handleStoreSearch()"></div>
-<div class="actions"><button class="iconbtn" onclick="showCart()">السلة <span id="cartCount">0</span></button></div>
-</div><nav id="nav"></nav></header>
-<main id="store">
-<section class="hero"><div class="hero-copy"><h1>أناقتك تبدأ من هنا</h1><p>اختيارات متنوعة بعناية، عروض متجددة<br>وتجربة تسوّق سهلة وممتعة.</p><button class="primary" onclick="setCategory('الكل')">تسوّقي الآن</button></div><div class="hero-art">SH</div></section>
-<div class="category-strip" id="quick"></div>
-<div class="section-title"><h2 id="sectionTitle">تسوّقي الكل</h2><p>اختيارات شعيبيه لكِ</p></div><section class="product-grid" id="products"></section>
-<section class="admin" id="admin"><div class="section-title"><h2>لوحة إدارة شعيبيه</h2><button class="iconbtn" onclick="closeAdmin()">العودة للمتجر</button></div>
-<div class="notice">متصل بقاعدة بيانات المتجر.</div>
-<div class="admin-grid"><div class="stat">المنتجات<b id="statProducts">0</b></div><div class="stat">الطلبات<b id="statOrders">0</b></div><div class="stat">الأقسام<b>5</b></div></div>
-<h3>إضافة منتج جديد</h3><div class="field"><label>اسم المنتج</label><input id="newName" placeholder="اسم المنتج"></div><div class="field"><label>القسم</label><select id="newCat"><option>ملابس</option><option>مفروشات</option><option>تجميل</option><option>بهارات</option><option>أدوات منزلية</option></select></div><div class="field"><label>السعر</label><input id="newPrice" type="number"></div><button class="wide" onclick="addProduct()">إضافة المنتج</button><h3>الطلبات الواردة</h3><div id="ordersList" class="muted">لا توجد طلبات.</div></section>
-</main><footer><b>شعيبيه | SHUAIBIYA</b><p>تسوّقي بذوقك، واكتشفي المزيد</p><small>© متجر شعيبيه</small></footer>
-<div class="overlay" id="overlay"><div class="modal"><button class="close" onclick="hideModal()">×</button><div id="modalContent"></div></div></div>
-<script>
-const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg>';
-const categoryIcons={'ملابس':'<svg viewBox="0 0 24 24"><path d="m8 4 4 2 4-2 4 4-3 3-2-2v11H9V9l-2 2-3-3 4-4Z"/></svg>','مفروشات':'<svg viewBox="0 0 24 24"><path d="M3 12V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4M3 11h18v7H3zM5 18v2m14-2v2M7 11V9h4v2m2 0V9h4v2"/></svg>','تجميل':'<svg viewBox="0 0 24 24"><path d="M9 3h6v4H9zM8 7h8l1 14H7L8 7ZM10 11h4"/></svg>','بهارات':'<svg viewBox="0 0 24 24"><path d="M12 3c-3 4-7 8-7 12a7 7 0 0 0 14 0c0-4-4-8-7-12Z"/><path d="M9 16c.5 1.5 1.5 2 3 2"/></svg>','أدوات منزلية':'<svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10H3V11Z"/><path d="M9 21v-7h6v7"/></svg>'};
-const categories=['الكل','ملابس','مفروشات','تجميل','بهارات','أدوات منزلية'];
-let products=[
-{id:1,name:'فستان يومي أنيق',cat:'ملابس',price:18500,old:24000,tag:'خصم 23%',colors:['أسود','وردي','بيج'],sizes:['S','M','L','XL']},
-{id:2,name:'طقم مفارش ناعم',cat:'مفروشات',price:32000,old:39000,tag:'الأكثر طلباً',colors:['أبيض','وردي','رمادي'],sizes:['مفرد','مزدوج','كبير']},
-{id:3,name:'مجموعة عناية وجمال',cat:'تجميل',price:12500,old:16000,tag:'عرض خاص',colors:['وردي','ذهبي'],sizes:['الحجم العادي']},
-{id:4,name:'تشكيلة بهارات مشكلة',cat:'بهارات',price:6500,old:8000,tag:'جديد',colors:['خلطة أصلية'],sizes:['250 جرام','500 جرام','1 كيلو']},
-{id:5,name:'منظم أدوات للمطبخ',cat:'أدوات منزلية',price:9500,old:12000,tag:'خصم 20%',colors:['أبيض','أسود'],sizes:['قطعة واحدة']},
-{id:6,name:'حقيبة نسائية عصرية',cat:'ملابس',price:22000,old:28000,tag:'وصل حديثاً',colors:['أسود','بني','وردي'],sizes:['مقاس موحد']},
-{id:7,name:'وسادة ديكور فاخرة',cat:'مفروشات',price:7800,old:9500,tag:'اختيار شعيبيه',colors:['وردي','كريمي'],sizes:['45×45']},
-{id:8,name:'طقم فرش مكياج',cat:'تجميل',price:11000,old:14000,tag:'الأكثر مبيعاً',colors:['وردي','أسود'],sizes:['12 قطعة']}
-];
-let category='الكل',cart=[],orders=[];
-const money=n=>Number(n).toLocaleString('ar-YE')+' ر.ي';
-function setCategory(c){category=c;render();window.scrollTo({top:0,behavior:'smooth'})}
-function renderNav(){document.getElementById('nav').innerHTML=categories.map(c=>`<button class="${category===c?'active':''}" onclick="setCategory('${c}')">${c}</button>`).join('');document.getElementById('quick').innerHTML=categories.slice(1).map(c=>`<button class="category-tile" onclick="setCategory('${c}')">${categoryIcons[c]}<b>${c}</b></button>`).join('')}
-function productCard(p,related=false){return `<article class="${related?'related-card':'product-card'}" onclick="openProduct(${p.id})">${related?`<div class="rel-img">${icon}</div><p>${p.name}</p><b>${money(p.price)}</b>`:`<div class="product-image"><span class="tag">${p.tag||'اختيار شعيبيه'}</span><button class="fav" onclick="event.stopPropagation();this.textContent=this.textContent==='♡'?'♥':'♡'">♡</button><div class="placeholder">${icon}</div></div><div class="product-info"><h3>${p.name}</h3><span class="price">${money(p.price)}</span><span class="old">${money(p.old||p.price)}</span><div class="product-meta"><small>${p.cat}</small><button class="smallbtn">عرض التفاصيل</button></div></div>`}</article>`}
-function handleStoreSearch(){const input=document.getElementById('search');const q=input.value.trim();if(q==='هارفكس'){input.value='';showAdminLogin();return}render()}
-function showAdminLogin(){document.getElementById('modalContent').innerHTML=`<h2>دخول إدارة شعيبيه</h2><p class="muted">هذه الصفحة مخصصة للإدارة فقط.</p><div class="field"><label>البريد الإلكتروني</label><input id="adminEmail" type="email" autocomplete="username" placeholder="البريد المسجل للمدير"></div><div class="field"><label>كلمة المرور</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="كلمة مرور الإدارة"></div><button class="wide" onclick="adminSignIn()">تسجيل الدخول</button><p id="adminLoginStatus" class="muted"></p>`;showModal()}
-async function adminSignIn(){const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPassword').value,status=document.getElementById('adminLoginStatus');if(!email||!password){status.textContent='أدخل البريد الإلكتروني وكلمة المرور.';return}const db=window.shuaibiyaDB;if(!db){status.textContent='لم يتم ربط قاعدة البيانات بعد. أكمل إعداد Supabase أولاً.';return}status.textContent='جارٍ التحقق...';const {error}=await db.auth.signInWithPassword({email,password});if(error){status.textContent='تعذر تسجيل الدخول: '+error.message;return}hideModal();openAdmin()}
-function render(){renderNav();let q=document.getElementById('search').value.trim();let list=products.filter(p=>(category==='الكل'||p.cat===category)&&(!q||(p.name+p.cat).includes(q)));document.getElementById('sectionTitle').textContent=category==='الكل'?'تسوّقي الكل':category;document.getElementById('products').innerHTML=list.map(p=>productCard(p)).join('')||'<p class="muted">لا توجد منتجات مطابقة.</p>';document.getElementById('cartCount').textContent=cart.length}
-let currentProduct=null;
-function openProduct(id){let p=products.find(x=>String(x.id)===String(id));if(!p)return;currentProduct=p;const photoHtml=p.image_url?`<img src="${p.image_url}" alt="${p.name}">`:icon;document.getElementById('modalContent').innerHTML=`<div class="detail-grid"><div class="detail-photo">${photoHtml}</div><div class="detail"><div><h2>${p.name}</h2><div class="muted">${p.cat} · من متجر شعيبيه</div><div class="detail-price">${money(p.price)} <span class="old">${money(p.old||p.price)}</span></div><p class="muted">اختاري اللون والمقاس المناسبين قبل الإضافة إلى السلة.</p><div class="option-label">اللون</div><div class="choice" id="colors">${(p.colors||['متوفر']).map((c,i)=>`<button class="${i===0?'selected':''}" onclick="chooseOption('colors',this)">${c}</button>`).join('')}</div><div class="option-label">المقاس / الخيار</div><div class="choice" id="sizes">${(p.sizes||['مقاس موحد']).map((s,i)=>`<button class="${i===0?'selected':''}" onclick="chooseOption('sizes',this)">${s}</button>`).join('')}</div><div class="option-label">الكمية</div><input class="qty" id="qty" type="number" min="1" value="1"><button class="wide" onclick="addCart('${p.id}')">أضيفي إلى السلة</button></div></div></div><div class="related"><h3>منتجات قد تعجبك</h3><div class="related-grid">${products.filter(x=>String(x.id)!==String(p.id)).sort((a,b)=>(a.cat===p.cat?-1:0)).slice(0,4).map(x=>productCard(x,true)).join('')}</div></div>`;showModal()}
-function chooseOption(id,el){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.remove('selected'));el.classList.add('selected')}
-function addCart(id){let p=products.find(x=>String(x.id)===String(id));if(!p)return;cart.push({...p,color:document.querySelector('#colors .selected').textContent,size:document.querySelector('#sizes .selected').textContent,qty:Math.max(1,Number(document.getElementById('qty').value)||1)});render();showCart()}
-function showCart(){document.getElementById('modalContent').innerHTML=`<h2>سلة مشترياتك</h2>${cart.length?cart.map((p,i)=>`<div class="cart-row"><span>${p.name}<br><small class="muted">${p.color} · ${p.size} · الكمية ${p.qty}</small></span><b>${money(p.price*p.qty)} <button class="smallbtn" onclick="removeCart(${i})">حذف</button></b></div>`).join(''):'<p class="muted">سلتك فارغة حالياً.</p>'}<h3>الإجمالي: ${money(cart.reduce((s,p)=>s+p.price*p.qty,0))}</h3>${cart.length?`<div class="field"><label>الاسم</label><input id="custName" placeholder="الاسم الكامل"></div><div class="field"><label>رقم الجوال</label><input id="custPhone" type="tel" placeholder="رقم التواصل"></div><div class="field"><label>عنوان التوصيل (اختياري)</label><textarea id="custAddress" placeholder="المدينة والحي وأقرب معلم"></textarea></div><div class="field"><label>موقعك على الخريطة</label><button class="location-btn" onclick="getMyLocation()">⌖ تحديد موقعي الحالي تلقائياً</button><div id="locationStatus" class="location-status">اضغطي الزر واسمحي للمتصفح بالوصول إلى موقعك، وسننشئ رابط الخريطة تلقائياً.</div><a id="locationLink" class="location-link" target="_blank" rel="noopener">فتح موقعي على خرائط Google</a></div><button class="wide" onclick="submitOrder()">تأكيد الطلب</button>`:''}`;showModal()}
-function getMyLocation(){const status=document.getElementById('locationStatus'),link=document.getElementById('locationLink');if(!navigator.geolocation){status.textContent='المتصفح لا يدعم تحديد الموقع. افتحي المتجر من متصفح حديث.';return}status.textContent='جارٍ تحديد موقعك...';navigator.geolocation.getCurrentPosition(pos=>{const lat=pos.coords.latitude,lon=pos.coords.longitude;window.customerMapUrl=`https://www.google.com/maps?q=${lat},${lon}`;status.textContent='تم تحديد موقعك بنجاح. سيُرفق رابط الخريطة مع الطلب.';link.href=window.customerMapUrl;link.textContent='عرض موقعي على خرائط Google';link.style.display='block'},err=>{status.textContent=err.code===1?'لم تسمحي بالوصول للموقع. فعّلي إذن الموقع للمتصفح ثم حاولي مرة أخرى.':'تعذر تحديد الموقع. تأكدي من تشغيل GPS والإنترنت وحاولي مجدداً.'},{enableHighAccuracy:true,timeout:15000,maximumAge:0})}
-function removeCart(i){cart.splice(i,1);render();showCart()}
-function submitOrder(){let n=document.getElementById('custName'].value.trim(),p=document.getElementById('custPhone').value.trim(),a=document.getElementById('custAddress').value.trim();if(!n||!p){alert('أدخلي الاسم ورقم الجوال لإكمال الطلب.');return}if(!window.customerMapUrl&&!a){alert('حددي موقعك من زر تحديد موقعي أو اكتبي عنوان التوصيل.');return}orders.push({name:n,phone:p,address:a,map:window.customerMapUrl||'',items:cart.map(x=>x.name).join('، '),total:cart.reduce((s,x)=>s+x.price*x.qty,0)});cart=[];window.customerMapUrl='';render();document.getElementById('modalContent').innerHTML='<h2>شكراً لطلبك</h2><p class="muted">تم تسجيل الطلب بنجاح.</p>'}
-function showModal(){document.getElementById('overlay').classList.add('show')}function hideModal(){document.getElementById('overlay').classList.remove('show')}document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')hideModal()});
-function openAdmin(){document.querySelector('.hero').style.display='none';document.getElementById('quick').style.display='none';document.querySelector('#store>.section-title').style.display='none';document.getElementById('products').style.display='none';document.getElementById('admin').classList.add('show');document.getElementById('statProducts').textContent=products.length;document.getElementById('statOrders').textContent=orders.length;document.getElementById('ordersList').innerHTML=orders.map(o=>`<div class="cart-row"><span>${o.name} · ${o.phone}<br>${o.items}<br>${o.address}<br>${o.map?`<a href="${o.map}" target="_blank">رابط موقع العميل</a>`:''}</span><b>${money(o.total)}</b></div>`).join('')||'لا توجد طلبات بعد.'}
-function closeAdmin(){document.querySelector('.hero').style.display='flex';document.getElementById('quick').style.display='grid';document.querySelector('#store>.section-title').style.display='flex';document.getElementById('products').style.display='grid';document.getElementById('admin').classList.remove('show')}
-function addProduct(){let name=document.getElementById('newName').value.trim(),cat=document.getElementById('newCat').value,price=Number(document.getElementById('newPrice').value);if(!name||!price){alert('أدخلي اسم المنتج والسعر.');return}products.unshift({id:Date.now(),name,cat,price,old:price,tag:'جديد',colors:['متوفر'],sizes:['مقاس موحد']});document.getElementById('statProducts').textContent=products.length;alert('تمت الإضافة.')}
-render();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="backend.js"></script>
-</body></html>
+/* SHUAIBIYA production bridge — متوافق 100% مع هيكل قاعدة بيانات Supabase الفعلي */
+(() => {
+  const cfg = window.SHUAIBIYA_CONFIG || {};
+  const ready = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
+    !cfg.SUPABASE_URL.includes('YOUR_PROJECT') && !cfg.SUPABASE_ANON_KEY.includes('YOUR_');
+
+  const banner = msg => {
+    let el = document.getElementById('backendNotice');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'backendNotice';
+      el.className = 'notice';
+      document.querySelector('main')?.prepend(el);
+    }
+    el.textContent = msg;
+  };
+
+  if (!ready || !window.supabase) {
+    banner('المتجر في وضع التجهيز. يرجى التأكد من إعدادات config.js.');
+    return;
+  }
+
+  const db = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  window.shuaibiyaDB = db;
+
+  let categoriesMap = {}; 
+  let categoriesNameMap = {}; 
+
+  const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
+  async function loadCategories() {
+    const { data } = await db.from('categories').select('*');
+    if (data && data.length > 0) {
+      data.forEach(c => {
+        categoriesMap[c.id] = c.name;
+        categoriesNameMap[c.name] = c.id;
+      });
+    }
+  }
+
+  const asProduct = r => {
+    let catName = categoriesMap[r.category_id] || r.description || 'عام';
+    return {
+      id: r.id,
+      name: r.name,
+      cat: catName,
+      price: Number(r.price || 0),
+      old: Number(r.price ? Math.round(Number(r.price) * 1.15) : 0),
+      tag: (r.stock !== null && r.stock <= 0) ? 'نفد المخزون' : 'متوفر',
+      colors: ['متوفر'],
+      sizes: ['مقاس موحد'],
+      image_url: r.image_url || '',
+      stock: r.stock ?? 10
+    };
+  };
+
+  async function loadProducts() {
+    await loadCategories();
+    const { data, error } = await db
+      .from('products')
+      .select('*')
+      .eq('is_active', true)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      banner('تعذر تحميل المنتجات: ' + error.message);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      window.products = data.map(asProduct);
+      if (typeof products !== 'undefined') products = window.products;
+    }
+    if (typeof render === 'function') render();
+  }
+
+  loadProducts();
+
+  if (typeof productCard === 'function') {
+    const originalProductCard = productCard;
+    productCard = function (p, related = false) {
+      if (!p.image_url) return originalProductCard(p, related);
+      if (related) {
+        return `<article class="related-card" onclick="openProduct('${p.id}')"><div class="rel-img"><img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover"></div><p>${escapeHtml(p.name)}</p><b>${money(p.price)}</b></article>`;
+      }
+      return `<article class="product-card" onclick="openProduct('${p.id}')"><div class="product-image"><img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}"><span class="tag">${escapeHtml(p.tag || 'اختيار الشعيبية')}</span></div><div class="product-info"><h3>${escapeHtml(p.name)}</h3><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span><div class="product-meta"><small>${escapeHtml(p.cat)}</small><button class="smallbtn">عرض التفاصيل</button></div></div></article>`;
+    };
+  }
+
+  window.openAdmin = async function () {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) {
+      document.getElementById('modalContent').innerHTML = `
+        <h2>دخول إدارة متجر الشعيبية</h2>
+        <div class="field"><label>البريد الإلكتروني</label><input id="adminEmail" type="email" autocomplete="username" placeholder="hh7784438300@gmail.com"></div>
+        <div class="field"><label>كلمة المرور</label><input id="adminPassword" type="password" autocomplete="current-password"></div>
+        <button class="wide" onclick="window.shuaibiyaLogin()">تسجيل الدخول</button>
+      `;
+      showModal();
+      return;
+    }
+
+    const { data: profile } = await db
+      .from('staff_profiles')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+
+    const isOwnerOrActive = profile && (profile.is_owner === true || profile.is_active !== false);
+    if (!isOwnerOrActive) {
+      alert('هذا الحساب غير مضاف في جدول الإدارة (staff_profiles).');
+      await db.auth.signOut();
+      return;
+    }
+
+    document.querySelector('.hero').style.display = 'none';
+    document.getElementById('quick').style.display = 'none';
+    document.querySelector('#store>.section-title').style.display = 'none';
+    document.getElementById('products').style.display = 'none';
+    document.getElementById('admin').classList.add('show');
+
+    const roleLabel = profile.is_owner ? 'المالك (صلاحية كاملة)' : (profile.permissions || []).join(', ');
+    document.querySelector('#admin .notice').textContent = 'متصل بقاعدة البيانات بنجاح — الصلاحية: ' + roleLabel;
+
+    if (!document.getElementById('newImageUrl')) {
+      const priceField = document.getElementById('newPrice')?.parentElement;
+      if (priceField) {
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'field';
+        imgDiv.innerHTML = `<label>رابط صورة المنتج (اختياري)</label><input id="newImageUrl" type="url" placeholder="https://example.com/image.jpg">`;
+        priceField.after(imgDiv);
+      }
+    }
+
+    await refreshAdmin(profile);
+  };
+
+  window.shuaibiyaLogin = async function () {
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const { error } = await db.auth.signInWithPassword({ email, password });
+    if (error) {
+      alert('فشل تسجيل الدخول: ' + error.message);
+      return;
+    }
+    hideModal();
+    openAdmin();
+  };
+
+  async function refreshAdmin(profile) {
+    const [{ data: allProducts, count: pc }, { data: orders, error }] = await Promise.all([
+      db.from('products').select('*', { count: 'exact' }).order('created_at', { ascending: false }),
+      db.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }).limit(100)
+    ]);
+
+    document.getElementById('statProducts').textContent = pc ?? 0;
+    document.getElementById('statOrders').textContent = orders?.length ?? 0;
+
+    document.getElementById('ordersList').innerHTML = error
+      ? 'تعذر تحميل الطلبات: ' + escapeHtml(error.message)
+      : (orders || []).map(o => `
+        <div class="cart-row" style="align-items:flex-start; gap:10px; flex-wrap:wrap;">
+          <span style="flex:1; min-width:220px;">
+            <b>طلب #${o.id} — ${escapeHtml(o.customer_name)}</b> · <a href="tel:${escapeHtml(o.phone)}">${escapeHtml(o.phone)}</a><br>
+            <small>العنوان / الموقع: ${escapeHtml(o.address || 'غير محدد')}</small><br>
+            <small>الحالة: <b>${escapeHtml(o.status || 'جديد')}</b> · ${new Date(o.created_at).toLocaleString('ar-YE')}</small><br>
+            <div style="margin:6px 0; font-size:0.9em; color:#444;">
+              ${(o.order_items || []).map(i => `• ${escapeHtml(i.product_name)} × ${i.quantity} (${money(i.price)})`).join('<br>')}
+            </div>
+            <button class="smallbtn" onclick="window.shuaibiyaWhatsApp('${escapeHtml(o.phone)}','${escapeHtml(o.customer_name)}','${o.id}')">مراسلة واتساب</button>
+            <button class="smallbtn" onclick="window.updateOrderStatus(${o.id}, 'تم التسليم')">تم التسليم ✓</button>
+          </span>
+          <b>${money(o.total)}</b>
+        </div>
+      `).join('') || 'لا توجد طلبات حتى الآن.';
+
+    let prodManageBox = document.getElementById('adminProductsManage');
+    if (!prodManageBox) {
+      prodManageBox = document.createElement('div');
+      prodManageBox.id = 'adminProductsManage';
+      prodManageBox.style.marginTop = '24px';
+      document.getElementById('ordersList').after(prodManageBox);
+    }
+    prodManageBox.innerHTML = `
+      <h3>إدارة المنتجات الحالية (${allProducts?.length || 0})</h3>
+      ${(allProducts || []).map(p => `
+        <div class="cart-row" style="align-items:center;">
+          <span>
+            <b>${escapeHtml(p.name)}</b> (${escapeHtml(p.description || 'عام')})<br>
+            <small>السعر: ${money(p.price)} | الحالة: ${p.is_active ? 'ظاهر' : 'مخفي'}</small>
+          </span>
+          <div>
+            <button class="smallbtn" onclick="window.toggleProductActive(${p.id}, ${!p.is_active})">${p.is_active ? 'إخفاء' : 'إظهار'}</button>
+            <button class="smallbtn" style="color:#b00;" onclick="window.deleteProduct(${p.id})">حذف</button>
+          </div>
+        </div>
+      `).join('') || '<p class="muted">لا توجد منتجات مضافة بعد.</p>'}
+    `;
+
+    if (!document.getElementById('adminLogoutBtn')) {
+      const logout = document.createElement('button');
+      logout.id = 'adminLogoutBtn';
+      logout.className = 'iconbtn';
+      logout.textContent = 'تسجيل الخروج';
+      logout.onclick = async () => { await db.auth.signOut(); location.reload(); };
+      document.querySelector('#admin .section-title').append(logout);
+    }
+  }
+
+  window.updateOrderStatus = async (orderId, status) => {
+    const { error } = await db.from('orders').update({ status }).eq('id', orderId);
+    if (error) { alert('تعذر تحديث الحالة: ' + error.message); return; }
+    openAdmin();
+  };
+
+  window.toggleProductActive = async (prodId, newState) => {
+    const { error } = await db.from('products').update({ is_active: newState }).eq('id', prodId);
+    if (error) { alert('تعذر التحديث: ' + error.message); return; }
+    await loadProducts();
+    openAdmin();
+  };
+
+  window.deleteProduct = async (prodId) => {
+    if (!confirm('هل تريد حذف هذا المنتج نهائياً؟')) return;
+    const { error } = await db.from('products').delete().eq('id', prodId);
+    if (error) { alert('تعذر الحذف: ' + error.message); return; }
+    await loadProducts();
+    openAdmin();
+  };
+
+  window.shuaibiyaWhatsApp = (phone, name, id) => {
+    const msg = encodeURIComponent(`مرحباً ${name}، نتواصل معك من متجر الشعيبية بخصوص طلبك رقم #${id}.`);
+    let number = String(phone || '').replace(/\D/g, '');
+    if (number.startsWith('7') && number.length === 9) number = '967' + number;
+    window.open(`https://wa.me/${number}?text=${msg}`, '_blank', 'noopener');
+  };
+
+  window.submitOrder = async function () {
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const addressInput = document.getElementById('custAddress').value.trim();
+
+    if (!name || !phone) { alert('يرجى إدخال الاسم ورقم الجوال.'); return; }
+    if (!window.customerMapUrl && !addressInput) { alert('يرجى تحديد موقعك أو كتابة عنوان التوصيل.'); return; }
+    if (!cart || !cart.length) return;
+
+    const fullAddress = [addressInput, window.customerMapUrl].filter(Boolean).join(' — ');
+    const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
+
+    const { data: orderData, error } = await db
+      .from('orders')
+      .insert({
+        customer_name: name,
+        phone: phone,
+        address: fullAddress,
+        total: total,
+        status: 'جديد'
+      })
+      .select()
+      .single();
+
+    if (error) {
+      alert('لم يتم حفظ الطلب: ' + error.message);
+      return;
+    }
+
+    const rows = cart.map(x => ({
+      order_id: orderData.id,
+      product_id: typeof x.id === 'number' ? x.id : null,
+      product_name: `${x.name} (${x.color || 'متوفر'} / ${x.size || 'موحد'})`,
+      price: x.price,
+      quantity: x.qty
+    }));
+
+    const { error: itemError } = await db.from('order_items').insert(rows);
+    if (itemError) {
+      alert('تم تسجيل الطلب رقم #' + orderData.id + ' لكن تعذر حفظ بعض التفاصيل: ' + itemError.message);
+    }
+
+    const whatsapp = String(cfg.STORE_WHATSAPP || '').replace(/\D/g, '');
+    const summary = cart.map(x => `• ${x.name} × ${x.qty} (${x.color}/${x.size})`).join('\n');
+    const message = encodeURIComponent(
+      `طلب جديد من متجر الشعيبية\nرقم الطلب: #${orderData.id}\nالاسم: ${name}\nالهاتف: ${phone}\nالعنوان: ${fullAddress}\n\nالمنتجات:\n${summary}\n\nالإجمالي: ${money(total)}\nالدفع: عند الاستلام`
+    );
+
+    cart = [];
+    window.customerMapUrl = '';
+    if (typeof render === 'function') render();
+
+    document.getElementById('modalContent').innerHTML = `
+      <h2>تم استلام طلبك بنجاح ✅</h2>
+      <p class="muted">رقم الطلب: <b>#${orderData.id}</b>. تم حفظ طلبك في قاعدة البيانات وسيتم التواصل معك فوراً.</p>
+    `;
+    if (whatsapp) window.open(`https://wa.me/${whatsapp}?text=${message}`, '_blank', 'noopener');
+  };
+
+  window.addProduct = async function () {
+    const name = document.getElementById('newName').value.trim();
+    const catName = document.getElementById('newCat').value;
+    const price = Number(document.getElementById('newPrice').value);
+    const imageUrl = document.getElementById('newImageUrl')?.value.trim() || null;
+
+    if (!name || !price) { alert('يرجى إدخال اسم المنتج والسعر.'); return; }
+
+    let catId = categoriesNameMap[catName] || null;
+    if (!catId && catName) {
+      const { data: newCat } = await db.from('categories').insert({ name: catName }).select().single();
+      if (newCat) {
+        catId = newCat.id;
+        categoriesMap[catId] = catName;
+        categoriesNameMap[catName] = catId;
+      }
+    }
+
+    const { error } = await db.from('products').insert({
+      name: name,
+      description: catName,
+      category_id: catId,
+      price: price,
+      image_url: imageUrl,
+      stock: 50,
+      is_active: true
+    });
+
+    if (error) {
+      alert('تعذرت إضافة المنتج: ' + error.message);
+      return;
+    }
+
+    document.getElementById('newName').value = '';
+    document.getElementById('newPrice').value = '';
+    if (document.getElementById('newImageUrl')) document.getElementById('newImageUrl').value = '';
+
+    await loadProducts();
+    openAdmin();
+    alert('تم حفظ المنتج ونشره في المتجر بنجاح ✅');
+  };
+})();
