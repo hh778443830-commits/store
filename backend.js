@@ -1,173 +1,182 @@
-/* الشعيبية — مخزن ربط بقاعدة بيانات Supabase */
+/* SHUAIBIYA - Supabase Store Backend */
 (() => {
+  'use strict';
+
   const cfg = window.SHUAIBIYA_CONFIG || {};
-  const ready = Boolean(
-    cfg.SUPABASE_URL &&
-    cfg.SUPABASE_ANON_KEY &&
-    !String(cfg.SUPABASE_URL).includes('YOUR_PROJECT') &&
-    !String(cfg.SUPABASE_ANON_KEY).includes('YOUR_')
-  );
 
-  const banner = (message) => {
-    let el = document.getElementById('backendNotice');
-    إذا لم يكن العنصر {
-      el = document.createElement('div');
-      el.id = 'backendNotice';
-      el.className = 'notice';
-      document.querySelector('main')?.prepend(el);
-    }
-    el.textContent = message;
-  };
-
-  إذا لم يكن التطبيق جاهزًا أو لم يكن يستخدم قاعدة بيانات افتراضية (window.supabase)،
-    banner('تعذر الاتصال بقاعدة البيانات. تأكد من ملفي config.js ومكتبة Supabase.');
-    يعود؛
+  if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY || !window.supabase) {
+    console.error('Supabase configuration or library is missing.');
+    return;
   }
 
   const db = window.supabase.createClient(
     cfg.SUPABASE_URL,
     cfg.SUPABASE_ANON_KEY
   );
+
   window.shuaibiyaDB = db;
 
   let categoriesMap = {};
   let categoriesNameMap = {};
 
-  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
-    '&': '&',
-    '<': '<',
-    '>': '>',
-    '"': '"',
-    "'": '''
-  }[char]));
+  const escapeHtml = (value) =>
+    String(value ?? '').replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
 
-  const getCart = () => window.cart || cart;
+  function showError(message) {
+    console.error(message);
+    alert(message);
+  }
 
   async function loadCategories() {
     const { data, error } = await db
       .from('categories')
-      .يختار('*')؛
+      .select('*');
 
-    إذا حدث خطأ {
-      console.error('التصنيفات:', error.message);
-      يعود؛
+    if (error) {
+      console.error('Categories error:', error.message);
+      return;
     }
 
     categoriesMap = {};
     categoriesNameMap = {};
 
-    (البيانات || []).forEach((العنصر) => {
+    (data || []).forEach((item) => {
       categoriesMap[item.id] = item.name;
       categoriesNameMap[item.name] = item.id;
     });
   }
 
-  دالة asProduct(row) {
-    يعود {
-      المعرّف: row.id،
-      الاسم: اسم الصف || "منتج بدون اسم"،
+  function convertProduct(row) {
+    return {
+      id: row.id,
+      name: row.name || 'منتج بدون اسم',
       cat: categoriesMap[row.category_id] || row.description || 'عام',
-      السعر: رقم(سعر الصف || 0)،
-      قديم: رقم(سعر الصف || 0)،
-      العلامة: Row.stock !== null && Number(row.stock) <= 0 ? 'ليس في الأوراق المالية' : 'متوفر',
-      الألوان: ['م'],
-      الأحجام: ['ابتعد موحد'],
+      price: Number(row.price || 0),
+      old: Number(row.price || 0),
+      tag: Number(row.stock) <= 0 ? 'نفد المخزون' : 'متوفر',
+      colors: ['متوفر'],
+      sizes: ['مقاس موحد'],
       image_url: row.image_url || '',
-      المخزون: صف.المخزون ?? 0,
-      الوصف: row.description || ''
+      stock: row.stock ?? 0,
+      description: row.description || ''
     };
   }
 
   async function loadProducts() {
-    انتظر تحميل الفئات();
+    await loadCategories();
 
     const { data, error } = await db
       .from('products')
-      .يختار('*')
+      .select('*')
       .eq('is_active', true)
       .order('created_at', { ascending: false });
 
-    إذا حدث خطأ {
-      banner('تعذر تحميل المنتجات:' + error.message);
-      console.error(error);
-      يعود؛
+    if (error) {
+      console.error('Products error:', error.message);
+      return;
     }
 
-    //التخزين المعروض بقاعدة بيانات المنتجات فقط، حتى لو كانت القائمة فارغة.
-    products = (البيانات || []).map(asProduct);
-    إذا كان نوع الدالة render هو 'function'، فسيتم استدعاء الدالة render().
+    products = (data || []).map(convertProduct);
+
+    if (typeof render === 'function') {
+      render();
+    }
   }
 
-  window.loadShuaibiyaProducts = LoadProducts;
+  window.loadShuaibiyaProducts = loadProducts;
   loadProducts();
 
-  إذا كان نوع بطاقة المنتج دالة {
+  if (typeof productCard === 'function') {
     const originalProductCard = productCard;
 
     productCard = function (product, related = false) {
-      إذا لم يكن رابط صورة المنتج موجودًا، فسيتم إرجاع بطاقة المنتج الأصلية (المنتج، المرتبط).
+      if (!product.image_url) {
+        return originalProductCard(product, related);
+      }
 
       const id = escapeHtml(product.id);
       const name = escapeHtml(product.name);
       const image = escapeHtml(product.image_url);
 
-      إذا (كان مرتبطًا) {
-        return `<article class="related-card" onclick="openProduct('${id}')">
-          <div class="rel-img"><img src="${image}" alt="${name}" style="width:100%;height:100%;object-fit:cover"></div>
-          <p>${name}</p><b>${money(product.price)}</b>
-        </article>`;
+      if (related) {
+        return `
+          <article class="related-card" onclick="openProduct('${id}')">
+            <div class="rel-img">
+              <img src="${image}" alt="${name}"
+                style="width:100%;height:100%;object-fit:cover">
+            </div>
+            <p>${name}</p>
+            <b>${money(product.price)}</b>
+          </article>
+        `;
       }
 
-      return `<article class="product-card" onclick="openProduct('${id}')">
-        <div class="product-image">
-          <img src="${image}" alt="${name}">
-          <span class="tag">${escapeHtml(product.tag || 'اختيار شعيبيه')}</span>
-        </div>
-        <div class="product-info">
-          <h3>${name}</h3>
-          <span class="price">${money(product.price)}</span>
-          <div class="product-meta">
-            <small>${escapeHtml(product.cat)}</small>
-            <button class="smallbtn" type="button">عرض التفاصيل</button>
+      return `
+        <article class="product-card" onclick="openProduct('${id}')">
+          <div class="product-image">
+            <img src="${image}" alt="${name}">
+            <span class="tag">${escapeHtml(product.tag || 'اختيار شعيبيه')}</span>
           </div>
-        </div>
-      </article>`;
+          <div class="product-info">
+            <h3>${name}</h3>
+            <span class="price">${money(product.price)}</span>
+            <div class="product-meta">
+              <small>${escapeHtml(product.cat)}</small>
+              <button class="smallbtn" type="button">عرض التفاصيل</button>
+            </div>
+          </div>
+        </article>
+      `;
     };
   }
 
   async function getStaffProfile() {
-    const { data: sessionData, error: sessionError } = await db.auth.getSession();
-    إذا حدث خطأ في الجلسة، فقم برمي استثناء خطأ الجلسة.
+    const { data: sessionData, error: sessionError } =
+      await db.auth.getSession();
+
+    if (sessionError) throw sessionError;
 
     const session = sessionData?.session;
-    إذا لم تكن هناك جلسة، فسيتم إرجاع { session: null, profile: null };
+
+    if (!session) {
+      return { session: null, profile: null };
+    }
 
     const { data: profile, error } = await db
       .from('staff_profiles')
-      .يختار('*')
+      .select('*')
       .eq('user_id', session.user.id)
       .maybeSingle();
 
-    إذا حدث خطأ، فقم برمي الخطأ.
+    if (error) throw error;
+
     return { session, profile };
   }
 
   window.openAdmin = async function () {
-    يحاول {
+    try {
       const { session, profile } = await getStaffProfile();
 
-      إذا لم تكن هناك جلسة {
-        إذا كان نوع showAdminLogin هو 'function'، فسيتم استدعاء showAdminLogin().
-        يعود؛
+      if (!session) {
+        if (typeof showAdminLogin === 'function') {
+          showAdminLogin();
+        }
+        return;
       }
 
       const allowed = profile &&
         (profile.is_owner === true || profile.is_active === true);
 
-      إذا لم يكن مسموحًا به {
-        تنبيه('هذا الحساب غير مخوّل والابتكار. تأكد من الهاتف في جدول ملفات تعريف الموظفين.');
+      if (!allowed) {
+        alert('هذا الحساب غير مخوّل لإدارة المتجر.');
         await db.auth.signOut();
-        يعود؛
+        return;
       }
 
       document.querySelector('.hero').style.display = 'none';
@@ -177,50 +186,76 @@
       document.getElementById('admin').classList.add('show');
 
       const permissions = Array.isArray(profile.permissions)
-        ? profile.permissions.join(', ')
+        ? profile.permissions.join('، ')
         : '';
-      const roleLabel = Profile.is_owner ? 'المالك — صلاحية كاملة' : (permissions || 'موظف');
-      document.querySelector('#admin .notice').textContent =
-        'متصل بقاعدة البيانات الفعالة — النجاح: ' + roleLabel;
 
-      إذا لم يكن العنصر الذي يحمل المعرّف 'newImageUrl' موجودًا في المستند {
-        const priceField = document.getElementById('newPrice')?.parentElement;
-        إذا كان (حقل السعر) {
+      const roleLabel = profile.is_owner
+        ? 'المالك - صلاحية كاملة'
+        : (permissions || 'موظف');
+
+      const notice = document.querySelector('#admin .notice');
+
+      if (notice) {
+        notice.textContent =
+          'متصل بقاعدة البيانات بنجاح - الصلاحية: ' + roleLabel;
+      }
+
+      if (!document.getElementById('newImageUrl')) {
+        const priceField =
+          document.getElementById('newPrice')?.parentElement;
+
+        if (priceField) {
           const imageField = document.createElement('div');
           imageField.className = 'field';
-          imageField.innerHTML = '<label>رابط صورة المنتج (اختياري)</label><input id="newImageUrl" type="url" placeholder="https://example.com/image.jpg">';
+          imageField.innerHTML = `
+            <label>رابط صورة المنتج (اختياري)</label>
+            <input id="newImageUrl" type="url"
+              placeholder="https://example.com/image.jpg">
+          `;
           priceField.after(imageField);
         }
       }
 
-      انتظر تحديث لوحة التحكم ();
+      await refreshAdmin();
+
     } catch (error) {
-      تنبيه('تعذر فتح لوحة الإدارة: ' + error.message);
+      alert('تعذر فتح لوحة الإدارة: ' + error.message);
     }
   };
 
   window.shuaibiyaLogin = async function () {
-    const email = document.getElementById('adminEmail')?.value.trim();
-    const password = document.getElementById('adminPassword')?.value;
-    إذا لم يكن البريد الإلكتروني أو كلمة المرور موجودين {
-      تنبيه('أدخل البريد الإلكتروني وكلمة المرور.');
-      يعود؛
+    const email =
+      document.getElementById('adminEmail')?.value.trim();
+
+    const password =
+      document.getElementById('adminPassword')?.value;
+
+    if (!email || !password) {
+      alert('أدخل البريد الإلكتروني وكلمة المرور.');
+      return;
     }
 
-    const { error } = await db.auth.signInWithPassword({ email, password });
-    إذا حدث خطأ {
-      تنبيه('فشل تسجيل الدخول:' + error.message);
-      يعود؛
+    const { error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      alert('فشل تسجيل الدخول: ' + error.message);
+      return;
     }
 
-    إخفاء النافذة المنبثقة();
-    انتظر حتى يتم فتح نافذة الإدارة.
+    if (typeof hideModal === 'function') {
+      hideModal();
+    }
+
+    await window.openAdmin();
   };
 
   async function refreshAdmin() {
     const productsResult = await db
       .from('products')
-      .يختار('*')
+      .select('*')
       .order('created_at', { ascending: false });
 
     const ordersResult = await db
@@ -232,76 +267,141 @@
     const allProducts = productsResult.data || [];
     const allOrders = ordersResult.data || [];
 
-    document.getElementById('statProducts').textContent =
-      productsResult.error ? '—' : allProducts.length;
-    document.getElementById('statOrders').textContent =
-      ordersResult.error ? '—' : allOrders.length;
+    const statProducts = document.getElementById('statProducts');
+    const statOrders = document.getElementById('statOrders');
+    const ordersList = document.getElementById('ordersList');
 
-    document.getElementById('ordersList').innerHTML = ordersResult.error
-      ؟ 'تعذر تحميل الطلبات: ' + escapeHtml(ordersResult.error.message)
-      : allOrders.map((order) => `
-        <div class="cart-row" style="align-items:flex-start;gap:10px;flex-wrap:wrap;">
-          <span style="flex:1;min-width:220px;">
-            طلب #${escapeHtml(order.id)} — ${escapeHtml(order.customer_name)}</b>
-            · <a href="tel:${escapeHtml(order.phone)}">${escapeHtml(order.phone)}</a><br>
-            <small>العنوان / الموقع: ${escapeHtml(order.address || 'غير محدد')}</small><br>
-            <small>الحالة: <b>${escapeHtml(order.status || 'جديد')}</b> · ${order.created_at ? new Date(order.created_at).toLocaleString('ar-YE') : ''}</small><br>
-            <div style="margin:6px 0;font-size:.9em;color:#444;">
-              ${(order.order_items || []).map((item) =>
-                `• ${escapeHtml(item.product_name)} × ${escapeHtml(item.quantity)} (${money(item.price)})`
-              ).join('<br>')}
-            </div>
-            <button class="smallbtn" onclick="window.shuaibiyaWhatsApp('${escapeHtml(order.phone)}','${escapeHtml(order.customer_name)}','${escapeHtml(order.id)}')"> واتساب</button>
-            <button class="smallbtn" onclick="window.updateOrderStatus('${escapeHtml(order.id)}','تم تسليم')">تم تسليم ✓</button>
-          </span>
-          <b>${money(order.total)}</b>
-        </div>
-      `).الانضمام('') || 'لا يوجد طلبات حتى الآن.';
+    if (statProducts) {
+      statProducts.textContent =
+        productsResult.error ? '—' : allProducts.length;
+    }
 
-    Let ManageBox = document.getElementById('adminProductsManage');
-    إذا لم يكن بالإمكان إدارة الصندوق {
+    if (statOrders) {
+      statOrders.textContent =
+        ordersResult.error ? '—' : allOrders.length;
+    }
+
+    if (ordersList) {
+      ordersList.innerHTML = ordersResult.error
+        ? 'تعذر تحميل الطلبات: ' +
+          escapeHtml(ordersResult.error.message)
+        : allOrders.map((order) => `
+          <div class="cart-row"
+            style="align-items:flex-start;gap:10px;flex-wrap:wrap;">
+            <span style="flex:1;min-width:220px;">
+              <b>طلب #${escapeHtml(order.id)} -
+                ${escapeHtml(order.customer_name)}</b>
+              <br>
+              <a href="tel:${escapeHtml(order.phone)}">
+                ${escapeHtml(order.phone)}
+              </a>
+              <br>
+              <small>
+                العنوان: ${escapeHtml(order.address || 'غير محدد')}
+              </small>
+              <br>
+              <small>
+                الحالة: ${escapeHtml(order.status || 'جديد')}
+              </small>
+              <div style="margin:6px 0;font-size:.9em;">
+                ${(order.order_items || []).map((item) =>
+                  `• ${escapeHtml(item.product_name)} ×
+                  ${escapeHtml(item.quantity)}`
+                ).join('<br>')}
+              </div>
+              <button class="smallbtn"
+                onclick="window.shuaibiyaWhatsApp(
+                  '${escapeHtml(order.phone)}',
+                  '${escapeHtml(order.customer_name)}',
+                  '${escapeHtml(order.id)}'
+                )">
+                واتساب
+              </button>
+              <button class="smallbtn"
+                onclick="window.updateOrderStatus(
+                  '${escapeHtml(order.id)}',
+                  'تم التسليم'
+                )">
+                تم التسليم
+              </button>
+            </span>
+            <b>${money(order.total)}</b>
+          </div>
+        `).join('') || 'لا توجد طلبات حتى الآن.';
+    }
+
+    let manageBox =
+      document.getElementById('adminProductsManage');
+
+    if (!manageBox && ordersList) {
       manageBox = document.createElement('div');
       manageBox.id = 'adminProductsManage';
       manageBox.style.marginTop = '24px';
-      document.getElementById('ordersList').after(manageBox);
+      ordersList.after(manageBox);
     }
 
-    manageBox.innerHTML = productsResult.error
-      ؟ 'تعذر تحميل المنتجات: ' + escapeHtml(productsResult.error.message)
-      : `<h3>إدارة المنتجات الحالية (${allProducts.length})</h3>
-        ${allProducts.map((product) => `
-          <div class="cart-row" style="align-items:center;">
-            <span>
-              <b>${escapeHtml(product.name)}</b><br>
-              <small>السعر: ${money(product.price)} | الحالة: ${product.is_active ؟ 'ظاهر' : 'مخفي'}</small>
-            </span>
-            <div>
-              <button class="smallbtn" onclick="window.toggleProductActive('${escapeHtml(product.id)}',${!product.is_active})">${product.is_active ? 'غير نشط' : 'غير نشط'}</button>
-              <button class="smallbtn" style="color:#b00;" onclick="window.deleteProduct('${escapeHtml(product.id)}')"> حذف</button>
+    if (manageBox) {
+      manageBox.innerHTML = productsResult.error
+        ? 'تعذر تحميل المنتجات: ' +
+          escapeHtml(productsResult.error.message)
+        : `
+          <h3>إدارة المنتجات الحالية (${allProducts.length})</h3>
+          ${allProducts.map((product) => `
+            <div class="cart-row" style="align-items:center;">
+              <span>
+                <b>${escapeHtml(product.name)}</b><br>
+                <small>
+                  السعر: ${money(product.price)} |
+                  الحالة: ${product.is_active ? 'ظاهر' : 'مخفي'}
+                </small>
+              </span>
+              <div>
+                <button class="smallbtn"
+                  onclick="window.toggleProductActive(
+                    '${escapeHtml(product.id)}',
+                    ${!product.is_active}
+                  )">
+                  ${product.is_active ? 'إخفاء' : 'إظهار'}
+                </button>
+                <button class="smallbtn"
+                  style="color:#b00;"
+                  onclick="window.deleteProduct('${escapeHtml(product.id)}')">
+                  حذف
+                </button>
+              </div>
             </div>
-          </div>
-        `).الانضمام('') || '<p class="muted">لا توجد منتجات مضافة بعد.</p>'}`;
+          `).join('') ||
+          '<p class="muted">لا توجد منتجات مضافة بعد.</p>'
+        `;
+    }
 
-    إذا لم يكن العنصر الذي يحمل المعرّف 'adminLogoutBtn' موجودًا في المستند {
+    if (!document.getElementById('adminLogoutBtn')) {
       const logout = document.createElement('button');
       logout.id = 'adminLogoutBtn';
       logout.className = 'iconbtn';
       logout.textContent = 'تسجيل الخروج';
+
       logout.onclick = async () => {
         await db.auth.signOut();
         location.reload();
       };
-      document.querySelector('#admin .section-title').append(logout);
+
+      document.querySelector('#admin .section-title')?.append(logout);
     }
   }
 
   window.updateOrderStatus = async (orderId, status) => {
-    const { error } = await db.from('orders').update({ status }).eq('id', orderId);
-    إذا حدث خطأ {
-      تنبيه ("تعذر تحديث حالة الطلب:" + error.message)؛
-      يعود؛
+    const { error } = await db
+      .from('orders')
+      .update({ status })
+      .eq('id', orderId);
+
+    if (error) {
+      alert('تعذر تحديث حالة الطلب: ' + error.message);
+      return;
     }
-    انتظر تحديث لوحة التحكم ();
+
+    await refreshAdmin();
   };
 
   window.toggleProductActive = async (productId, newState) => {
@@ -310,148 +410,210 @@
       .update({ is_active: newState })
       .eq('id', productId);
 
-    إذا حدث خطأ {
-      تنبيه('تعذر تحديث المنتج:' + error.message);
-      يعود؛
+    if (error) {
+      alert('تعذر تحديث المنتج: ' + error.message);
+      return;
     }
 
-    انتظر تحميل المنتجات();
-    انتظر تحديث لوحة التحكم ();
+    await loadProducts();
+    await refreshAdmin();
   };
 
   window.deleteProduct = async (productId) => {
     if (!confirm('هل تريد حذف هذا المنتج نهائياً؟')) return;
 
-    const { error } = await db.from('products').delete().eq('id', productId);
-    إذا حدث خطأ {
-      تنبيه("تعذر حذف المنتج:" + error.message);
-      يعود؛
+    const { error } = await db
+      .from('products')
+      .delete()
+      .eq('id', productId);
+
+    if (error) {
+      alert('تعذر حذف المنتج: ' + error.message);
+      return;
     }
 
-    انتظر تحميل المنتجات();
-    انتظر تحديث لوحة التحكم ();
+    await loadProducts();
+    await refreshAdmin();
   };
 
   window.shuaibiyaWhatsApp = (phone, name, id) => {
     const message = encodeURIComponent(
-      `مرحباً ${name}، نتواصل معك من متجر شعيبيه الخاص بك رقم #${id}.`
+      `مرحباً ${name}، نتواصل معك من متجر شعيبيه بخصوص طلبك رقم #${id}.`
     );
+
     let number = String(phone || '').replace(/\D/g, '');
-    إذا كان (الرقم يبدأ بـ '7') وكان طول الرقم يساوي 9) الرقم = '967' + الرقم؛
-    إذا لم يكن هناك رقم {
-      تنبيه('لا يوجد رقم هاتف صالح لهذا الطلب.');
-      يعود؛
+
+    if (number.startsWith('7') && number.length === 9) {
+      number = '967' + number;
     }
-    window.open(`https://wa.me/${number}?text=${message}`, '_blank', 'noopener');
+
+    if (!number) {
+      alert('لا يوجد رقم هاتف صالح لهذا الطلب.');
+      return;
+    }
+
+    window.open(
+      `https://wa.me/${number}?text=${message}`,
+      '_blank',
+      'noopener'
+    );
   };
 
   window.submitOrder = async function () {
-    const name = document.getElementById('custName')?.value.trim();
-    const phone = document.getElementById('custPhone')?.value.trim();
-    const addressInput = document.getElementById('custAddress')?.value.trim();
+    const name =
+      document.getElementById('custName')?.value.trim();
 
-    إذا لم يكن هناك اسم أو رقم هاتف {
-      تنبيه('يرجى إدخال الاسم ورقم الجوال.');
-      يعود؛
-    }
-    إذا لم يكن عنوان URL الخاص بالعميل موجودًا ولم يكن حقل العنوان موجودًا، {
-      تنبيه('يرجى تحديد موقعك أو كتابة عنوان التوصيل.');
-      يعود؛
-    }
-    إذا لم تكن هناك سلة تسوق أو لم يكن طولها غير محدد، فقم بالخروج.
+    const phone =
+      document.getElementById('custPhone')?.value.trim();
 
-    const fullAddress = [addressInput, window.customerMapUrl].filter(Boolean).join(' — ');
+    const addressInput =
+      document.getElementById('custAddress')?.value.trim();
+
+    if (!name || !phone) {
+      alert('يرجى إدخال الاسم ورقم الجوال.');
+      return;
+    }
+
+    if (!window.customerMapUrl && !addressInput) {
+      alert('يرجى تحديد موقعك أو كتابة عنوان التوصيل.');
+      return;
+    }
+
+    if (!cart || !cart.length) {
+      alert('السلة فارغة.');
+      return;
+    }
+
+    const fullAddress = [
+      addressInput,
+      window.customerMapUrl
+    ].filter(Boolean).join(' — ');
+
     const total = cart.reduce((sum, item) =>
-      المجموع + عدد (سعر الصنف || 0) * عدد (كمية الصنف || 1)، 0
+      sum + Number(item.price || 0) * Number(item.qty || 1), 0
     );
 
-    const { data: orderData، error: orderError } = انتظار db
+    const { data: orderData, error: orderError } = await db
       .from('orders')
       .insert({
-        اسم_العميل: الاسم،
-        هاتف،
-        العنوان: العنوان الكامل،
-        المجموع،
-        الحالة: جديد
+        customer_name: name,
+        phone,
+        address: fullAddress,
+        total,
+        status: 'جديد'
       })
-      .يختار()
-      .أعزب()؛
+      .select()
+      .single();
 
-    إذا حدث خطأ في الطلب {
-      تنبيه('لم يتم حفظ الطلب: ' + orderError.message);
-      يعود؛
+    if (orderError) {
+      alert('لم يتم حفظ الطلب: ' + orderError.message);
+      return;
     }
 
-    const rows = cart.map((item) => {
-      const numericId = Number(item.id);
-      يعود {
-        order_id: orderData.id,
-        product_id: Number.isFinite(numericId) ? numericId : null,
-        اسم_المنتج: `${item.name} (${item.color || 'متوفر'} / ${item.size || 'موحد'})`,
-        السعر: رقم(سعر العنصر || 0)،
-        الكمية: رقم (الكمية في العنصر || 1)
-      };
-    });
+    const rows = cart.map((item) => ({
+      order_id: orderData.id,
+      product_id: item.id,
+      product_name: `${item.name} (${item.color || 'متوفر'} / ${item.size || 'موحد'})`,
+      price: Number(item.price || 0),
+      quantity: Number(item.qty || 1)
+    }));
 
-    const { error: itemsError } = await db.from('order_items').insert(rows);
-    إذا (حدث خطأ في العناصر) {
-      تنبيه('تم تسجيل الطلب رقم #' + orderData.id +
-        ' لكن تعذر حفظ تفاصيل المنتجات: ' + itemsError.message);
-      يعود؛
+    const { error: itemsError } = await db
+      .from('order_items')
+      .insert(rows);
+
+    if (itemsError) {
+      alert(
+        'تم تسجيل الطلب رقم #' + orderData.id +
+        ' لكن تعذر حفظ تفاصيل المنتجات: ' + itemsError.message
+      );
+      return;
     }
 
-    const whatsapp = String(cfg.STORE_WHATSAPP || '').replace(/\D/g, '');
+    const whatsapp =
+      String(cfg.STORE_WHATSAPP || '').replace(/\D/g, '');
+
     const summary = cart.map((item) =>
-      `• ${item.name} × ${item.qty} (${item.color || 'متوفر'}/${item.size || 'موحد'})`
+      `• ${item.name} × ${item.qty}`
     ).join('\n');
+
     const message = encodeURIComponent(
-      `طلب جديد من متجر شعيبيه\nرقم الطلب: #${orderData.id}\nالاسم: ${name}\nالهاتف: ${phone}\nالعنوان: ${fullAddress}\n\nالمنتجات:\n${summary}\n\nالإجمالي: ${money(total)}\nالدفع: عند الاستلام`
+      `طلب جديد من متجر شعيبيه\n` +
+      `رقم الطلب: #${orderData.id}\n` +
+      `الاسم: ${name}\n` +
+      `الهاتف: ${phone}\n` +
+      `العنوان: ${fullAddress}\n\n` +
+      `المنتجات:\n${summary}\n\n` +
+      `الإجمالي: ${money(total)}\n` +
+      `الدفع: عند الاستلام`
     );
 
-    سلة التسوق = [];
+    cart = [];
     window.customerMapUrl = '';
-    إذا كان نوع الدالة render هو 'function'، فسيتم استدعاء الدالة render().
 
-    document.getElementById('modalContent').innerHTML = `
-      <h2>تم استلام الأسئلة الفعالة ✅</h2>
-      <p class="muted">رقم الطلب: <b>#${escapeHtml(orderData.id)}</b>. تم حفظه وتفاصيله في قاعدة البيانات.</p>
-    `;
-
-    إذا كان (واتساب) {
-      window.open(`https://wa.me/${whatsapp}?text=${message}`, '_blank', 'noopener');
+    if (typeof render === 'function') {
+      render();
     }
-    انتظر تحديث لوحة التحكم إذا كانت مفتوحة.
+
+    const modalContent = document.getElementById('modalContent');
+
+    if (modalContent) {
+      modalContent.innerHTML = `
+        <h2>تم استلام طلبك بنجاح</h2>
+        <p class="muted">
+          رقم الطلب:
+          <b>#${escapeHtml(orderData.id)}</b>
+        </p>
+      `;
+    }
+
+    if (whatsapp) {
+      window.open(
+        `https://wa.me/${whatsapp}?text=${message}`,
+        '_blank',
+        'noopener'
+      );
+    }
+
+    await refreshAdminIfOpen();
   };
 
   async function refreshAdminIfOpen() {
-    إذا كان عنصر `admin` يحتوي على فئة `show`، فسيتم تنفيذ ما يلي:
-      انتظر تحديث لوحة التحكم ();
+    if (document.getElementById('admin')?.classList.contains('show')) {
+      await refreshAdmin();
     }
   }
 
   window.addProduct = async function () {
-    const name = document.getElementById('newName')?.value.trim();
-    const categoryName = document.getElementById('newCat')?.value;
-    const price = Number(document.getElementById('newPrice')?.value);
-    const imageUrl = document.getElementById('newImageUrl')?.value.trim() || null;
+    const name =
+      document.getElementById('newName')?.value.trim();
 
-    إذا لم يكن هناك اسم أو لم يكن السعر عددًا محدودًا أو كان السعر أقل من أو يساوي صفرًا،
-      تنبيه('يرجى كتابة اسم المنتج والسعر أكبر من صفر.');
-      يعود؛
+    const categoryName =
+      document.getElementById('newCat')?.value;
+
+    const price =
+      Number(document.getElementById('newPrice')?.value);
+
+    const imageUrl =
+      document.getElementById('newImageUrl')?.value.trim() || null;
+
+    if (!name || !Number.isFinite(price) || price <= 0) {
+      alert('يرجى إدخال اسم المنتج وسعر صحيح أكبر من صفر.');
+      return;
     }
 
     let categoryId = categoriesNameMap[categoryName] || null;
 
-    إذا لم يكن (categoryId && categoryName) {
+    if (!categoryId && categoryName) {
       const { data: newCategory, error: categoryError } = await db
         .from('categories')
         .insert({ name: categoryName })
-        .يختار()
-        .أعزب()؛
+        .select()
+        .single();
 
-      إذا كان هناك خطأ في الفئة {
-        تنبيه('تعذر إضافة القسم:' +categorError.message);
-        يعود؛
+      if (categoryError) {
+        alert('تعذر إضافة القسم: ' + categoryError.message);
+        return;
       }
 
       categoryId = newCategory.id;
@@ -459,29 +621,34 @@
       categoriesNameMap[categoryName] = categoryId;
     }
 
-    const { error } = await db.from('products').insert({
-      اسم،
-      الوصف: اسم الفئة || '',
-      category_id: categoryId,
-      سعر،
-      image_url: imageUrl,
-      المخزون: 50
-      نشط: صحيح
-    });
+    const { error } = await db
+      .from('products')
+      .insert({
+        name,
+        description: categoryName || '',
+        category_id: categoryId,
+        price,
+        image_url: imageUrl,
+        stock: 50,
+        is_active: true
+      });
 
-    إذا حدث خطأ {
-      تنبيه('تعذرت إضافة المنتج:' + error.message);
-      يعود؛
+    if (error) {
+      alert('تعذرت إضافة المنتج: ' + error.message);
+      return;
     }
 
     document.getElementById('newName').value = '';
     document.getElementById('newPrice').value = '';
-    إذا كان العنصر الذي يحمل المعرّف 'newImageUrl' موجودًا في المستند {
+
+    if (document.getElementById('newImageUrl')) {
       document.getElementById('newImageUrl').value = '';
     }
 
-    انتظر تحميل المنتجات();
-    انتظر تحديث لوحة التحكم ();
-    تنبيه('تم حفظ المنتج الفعال.');
+    await loadProducts();
+    await refreshAdmin();
+
+    alert('تم حفظ المنتج بنجاح.');
   };
+
 })();
