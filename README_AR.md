@@ -48,3 +48,4 @@ update public.profiles set role='orders_monitor', assigned_category=null where i
 - `js/config.js`: إعدادات مشروعك ورقم واتساب.
 - `js/backend.js`: الربط مع Supabase.
 - `supabase/schema.sql`: الجداول وسياسات الوصول.
+تحديث
