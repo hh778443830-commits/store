@@ -28,6 +28,7 @@ footer{margin-top:42px;background:var(--ink);color:#fff;text-align:center;paddin
 .related{border-top:1px solid var(--line);margin-top:25px;padding-top:18px}.related h3{font-family:"Tajawal",sans-serif;font-size:19px;margin:0 0 13px}.related-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.related-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer}.related-card .rel-img{height:115px;background:#f6eef0;display:grid;place-items:center}.related-card .rel-img img{width:100%;height:100%;object-fit:cover}.related-card .rel-img svg{width:28px;stroke:#71666b;fill:none}.related-card p{font-size:12px;margin:8px}.related-card b{font-size:12px;margin:0 8px 9px;display:block}
 .field{display:grid;gap:7px;margin:13px 0}.field label{font-size:13px;font-weight:600}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none}.location-btn{width:100%;border:1px solid var(--ink);background:#fff;border-radius:11px;padding:13px;font-weight:700;color:var(--ink)}.location-status{font-size:12px;color:var(--muted);line-height:1.8;margin-top:8px}.location-link{display:none;color:#2864ad;font-size:12px;word-break:break-all}
 .admin{display:none}.admin.show{display:block}.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#fff6f8;border:1px solid var(--line);border-radius:13px;padding:15px}.stat b{font-size:23px;display:block}.notice{background:#fff7e9;border:1px solid #f0dfbf;border-radius:12px;padding:12px;font-size:12px;line-height:1.8;margin:12px 0}.cart-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:12px 0;font-size:13px}
+.item-card-order{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--line);cursor:pointer}.item-card-order img{width:60px;height:60px;border-radius:10px;object-fit:cover}.item-card-order .placeholder-mini{width:60px;height:60px;border-radius:10px;background:#f6eef0;display:grid;place-items:center}.item-card-order svg{width:25px;stroke:#71666b;fill:none}.item-card-order:hover{background:var(--rose-pale)}
 @media(max-width:760px){.header-main{padding:10px 12px;gap:9px;flex-wrap:wrap}.brand{min-width:0;flex:1}.brand strong{font-size:20px}.search{order:3;flex-basis:100%}nav{padding:0 10px 9px}.hero{min-height:210px;padding:22px}.hero-art{font-size:65px;padding:0 8px}.hero p{font-size:13px}.category-strip{grid-template-columns:repeat(5,minmax(75px,1fr));overflow:auto;gap:9px}.category-tile{padding:13px 5px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-image{height:185px}.product-info{padding:10px}.product-info h3{font-size:13px}.detail-grid{grid-template-columns:1fr;gap:14px}.detail-photo{height:280px}.modal{padding:15px}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.related-card .rel-img{height:105px}main{padding:13px}.admin-grid{grid-template-columns:1fr 1fr}}
 </style></head>
 <body>
@@ -45,17 +46,45 @@ footer{margin-top:42px;background:var(--ink);color:#fff;text-align:center;paddin
 <!-- لوحة الإدارة المخفية -->
 <section class="admin" id="admin">
   <div class="section-title"><h2>لوحة إدارة شعيبيه</h2><button class="iconbtn" onclick="closeAdmin()">العودة للمتجر</button></div>
-  <div class="notice">أهلاً بك. من هنا تضيفين منتجاتك. تُحفظ المنتجات في ذاكرة المتصفح (جوالك) وتظهر في متجرك فوراً.</div>
-  <div class="admin-grid"><div class="stat">المنتجات المضافة<b id="statProducts">0</b></div><div class="stat">الأقسام<b>5</b></div></div>
+  <div class="notice">مرحباً <b id="adminNameDisplay"></b> | صلاحيتك: <b id="adminRoleDisplay"></b></div>
   
-  <h3 style="margin-top:20px">إضافة منتج جديد</h3>
-  <div class="field"><label>اسم المنتج</label><input id="newName" placeholder="مثال: فستان سهرة"></div>
-  <div class="field"><label>القسم</label><select id="newCat"><option>ملابس</option><option>مفروشات</option><option>تجميل</option><option>بهارات</option><option>أدوات منزلية</option></select></div>
-  <div class="field"><label>السعر (رقم فقط)</label><input id="newPrice" type="number" placeholder="15000"></div>
-  <div class="field"><label>رابط الصورة (اختياري)</label><input id="newImg" placeholder="https://example.com/image.jpg"></div>
-  <button class="wide" onclick="addProduct()">حفظ المنتج في المتجر</button>
-  <h3 style="margin-top:20px">إدارة المنتجات المضافة</h3>
-  <div id="adminList" class="muted">لا توجد منتجات مضافة بعد.</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+    <button class="iconbtn" onclick="switchAdminTab('products')" style="background:#f6edef">المنتجات</button>
+    <button class="iconbtn" onclick="switchAdminTab('staff')" id="staffTabBtn" style="display:none">إدارة الموظفين</button>
+  </div>
+
+  <!-- قسم المنتجات -->
+  <div id="adminProductsTab">
+    <div class="admin-grid"><div class="stat">المنتجات المضافة<b id="statProducts">0</b></div><div class="stat">الأقسام<b>5</b></div></div>
+    <h3 style="margin-top:20px">إضافة منتج جديد</h3>
+    <div class="field"><label>اسم المنتج</label><input id="newName" placeholder="مثال: فستان سهرة"></div>
+    <div class="field"><label>القسم</label><select id="newCat"><option>ملابس</option><option>مفروشات</option><option>تجميل</option><option>بهارات</option><option>أدوات منزلية</option></select></div>
+    <div class="field"><label>السعر (رقم فقط)</label><input id="newPrice" type="number" placeholder="15000"></div>
+    <div class="field"><label>رابط الصورة (اختياري)</label><input id="newImg" placeholder="https://example.com/image.jpg"></div>
+    <button class="wide" onclick="addProduct()">حفظ المنتج في المتجر</button>
+    <h3 style="margin-top:20px">إدارة المنتجات المضافة</h3>
+    <div id="adminList" class="muted">لا توجد منتجات مضافة بعد.</div>
+  </div>
+
+  <!-- قسم الموظفين (للمدير فقط) -->
+  <div id="adminStaffTab" style="display:none">
+    <h3>إضافة موظف جديد</h3>
+    <div class="field"><label>اسم المستخدم (للدخول)</label><input id="staffUser" placeholder="مثال: ahmed"></div>
+    <div class="field"><label>كلمة المرور</label><input id="staffPass" type="password" placeholder="******"></div>
+    <div class="field"><label>الصلاحية (القسم)</label>
+      <select id="staffRole">
+        <option value="all">مدير عام (كل الأقسام)</option>
+        <option value="ملابس">ملابس فقط</option>
+        <option value="مفروشات">مفروشات فقط</option>
+        <option value="تجميل">تجميل فقط</option>
+        <option value="بهارات">بهارات فقط</option>
+        <option value="أدوات منزلية">أدوات منزلية فقط</option>
+      </select>
+    </div>
+    <button class="wide" onclick="addStaff()" style="background:var(--gold)">إضافة الموظف</button>
+    <h3 style="margin-top:20px">الموظفون الحاليون</h3>
+    <div id="staffList" class="muted"></div>
+  </div>
 </section>
 
 </main><footer><b>شعيبيه | SHUAIBIYA</b><p>تسوّقي بذوقك، واكتشفي المزيد</p><small>© متجر شعيبيه</small></footer>
@@ -66,7 +95,6 @@ footer{margin-top:42px;background:var(--ink);color:#fff;text-align:center;paddin
 const MY_WHATSAPP = "967776371235"; 
 
 const icon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg>';
-// تم إرجاع أيقونات SVG الأصلية بدلاً من الإيموجيات
 const categoryIcons={'ملابس':'<svg viewBox="0 0 24 24"><path d="m8 4 4 2 4-2 4 4-3 3-2-2v11H9V9l-2 2-3-3 4-4Z"/></svg>','مفروشات':'<svg viewBox="0 0 24 24"><path d="M3 12V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4M3 11h18v7H3zM5 18v2m14-2v2M7 11V9h4v2m2 0V9h4v2"/></svg>','تجميل':'<svg viewBox="0 0 24 24"><path d="M9 3h6v4H9zM8 7h8l1 14H7L8 7ZM10 11h4"/></svg>','بهارات':'<svg viewBox="0 0 24 24"><path d="M12 3c-3 4-7 8-7 12a7 7 0 0 0 14 0c0-4-4-8-7-12Z"/><path d="M9 16c.5 1.5 1.5 2 3 2"/></svg>','أدوات منزلية':'<svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10H3V11Z"/><path d="M9 21v-7h6v7"/></svg>'};
 const categories=['الكل','ملابس','مفروشات','تجميل','بهارات','أدوات منزلية'];
 
@@ -80,6 +108,10 @@ const DEFAULT_PRODUCTS = [
 {id:7,name:'وسادة ديكور فاخرة',cat:'مفروشات',price:7800,old:9500,tag:'اختيار شعيبيه',colors:['وردي','كريمي'],sizes:['45×45']},
 {id:8,name:'طقم فرش مكياج',cat:'تجميل',price:11000,old:14000,tag:'الأكثر مبيعاً',colors:['وردي','أسود'],sizes:['12 قطعة']}
 ];
+
+// نظام الموظفين (المدير الافتراضي)
+let admins = JSON.parse(localStorage.getItem('shuaibiya_admins')) || [{user:'admin', pass:'123', role:'all'}];
+let currentAdmin = null;
 
 let products = [...DEFAULT_PRODUCTS];
 let customProducts = JSON.parse(localStorage.getItem('shuaibiya_custom') || '[]');
@@ -109,8 +141,6 @@ function productCard(p,related=false){
       <div class="product-meta"><small>${p.cat}</small><button class="smallbtn">عرض التفاصيل</button></div>
     </div></article>`;
 }
-
-function handleStoreSearch(){const input=document.getElementById('search');const q=input.value.trim();if(q==='هارفكس'){input.value='';openAdmin();return}render()}
 
 function render(){
   renderNav();
@@ -177,7 +207,6 @@ function getMyLocation(){
 
 function removeCart(i){cart.splice(i,1);render();showCart()}
 
-// دالة تشفير البيانات لتمريرها في الرابط
 function encodeData(obj){return btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).replace(/\+/g,'-').replace(/\//g,'_');}
 function decodeData(s){s=s.replace(/-/g,'+').replace(/_/g,'/');return JSON.parse(decodeURIComponent(escape(atob(s))));}
 
@@ -207,34 +236,95 @@ function submitOrder(){
 
 function showModal(){document.getElementById('overlay').classList.add('show')}function hideModal(){document.getElementById('overlay').classList.remove('show')}document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')hideModal()});
 
+// نظام الدخول
+function handleStoreSearch(){
+  const input=document.getElementById('search');
+  const q=input.value.trim();
+  if(q==='هارفكس'){
+    input.value='';
+    let u = prompt('اسم المستخدم:');
+    if(u===null) return;
+    let p = prompt('كلمة المرور:');
+    if(p===null) return;
+    
+    let found = admins.find(a => a.user === u && a.pass === p);
+    if(found){
+      currentAdmin = found;
+      openAdmin();
+    } else {
+      alert('❌ اسم المستخدم أو كلمة المرور غير صحيحة');
+    }
+    return;
+  }
+  render();
+}
+
 function openAdmin(){
   document.querySelector('.hero').style.display='none';
   document.getElementById('quick').style.display='none';
   document.querySelector('#store>.section-title').style.display='none';
   document.getElementById('products').style.display='none';
   document.getElementById('admin').classList.add('show');
+  
+  document.getElementById('adminNameDisplay').textContent = currentAdmin.user;
+  document.getElementById('adminRoleDisplay').textContent = currentAdmin.role === 'all' ? 'مدير عام' : currentAdmin.role;
+  
+  // إظهار زر الموظفين فقط للمدير العام
+  document.getElementById('staffTabBtn').style.display = currentAdmin.role === 'all' ? 'inline-block' : 'none';
+  
+  switchAdminTab('products');
   refreshAdmin();
 }
+
 function closeAdmin(){
   document.querySelector('.hero').style.display='flex';
   document.getElementById('quick').style.display='grid';
   document.querySelector('#store>.section-title').style.display='flex';
   document.getElementById('products').style.display='grid';
   document.getElementById('admin').classList.remove('show');
+  currentAdmin = null;
 }
+
+function switchAdminTab(tab){
+  document.getElementById('adminProductsTab').style.display = tab === 'products' ? 'block' : 'none';
+  document.getElementById('adminStaffTab').style.display = tab === 'staff' ? 'block' : 'none';
+  if(tab === 'staff') renderStaffList();
+}
+
 function refreshAdmin(){
-  document.getElementById('statProducts').textContent=customProducts.length;
-  document.getElementById('adminList').innerHTML = customProducts.map((p,i)=>
-    `<div class="cart-row"><span>${p.name} - ${money(p.price)}</span><button onclick="deleteProduct(${i})" class="smallbtn" style="background:#ffdede;color:#c00">حذف</button></div>`
-  ).join('') || '<p>لا توجد منتجات مضافة بعد.</p>';
+  // تصفية المنتجات المعروضة في اللوحة حسب القسم المسموح للموظف
+  let allowedProducts = customProducts.filter(p => currentAdmin.role === 'all' || p.cat === currentAdmin.role);
+  document.getElementById('statProducts').textContent = allowedProducts.length;
+  
+  // تعبئة قائمة الأقسام في نموذج الإضافة (الموظف يرى قسمه فقط)
+  const catSelect = document.getElementById('newCat');
+  catSelect.innerHTML = categories.slice(1).map(c => {
+    if(currentAdmin.role === 'all' || currentAdmin.role === c) {
+      return `<option>${c}</option>`;
+    }
+    return '';
+  }).join('');
+
+  document.getElementById('adminList').innerHTML = allowedProducts.map((p) => {
+    // إيجاد رقم المنتج في المصفوفة الأصلية للحذف
+    let originalIndex = customProducts.findIndex(x => x.id === p.id);
+    return `<div class="cart-row"><span>${p.name} - ${money(p.price)} (${p.cat})</span><button onclick="deleteProduct(${originalIndex})" class="smallbtn" style="background:#ffdede;color:#c00">حذف</button></div>`;
+  }).join('') || '<p>لا توجد منتجات مضافة تطابق صلاحيتك.</p>';
 }
+
 function addProduct(){
   let name=document.getElementById('newName').value.trim();
   let cat=document.getElementById('newCat').value;
   let price=Number(document.getElementById('newPrice').value);
   let image=document.getElementById('newImg').value.trim();
+  
   if(!name||!price){alert('أدخلي اسم المنتج والسعر.');return}
   
+  if(currentAdmin.role !== 'all' && cat !== currentAdmin.role) {
+    alert('⛔ غير مسموح لك بإضافة منتجات لهذا القسم.');
+    return;
+  }
+
   customProducts.unshift({id:Date.now(),name,cat,price,old:price,tag:'جديد',colors:['متوفر'],sizes:['مقاس موحد'],image});
   localStorage.setItem('shuaibiya_custom', JSON.stringify(customProducts));
   products=[...customProducts, ...DEFAULT_PRODUCTS];
@@ -247,20 +337,67 @@ function addProduct(){
   closeAdmin();
   render();
 }
+
 function deleteProduct(i){
-  if(!confirm('حذف هذا المنتج؟')) return;
+  if(!confirm('حذف هذا المنتج نهائياً؟')) return;
   customProducts.splice(i,1);
   localStorage.setItem('shuaibiya_custom', JSON.stringify(customProducts));
   products=[...customProducts, ...DEFAULT_PRODUCTS];
   refreshAdmin(); render();
 }
 
+// إدارة الموظفين
+function renderStaffList(){
+  document.getElementById('staffList').innerHTML = admins.map((a, i) => 
+    `<div class="cart-row">
+      <span><b>${a.user}</b> (${a.role === 'all' ? 'مدير' : a.role})</span>
+      ${a.user !== 'admin' ? `<button onclick="deleteStaff(${i})" class="smallbtn" style="background:#ffdede;color:#c00">حذف</button>` : '<small class="muted">أساسي</small>'}
+    </div>`
+  ).join('');
+}
+
+function addStaff(){
+  let u = document.getElementById('staffUser').value.trim();
+  let p = document.getElementById('staffPass').value.trim();
+  let r = document.getElementById('staffRole').value;
+  if(!u || !p) return alert('أدخل اسم المستخدم وكلمة المرور');
+  if(admins.find(a => a.user === u)) return alert('اسم المستخدم موجود مسبقاً');
+  
+  admins.push({user: u, pass: p, role: r});
+  localStorage.setItem('shuaibiya_admins', JSON.stringify(admins));
+  document.getElementById('staffUser').value='';
+  document.getElementById('staffPass').value='';
+  renderStaffList();
+  alert('✅ تم إضافة الموظف بنجاح');
+}
+
+function deleteStaff(i){
+  if(!confirm('حذف هذا الموظف؟')) return;
+  admins.splice(i,1);
+  localStorage.setItem('shuaibiya_admins', JSON.stringify(admins));
+  renderStaffList();
+}
+
+// عرض سلة العميل (بشكل احترافي مع صور المنتجات)
 function checkOrderLink(){
   const params = new URLSearchParams(window.location.search);
   if(params.has('order')){
     try{
       let data = decodeData(params.get('order'));
-      let itemsHtml = data.items.map(x=>`• ${x.name} (${x.color}/${x.size}) ×${x.qty} = ${money(x.price*x.qty)}`).join('<br>');
+      
+      // بناء بطاقات المنتجات للعميل
+      let itemsHtml = data.items.map(x => {
+        let img = x.image ? `<img src="${x.image}">` : `<div class="placeholder-mini">${icon}</div>`;
+        return `<div class="item-card-order" onclick="alert('المنتج: ${x.name}\\nاللون: ${x.color}\\nالمقاس: ${x.size}\\nالسعر: ${money(x.price)}')">
+          ${img}
+          <div style="flex:1">
+            <b style="font-size:14px">${x.name}</b><br>
+            <small class="muted">${x.color} · ${x.size} · الكمية: ${x.qty}</small>
+          </div>
+          <b style="color:var(--gold)">${money(x.price*x.qty)}</b>
+        </div>`;
+      }).join('');
+
       document.getElementById('modalContent').innerHTML=`
         <h2 style="color:#25D366">🛍️ سلة العميل</h2>
         <div class="cart-row"><b>👤 الاسم:</b> ${data.n}</div>
@@ -268,9 +405,14 @@ function checkOrderLink(){
         <div class="cart-row"><b>📍 العنوان:</b> ${data.a||'غير محدد'}</div>
         ${data.map?`<div class="cart-row"><b>🗺️ الموقع:</b> <a href="${data.map}" target="_blank" style="color:#2864ad">فتح الخريطة</a></div>`:''}
         <div class="cart-row"><b>⏰ التاريخ:</b> ${data.date}</div>
-        <h3 style="margin-top:15px">📦 المنتجات:</h3>
-        <div style="line-height:2;font-size:14px">${itemsHtml}</div>
-        <h3 style="color:#25D366;margin-top:15px">💰 الإجمالي: ${money(data.total)}</h3>
+        
+        <h3 style="margin-top:20px">📦 المنتجات المطلوبة:</h3>
+        <div style="margin-top:10px">${itemsHtml}</div>
+        
+        <div style="display:flex;justify-content:space-between;margin-top:20px;padding-top:15px;border-top:2px dashed var(--line)">
+          <h3 style="margin:0">الإجمالي:</h3>
+          <h3 style="margin:0;color:#25D366">${money(data.total)}</h3>
+        </div>
         <button class="wide" onclick="hideModal()" style="margin-top:20px">إغلاق</button>`;
       showModal();
     }catch(e){alert('رابط الطلب غير صالح');}
