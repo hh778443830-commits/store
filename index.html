@@ -6,6 +6,73 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* تصميم شعيبيه الجديد */
+.hero {
+  display: none !important;
+}
+
+.category-strip {
+  display: flex !important;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 12px 4px 20px;
+  margin: 10px 0 22px;
+  scrollbar-width: none;
+}
+
+.category-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.category-tile {
+  flex: 0 0 82px;
+  width: 82px;
+  height: 105px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  gap: 8px;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.category-tile svg {
+  width: 68px;
+  height: 68px;
+  padding: 18px;
+  border-radius: 50%;
+  background: #fff0f3;
+  border: 1px solid #efd8df;
+  stroke: #171416;
+}
+
+.category-tile b {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.section-title {
+  margin-top: 12px;
+}
+
+.product-grid {
+  margin-top: 15px;
+}
+
+@media(max-width:760px) {
+  .category-strip {
+    display: flex !important;
+  }
+
+  .category-tile {
+    flex: 0 0 76px;
+  }
+
+  .category-tile svg {
+    width: 64px;
+    height: 64px;
+  }
+}
 :root{--ink:#171416;--rose:#e9a4b5;--rose-pale:#fff1f4;--gold:#b58b55;--muted:#81777b;--line:#eee7e8;--paper:#fffdfc}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font-family:"IBM Plex Sans Arabic","Tajawal",Tahoma,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .promo{background:var(--ink);color:#fff;text-align:center;padding:9px 12px;font-size:12px}
