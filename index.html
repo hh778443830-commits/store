@@ -64,14 +64,13 @@ footer{margin-top:42px;background:var(--ink);color:#fff;text-align:center;paddin
 <div class="overlay" id="overlay"><div class="modal"><button class="close" onclick="hideModal()">×</button><div id="modalContent"></div></div></div>
 
 <script>
-// ⚠️⚠️⚠️ غير هذا الرقم لرقم واتسابك (بدون + وبدون مسافات) ⚠️⚠️⚠️
-const MY_WHATSAPP = "967771234567";
+// ⚠️ تم إضافة رقمك هنا بنجاح
+const MY_WHATSAPP = "967776371235";
 
 const icon='<svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5L4 8Z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg>';
 const categoryIcons={'ملابس':'👗','مفروشات':'🛏️','تجميل':'💄','بهارات':'🌶️','أدوات منزلية':'🍽️'};
 const categories=['الكل','ملابس','مفروشات','تجميل','بهارات','أدوات منزلية'];
 
-// المنتجات الافتراضية (كل الزوار يشوفونها)
 const DEFAULT_PRODUCTS = [
 {id:1,name:'فستان يومي أنيق',cat:'ملابس',price:18500,old:24000,tag:'خصم 23%',colors:['أسود','وردي','بيج'],sizes:['S','M','L','XL']},
 {id:2,name:'طقم مفارش ناعم',cat:'مفروشات',price:32000,old:39000,tag:'الأكثر طلباً',colors:['أبيض','وردي','رمادي'],sizes:['مفرد','مزدوج','كبير']},
@@ -83,7 +82,6 @@ const DEFAULT_PRODUCTS = [
 {id:8,name:'طقم فرش مكياج',cat:'تجميل',price:11000,old:14000,tag:'الأكثر مبيعاً',colors:['وردي','أسود'],sizes:['12 قطعة']}
 ];
 
-// دمج المنتجات الافتراضية + المنتجات المضافة من الجوال
 let products = [...DEFAULT_PRODUCTS];
 let customProducts = JSON.parse(localStorage.getItem('shuaibiya_custom') || '[]');
 products = [...customProducts, ...products];
