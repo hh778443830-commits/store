@@ -132,7 +132,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: 0.2s;
         }
         .badge-count {
             position: absolute;
@@ -177,7 +176,7 @@
             pointer-events: none;
         }
 
-        /* دوائر الأقسام مع ميزة القفل */
+        /* دوائر الأقسام */
         .categories-wrapper {
             padding: 16px;
             border-bottom: 1px solid var(--border);
@@ -209,7 +208,6 @@
             align-items: center;
             justify-content: center;
             border: 2px solid transparent;
-            transition: 0.25s;
             position: relative;
         }
         .cat-circle-item.active .cat-circle-icon {
@@ -315,8 +313,8 @@
         .card-img-box {
             position: relative;
             width: 100%;
-            height: 200px;
-            background: #f1f5f9;
+            height: 210px;
+            background: #f8fafc;
             overflow: hidden;
             touch-action: pan-y;
         }
@@ -324,17 +322,19 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
         .video-indicator-badge {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             color: #fff;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-size: 0.72rem;
+            font-weight: 800;
+            z-index: 4;
         }
         .swipe-dots {
             position: absolute;
@@ -344,8 +344,9 @@
             display: flex;
             gap: 4px;
             background: rgba(0,0,0,0.35);
-            padding: 3px 6px;
+            padding: 3px 7px;
             border-radius: 10px;
+            z-index: 4;
         }
         .swipe-dot {
             width: 5px;
@@ -362,7 +363,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.92);
             border: none;
             display: flex;
             align-items: center;
@@ -380,7 +381,6 @@
             flex-direction: column;
             flex: 1;
         }
-        /* دوائر الألوان المصغرة تحت المنتج مثل شي إن */
         .shein-color-swatches {
             display: flex;
             align-items: center;
@@ -399,13 +399,14 @@
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
+            background: #f1f5f9;
         }
         .swatch-thumb.active {
             border-color: var(--primary);
             transform: scale(1.12);
             box-shadow: 0 0 0 2px var(--primary-light);
         }
-        .swatch-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .swatch-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .card-title {
             font-size: 0.88rem;
@@ -422,7 +423,9 @@
         .card-price { font-size: 1.05rem; font-weight: 900; color: var(--primary); }
         .old-price { font-size: 0.75rem; color: var(--text-muted); text-decoration: line-through; }
 
-        /* شاشة تفاصيل المنتج الكاملة (SHEIN Style) */
+        /* =========================================================
+           إصلاح شاشة تفاصيل المنتج الكاملة (مرتبة، ثابتة الأبعاد، بدون أي تشوه)
+           ========================================================= */
         .product-view-screen {
             position: fixed;
             inset: 0;
@@ -433,6 +436,7 @@
             overflow-y: auto;
         }
         .product-view-screen.active { display: flex; }
+
         .pv-header {
             display: flex;
             align-items: center;
@@ -441,8 +445,9 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            background: #fff;
-            z-index: 20;
+            background: #ffffff;
+            z-index: 30;
+            flex-shrink: 0;
         }
         .pv-back-btn {
             display: flex;
@@ -450,36 +455,55 @@
             gap: 4px;
             font-weight: 800;
             background: #f1f5f9;
-            padding: 6px 12px;
+            padding: 7px 14px;
             border-radius: 20px;
             border: none;
             cursor: pointer;
+            font-size: 0.88rem;
         }
+
+        /* صندوق الصورة والفيديو الرئيسي مضاد للانضغاط */
         .pv-media-container {
             position: relative;
             width: 100%;
             max-width: 600px;
             margin: 0 auto;
-            height: 380px;
-            background: #000;
+            height: 370px;
+            min-height: 370px;
+            flex-shrink: 0;
+            background: #f8fafc;
             overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .pv-media-container img, .pv-media-container video, .pv-media-container iframe {
+        .pv-media-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: #f8fafc;
+            display: block;
+        }
+        .pv-media-container video, .pv-media-container iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
             border: none;
+            display: block;
         }
         .pv-media-counter {
             position: absolute;
             bottom: 14px;
             left: 14px;
-            background: rgba(0,0,0,0.65);
+            background: rgba(15, 23, 42, 0.75);
             color: #fff;
-            font-size: 0.78rem;
-            font-weight: 700;
-            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 5px 12px;
             border-radius: 20px;
+            z-index: 10;
         }
         .pv-video-toggle-btn {
             position: absolute;
@@ -488,52 +512,68 @@
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 7px 14px;
+            padding: 8px 16px;
             border-radius: 25px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
         }
 
+        /* شريط الصور المصغرة تحت الصورة الكبيرة */
         .pv-thumbs {
             display: flex;
+            align-items: center;
             justify-content: center;
             gap: 10px;
             padding: 12px 16px;
             overflow-x: auto;
-            background: #f8fafc;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
         .pv-thumb-item {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
+            width: 62px;
+            height: 62px;
+            min-width: 62px;
+            min-height: 62px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid transparent;
+            border: 2px solid #e2e8f0;
             cursor: pointer;
-            opacity: 0.65;
+            opacity: 0.7;
             flex-shrink: 0;
+            background: #f8fafc;
         }
         .pv-thumb-item.active {
             border-color: var(--primary);
             opacity: 1;
-            transform: scale(1.05);
+            transform: scale(1.06);
+            box-shadow: 0 3px 10px rgba(225, 29, 72, 0.2);
         }
-        .pv-thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+        .pv-thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
         .pv-details-box {
-            padding: 16px 20px 30px;
+            padding: 18px 20px 30px;
             max-width: 700px;
             margin: 0 auto;
             width: 100%;
             flex: 1;
+            flex-shrink: 0;
         }
-        .pv-price { font-size: 1.55rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
-        .pv-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; }
-        .pv-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.6; }
+        .pv-price { font-size: 1.6rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
+        .pv-title { font-size: 1.18rem; font-weight: 800; margin-bottom: 8px; color: var(--dark); }
+        .pv-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
 
-        .pv-options { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 10px; }
+        .pv-options { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 10px; }
         .pv-option-label {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: var(--text-main);
             margin-bottom: 10px;
@@ -547,22 +587,26 @@
             margin-bottom: 18px;
         }
         .variant-img-chip {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 5px 12px 5px 6px;
+            padding: 5px 14px 5px 6px;
             border-radius: 30px;
             border: 2px solid var(--border);
             background: #fff;
             cursor: pointer;
+            transition: 0.2s;
         }
         .variant-img-chip img {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
             border-radius: 50%;
             object-fit: cover;
+            display: block;
+            background: #f1f5f9;
         }
-        .variant-img-chip span { font-size: 0.82rem; font-weight: 800; }
+        .variant-img-chip span { font-size: 0.85rem; font-weight: 800; white-space: nowrap; }
         .variant-img-chip.selected {
             border-color: var(--primary);
             background: var(--primary-light);
@@ -571,12 +615,12 @@
 
         .chips-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
         .option-chip {
-            padding: 7px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             border: 1.5px solid var(--border);
             background: #fff;
-            font-size: 0.84rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             cursor: pointer;
         }
         .option-chip.selected {
@@ -594,20 +638,17 @@
             border-top: 1px solid var(--border);
             position: sticky;
             bottom: 0;
-            z-index: 20;
+            z-index: 30;
+            flex-shrink: 0;
         }
         .btn-add-cart-dark {
             background: var(--dark);
             color: #fff;
             border: none;
             border-radius: 35px;
-            padding: 13px;
+            padding: 14px;
             font-size: 0.92rem;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             cursor: pointer;
         }
         .btn-whatsapp-direct {
@@ -615,13 +656,9 @@
             color: #fff;
             border: none;
             border-radius: 35px;
-            padding: 13px;
+            padding: 14px;
             font-size: 0.92rem;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             cursor: pointer;
         }
 
@@ -709,9 +746,38 @@
         .btn-del { background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.78rem; cursor: pointer; }
         .btn-act { background: #e0f2fe; color: #0284c7; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.78rem; cursor: pointer; }
 
-        /* =========================================================
-           منظومة لوحة التحكم الجديدة (فصل تام بين واجهة الجوال وواجهة الكمبيوتر)
-           ========================================================= */
+        /* أزرار رفع الصور والفيديو من معرض الجوال */
+        .upload-gallery-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #fff1f2;
+            color: var(--primary);
+            border: 1.5px dashed var(--primary);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.84rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .upload-gallery-btn.video-btn {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-color: #3b82f6;
+        }
+        .preview-mini-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            display: none;
+        }
+
+        /* لوحة التحكم */
         .erp-modal-card {
             max-width: 1240px !important;
             width: 100%;
@@ -747,14 +813,12 @@
             font-size: 0.82rem;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.2s;
         }
         .mode-switch-btn.active {
             background: var(--primary);
             color: #fff;
         }
 
-        /* حاوية وضع الجوال (تظهر وحدها فقط في وضع الجوال) */
         .mobile-only-workspace {
             padding: 18px;
             overflow-y: auto;
@@ -764,7 +828,6 @@
         }
         .mobile-only-workspace.active { display: block; }
 
-        /* حاوية وضع الكمبيوتر الشامل (تظهر في وضع الكمبيوتر) */
         .desktop-full-workspace {
             display: none;
             flex: 1;
@@ -903,11 +966,15 @@
         .admin-panel-section.active { display: block; }
 
         .variant-builder-row {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr auto;
-            gap: 8px;
-            margin-bottom: 8px;
+            display: flex;
             align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
         }
     </style>
 </head>
@@ -987,7 +1054,7 @@
     <section class="products-grid" id="productsGrid"></section>
 </div>
 
-<!-- شاشة تفاصيل المنتج بأسلوب SHEIN -->
+<!-- شاشة تفاصيل المنتج المرتبة بالكامل بأسلوب SHEIN -->
 <div class="product-view-screen" id="productViewScreen">
     <div class="pv-header">
         <button class="pv-back-btn" onclick="closeProductView()">
@@ -1001,7 +1068,7 @@
     </div>
 
     <div class="pv-media-container" id="pvMediaBox">
-        <img id="pvMainImage" src="" alt="">
+        <img id="pvMainImage" src="" alt="صورة المنتج">
         <div id="pvVideoHolder" style="display:none; width:100%; height:100%;"></div>
         <div class="pv-media-counter" id="pvMediaCounter">1 / 1</div>
         <button class="pv-video-toggle-btn" id="pvVideoBtn" style="display:none;" onclick="toggleProductVideo()">
@@ -1027,10 +1094,10 @@
 
     <div class="pv-bottom-actions">
         <button class="btn-add-cart-dark" onclick="addActiveProductToCart()">
-            <span>إضافة للسلة</span>
+            إضافة للسلة
         </button>
         <button class="btn-whatsapp-direct" onclick="orderActiveProductDirectWhatsApp()">
-            <span>اطلبي هذا اللون واتساب</span>
+            اطلبي هذا اللون واتساب
         </button>
     </div>
 </div>
@@ -1082,7 +1149,7 @@
                     <button type="button" onclick="getGPSLocation()" style="padding:0 14px; border-radius:10px; border:1px solid var(--primary); background:var(--primary-light); color:var(--primary); font-weight:800; cursor:pointer;">موقعي</button>
                 </div>
             </div>
-            <button class="btn-primary-full" onclick="sendCartOrderWhatsApp()">تأكيد وإرسال الطلب بالصور عبر واتساب</button>
+            <button class="btn-primary-full" onclick="sendCartOrderWhatsApp()">تأكيد وإرسال الطلب عبر واتساب</button>
         </div>
     </div>
 </div>
@@ -1114,19 +1181,18 @@
 </div>
 
 <!-- =========================================================================
-     منظومة الإدارة الاحترافية المفصولة (واجهة الجوال السريعة vs واجهة الكمبيوتر الشاملة)
+     منظومة الإدارة الاحترافية (رفع من المعرض + واجهة جوال + واجهة كمبيوتر)
      ========================================================================= -->
 <div class="modal-overlay" id="adminModal">
     <div class="modal-card erp-modal-card">
         <div class="erp-topbar">
-            <div style="display:flex; align-items:center; gap:10px;">
+            <div>
                 <strong style="font-size:1.05rem;">إدارة متجر شُعيبيّه (<span id="adminRoleText" style="color:#fde047;"></span>)</strong>
             </div>
 
-            <!-- أزرار التبديل المباشر بين واجهة الجوال وواجهة الكمبيوتر -->
-            <div class="mode-switcher-bar" id="modeSwitcherBar">
+            <div class="mode-switcher-bar">
                 <button class="mode-switch-btn" id="btnMobileView" onclick="setAdminDisplayMode('mobile')">📱 واجهة الجوال (إضافة طلبات)</button>
-                <button class="mode-switch-btn" id="btnDesktopView" onclick="setAdminDisplayMode('desktop')">💻 واجهة الكمبيوتر (الإحصائيات والإدارة الشاملة)</button>
+                <button class="mode-switch-btn" id="btnDesktopView" onclick="setAdminDisplayMode('desktop')">💻 واجهة الكمبيوتر والإدارة الشاملة</button>
             </div>
 
             <div style="display:flex; align-items:center; gap:8px;">
@@ -1135,7 +1201,7 @@
             </div>
         </div>
 
-        <!-- أولاً: واجهة الجوال المخصصة (تظهر عند الدخول من الجوال لإضافة الطلبات فقط) -->
+        <!-- 1. واجهة الجوال السريعة (إضافة الطلبات + رفع منتج سريع من المعرض) -->
         <div class="mobile-only-workspace" id="mobileWorkspace">
             <div style="background:#fff; padding:16px; border-radius:16px; border:2px solid var(--primary); margin-bottom:18px; box-shadow:var(--shadow);">
                 <h3 style="color:var(--primary); font-weight:900; margin-bottom:6px;">📱 شاشة الجوال: تسجيل طلب جديد سريع</h3>
@@ -1151,6 +1217,13 @@
                 <button class="btn-primary-full" onclick="createQuickMobileOrder()">+ حفظ الطلب وتجهيزه الآن</button>
             </div>
 
+            <div style="background:#fff; padding:16px; border-radius:16px; border:1px solid var(--border); margin-bottom:18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h4 style="font-weight:900;">👗 تبي تضيف منتج بصور وفيديو من استوديو الجوال؟</h4>
+                    <button class="btn-act" onclick="setAdminDisplayMode('desktop'); switchAdminTab('tabProducts');">افتح نافذة رفع المنتجات ⬅</button>
+                </div>
+            </div>
+
             <div style="background:#fff; padding:16px; border-radius:16px; border:1px solid var(--border);">
                 <h4 style="font-weight:900; margin-bottom:10px;">📦 الطلبات الحالية (تحديث الحالة السريع)</h4>
                 <div style="overflow-x:auto;">
@@ -1162,19 +1235,19 @@
             </div>
         </div>
 
-        <!-- ثانياً: واجهة الكمبيوتر الشاملة (تظهر عند الدخول من الكمبيوتر أو الضغط على زر الكمبيوتر) -->
+        <!-- 2. واجهة الكمبيوتر والإدارة الشاملة -->
         <div class="desktop-full-workspace" id="desktopWorkspace">
             <div class="erp-sidebar" id="erpSidebarNav">
                 <button class="erp-nav-btn active" data-tab="tabDashboard" onclick="switchAdminTab('tabDashboard')">📊 الإحصائيات والرسوم البيانية</button>
                 <button class="erp-nav-btn" data-tab="tabOrders" onclick="switchAdminTab('tabOrders')">📦 إدارة وتنفيذ الطلبات</button>
-                <button class="erp-nav-btn" data-tab="tabProducts" onclick="switchAdminTab('tabProducts')">👗 المنتجات (ألوان وفيديو شي إن)</button>
+                <button class="erp-nav-btn" data-tab="tabProducts" onclick="switchAdminTab('tabProducts')">👗 المنتجات (رفع من المعرض)</button>
                 <button class="erp-nav-btn" data-tab="tabCategories" onclick="switchAdminTab('tabCategories')">🗂️ إضافة وقفل الأقسام</button>
                 <button class="erp-nav-btn" data-tab="tabFinance" onclick="switchAdminTab('tabFinance')">💰 المحاسبة والمصاريف</button>
                 <button class="erp-nav-btn" data-tab="tabStaff" onclick="switchAdminTab('tabStaff')">👥 الموظفون والصلاحيات</button>
             </div>
 
             <div class="erp-main-content">
-                <!-- 1. الإحصائيات والرسوم البيانية -->
+                <!-- الإحصائيات والرسوم البيانية -->
                 <div class="admin-panel-section active" id="tabDashboard">
                     <h3 style="margin-bottom:14px; font-weight:900;">لوحة بيانات المتجر الشاملة والأرباح والطلبات</h3>
                     <div class="kpi-grid">
@@ -1200,7 +1273,7 @@
                     </div>
                 </div>
 
-                <!-- 2. مراجعة وتنفيذ الطلبات -->
+                <!-- مراجعة وتنفيذ الطلبات -->
                 <div class="admin-panel-section" id="tabOrders">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
                         <h3 style="font-weight:900;">مراجعة وتنفيذ الطلبات</h3>
@@ -1231,35 +1304,47 @@
                     </div>
                 </div>
 
-                <!-- 3. إضافة المنتجات بنظام شي إن -->
+                <!-- إضافة المنتجات مباشرة من معرض الجوال (استوديو الصور والفيديو) -->
                 <div class="admin-panel-section" id="tabProducts">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
-                        <h4 style="margin-bottom:12px; font-weight:900;">+ إضافة منتج جديد مع عدة صور وألوان وفيديو (مثل شي إن)</h4>
-                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:10px;">
+                        <h4 style="margin-bottom:12px; font-weight:900; color:var(--primary);">+ إضافة منتج جديد (رفع الصور والفيديو مباشرة من معرض الجوال)</h4>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:12px;">
                             <input type="text" id="pName" placeholder="اسم المنتج *" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
                             <select id="pCat" style="padding:10px; border-radius:8px; border:1px solid var(--border);"></select>
                             <input type="number" id="pBuyPrice" placeholder="سعر الشراء (التكلفة) *" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
                             <input type="number" id="pSellPrice" placeholder="سعر البيع للعميل *" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
                         </div>
-                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:10px;">
-                            <input type="url" id="pImg" placeholder="رابط الصورة الرئيسية للمنتج (URL) *" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
-                            <input type="url" id="pVideo" placeholder="رابط فيديو شرح المنتج (MP4 أو يوتيوب - اختياري)" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
+
+                        <!-- رفع الصورة الرئيسية والفيديو من استوديو الجوال -->
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-bottom:12px;">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <label class="upload-gallery-btn">
+                                    📷 اختر الصورة الرئيسية من المعرض *
+                                    <input type="file" accept="image/*" style="display:none;" onchange="handleMainImageUpload(this)">
+                                </label>
+                                <img id="mainImgPreview" class="preview-mini-img" alt="معاينة">
+                            </div>
+
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <label class="upload-gallery-btn video-btn">
+                                    🎥 اختر فيديو المنتج من المعرض (اختياري)
+                                    <input type="file" accept="video/*" style="display:none;" onchange="handleMainVideoUpload(this)">
+                                </label>
+                                <span id="videoUploadStatus" style="font-size:0.78rem; font-weight:800; color:#059669; white-space:nowrap;"></span>
+                            </div>
+
                             <input type="text" id="pSizes" placeholder="المقاسات مفصولة بفاصلة (مثال: S, M, L, XL)" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
                         </div>
-                        <textarea id="pDesc" rows="2" placeholder="وصف المنتج..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;"></textarea>
 
-                        <div style="background:#fff; padding:12px; border-radius:10px; border:1px dashed var(--primary); margin-bottom:12px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <strong style="font-size:0.85rem; color:var(--primary);">🎨 الألوان / الأشكال وصورة كل لون (تظهر دوائر تحت المنتج مثل شي إن):</strong>
-                                <button type="button" onclick="addVariantInputRow()" class="btn-act">+ إضافة لون آخر بصورته</button>
+                        <textarea id="pDesc" rows="2" placeholder="وصف المنتج وخامته..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;"></textarea>
+
+                        <!-- إضافة الألوان مع رفع صورة كل لون من معرض الجوال -->
+                        <div style="background:#fff; padding:14px; border-radius:12px; border:1.5px dashed var(--primary); margin-bottom:14px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                                <strong style="font-size:0.88rem; color:var(--primary);">🎨 الألوان / الأشكال (ارفع صورة لكل لون من استوديو الجوال لتظهر تحت المنتج مثل شي إن):</strong>
+                                <button type="button" onclick="addVariantInputRow()" class="btn-act">+ إضافة لون / شكل جديد</button>
                             </div>
-                            <div id="variantsInputsContainer">
-                                <div class="variant-builder-row">
-                                    <input type="text" class="v-color-name" placeholder="اسم اللون/الشكل (مثال: أحمر)" style="padding:8px; border-radius:8px; border:1px solid var(--border);">
-                                    <input type="url" class="v-color-img" placeholder="رابط صورة هذا اللون (URL)" style="padding:8px; border-radius:8px; border:1px solid var(--border);">
-                                    <button type="button" class="btn-del" onclick="this.parentElement.remove()">✕</button>
-                                </div>
-                            </div>
+                            <div id="variantsInputsContainer"></div>
                         </div>
 
                         <button class="btn-primary-full" onclick="addProductFromAdmin()">+ حفظ ونشر المنتج في المتجر</button>
@@ -1274,7 +1359,7 @@
                     </div>
                 </div>
 
-                <!-- 4. إضافة وقفل الأقسام -->
+                <!-- إضافة وقفل الأقسام -->
                 <div class="admin-panel-section" id="tabCategories">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
                         <h4 style="margin-bottom:12px; font-weight:800;">+ إضافة قسم جديد للمتجر (مثل: إلكترونيات، عطور، ساعات...)</h4>
@@ -1299,7 +1384,7 @@
                     </table>
                 </div>
 
-                <!-- 5. المحاسبة والمصاريف -->
+                <!-- المحاسبة والمصاريف -->
                 <div class="admin-panel-section" id="tabFinance">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
                         <h4 style="margin-bottom:12px; font-weight:800;">تسجيل مصروف تشغيلي (إيجار، شحن، رواتب...)</h4>
@@ -1315,7 +1400,7 @@
                     </table>
                 </div>
 
-                <!-- 6. الموظفون والصلاحيات -->
+                <!-- الموظفون والصلاحيات -->
                 <div class="admin-panel-section" id="tabStaff">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
                         <h4 style="margin-bottom:12px; font-weight:800;">+ تعيين موظف جديد (محاسبة، مراجعة وتنفيذ طلبات، أو مسؤول قسم)</h4>
@@ -1344,6 +1429,9 @@
 
 <script>
     const WHATSAPP_NUMBER = "967776371235";
+
+    // صورة احتياطية أنيقة في حال تعطل أي صورة خارجية
+    const FALLBACK_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="#ffe4e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Tajawal, sans-serif" font-size="24" font-weight="bold" fill="#e11d48">متجر شُعيبيّه</text></svg>`);
 
     const ICONS_LIBRARY = {
         star: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"></path></svg>`,
@@ -1378,7 +1466,7 @@
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
             variants: [
                 { color: "بيج ملكي", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80" },
-                { color: "رمادي مودرن", img: "https://images.unsplash.com/photo-1540518614846-7ede433c4efb?auto=format&fit=crop&w=700&q=80" },
+                { color: "رمادي مودرن", img: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80" },
                 { color: "عنابي فخم", img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80" }
             ],
             sizes: ["مترين × 2.5", "3 متر × 2.5"]
@@ -1395,19 +1483,19 @@
             videoUrl: "",
             variants: [
                 { color: "أبيض فندقي", img: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80" },
-                { color: "وردي ناعم", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=700&q=80" }
+                { color: "بيج دافئ", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80" }
             ],
             sizes: ["نفرين (كينج)", "نفرونص"]
         }
     ];
 
-    let categories = JSON.parse(localStorage.getItem("sh_v4_cats")) || DEFAULT_CATEGORIES;
-    let products = JSON.parse(localStorage.getItem("sh_v4_products")) || INITIAL_PRODUCTS;
-    let cart = JSON.parse(localStorage.getItem("sh_v4_cart")) || [];
-    let favorites = JSON.parse(localStorage.getItem("sh_v4_favs")) || [];
-    let staffList = JSON.parse(localStorage.getItem("sh_v4_staff")) || [];
-    let expensesList = JSON.parse(localStorage.getItem("sh_v4_expenses")) || [];
-    let ordersList = JSON.parse(localStorage.getItem("sh_v4_orders")) || [];
+    let categories = JSON.parse(localStorage.getItem("sh_v5_cats")) || DEFAULT_CATEGORIES;
+    let products = JSON.parse(localStorage.getItem("sh_v5_products")) || INITIAL_PRODUCTS;
+    let cart = JSON.parse(localStorage.getItem("sh_v5_cart")) || [];
+    let favorites = JSON.parse(localStorage.getItem("sh_v5_favs")) || [];
+    let staffList = JSON.parse(localStorage.getItem("sh_v5_staff")) || [];
+    let expensesList = JSON.parse(localStorage.getItem("sh_v5_expenses")) || [];
+    let ordersList = JSON.parse(localStorage.getItem("sh_v5_orders")) || [];
 
     let activeCategory = "الكل";
     let searchQuery = "";
@@ -1417,18 +1505,90 @@
     let isShowingVideo = false;
     let loggedInUser = null;
 
+    // متغيرات حفظ الصور والفيديو المرفوعة من معرض الجوال
+    let uploadedMainImageBase64 = "";
+    let uploadedMainVideoData = "";
+
     function saveState() {
-        localStorage.setItem("sh_v4_cats", JSON.stringify(categories));
-        localStorage.setItem("sh_v4_products", JSON.stringify(products));
-        localStorage.setItem("sh_v4_cart", JSON.stringify(cart));
-        localStorage.setItem("sh_v4_favs", JSON.stringify(favorites));
-        localStorage.setItem("sh_v4_staff", JSON.stringify(staffList));
-        localStorage.setItem("sh_v4_expenses", JSON.stringify(expensesList));
-        localStorage.setItem("sh_v4_orders", JSON.stringify(ordersList));
+        try {
+            localStorage.setItem("sh_v5_cats", JSON.stringify(categories));
+            localStorage.setItem("sh_v5_products", JSON.stringify(products));
+            localStorage.setItem("sh_v5_cart", JSON.stringify(cart));
+            localStorage.setItem("sh_v5_favs", JSON.stringify(favorites));
+            localStorage.setItem("sh_v5_staff", JSON.stringify(staffList));
+            localStorage.setItem("sh_v5_expenses", JSON.stringify(expensesList));
+            localStorage.setItem("sh_v5_orders", JSON.stringify(ordersList));
+        } catch (err) {
+            console.warn("Storage full, optimizing...", err);
+        }
         document.getElementById("headerCartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
     }
 
-    // فحص ذكي للجهاز الحقيقي (يكتشف الجوال حتى لو كان المتصفح في وضع سطح المكتب)
+    /* =========================================================
+       ضغط الصور تلقائياً عند اختيارها من معرض الجوال (لتكون سريعة وخفيفة)
+       ========================================================= */
+    function compressImageFromGallery(file, callback) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement("canvas");
+                const MAX_WIDTH = 750;
+                let width = img.width;
+                let height = img.height;
+                if (width > MAX_WIDTH) {
+                    height = Math.round((height * MAX_WIDTH) / width);
+                    width = MAX_WIDTH;
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+                const dataUrl = canvas.toDataURL("image/jpeg", 0.78);
+                callback(dataUrl);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handleMainImageUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        compressImageFromGallery(file, (compressedData) => {
+            uploadedMainImageBase64 = compressedData;
+            const prev = document.getElementById("mainImgPreview");
+            prev.src = compressedData;
+            prev.style.display = "block";
+        });
+    }
+
+    function handleMainVideoUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const statusEl = document.getElementById("videoUploadStatus");
+        statusEl.textContent = "جاري تجهيز الفيديو...";
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedMainVideoData = e.target.result;
+            statusEl.textContent = "✅ تم إرفاق الفيديو";
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function handleVariantImageUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const row = input.closest(".variant-builder-row");
+        const prevImg = row.querySelector(".v-preview-img");
+        compressImageFromGallery(file, (compressedData) => {
+            row.setAttribute("data-img", compressedData);
+            prevImg.src = compressedData;
+            prevImg.style.display = "block";
+        });
+    }
+
     function isRealMobileDevice() {
         const ua = navigator.userAgent || "";
         const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
@@ -1441,6 +1601,7 @@
         renderProducts();
         saveState();
         setupProductMediaSwipe();
+        resetVariantBuilder();
 
         document.getElementById("unifiedSearchInput").addEventListener("input", (e) => {
             const val = e.target.value.trim();
@@ -1523,9 +1684,9 @@
 
             const swatchesHtml = variants.map((v, vIdx) => `
                 <div class="swatch-thumb ${vIdx === 0 ? 'active' : ''}" 
-                     onclick="previewCardVariant(event, ${p.id}, '${v.img}', '${v.color}', this)" 
+                     onclick="previewCardVariant(event, ${p.id}, ${vIdx}, this)" 
                      title="${v.color}">
-                    <img src="${v.img}" alt="${v.color}">
+                    <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
                 </div>
             `).join("");
 
@@ -1544,7 +1705,7 @@
                         <svg class="svg-icon" style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
                     ${p.videoUrl ? `<div class="video-indicator-badge">▶ فيديو</div>` : ''}
-                    <img id="card-img-${p.id}" src="${variants[0].img}" alt="${p.name}">
+                    <img id="card-img-${p.id}" src="${variants[0].img}" onerror="this.src=FALLBACK_IMAGE" alt="${p.name}">
                     ${dotsHtml}
                 </div>
                 <div class="card-body">
@@ -1562,23 +1723,26 @@
         }).join("");
     }
 
-    function previewCardVariant(e, prodId, imgUrl, colorName, thumbEl) {
+    function previewCardVariant(e, prodId, variantIndex, thumbEl) {
         e.stopPropagation();
+        const p = products.find(x => x.id === prodId);
+        if (!p) return;
+        const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
+        const targetVar = variants[variantIndex] || variants[0];
+
         const imgEl = document.getElementById(`card-img-${prodId}`);
-        if (imgEl) imgEl.src = imgUrl;
+        if (imgEl) imgEl.src = targetVar.img;
 
         const card = thumbEl.closest(".product-card");
+        if (card) card.setAttribute("data-vindex", variantIndex);
+
         const allThumbs = thumbEl.parentElement.querySelectorAll(".swatch-thumb");
-        allThumbs.forEach((t, idx) => {
-            t.classList.remove("active");
-            if (t === thumbEl && card) card.setAttribute("data-vindex", idx);
-        });
+        allThumbs.forEach(t => t.classList.remove("active"));
         thumbEl.classList.add("active");
 
         const dotsWrap = document.getElementById(`dots-${prodId}`);
-        if (dotsWrap && card) {
-            const activeIdx = parseInt(card.getAttribute("data-vindex") || "0");
-            dotsWrap.querySelectorAll(".swipe-dot").forEach((d, i) => d.classList.toggle("active", i === activeIdx));
+        if (dotsWrap) {
+            dotsWrap.querySelectorAll(".swipe-dot").forEach((d, i) => d.classList.toggle("active", i === variantIndex));
         }
     }
 
@@ -1643,6 +1807,7 @@
             vidHolder.style.display = "none";
             vidHolder.innerHTML = "";
             imgEl.style.display = "block";
+            imgEl.onerror = function() { this.src = FALLBACK_IMAGE; };
             imgEl.src = selectedVariant.img;
         }
 
@@ -1651,13 +1816,13 @@
 
         document.getElementById("pvThumbsContainer").innerHTML = variants.map((v, idx) => `
             <div class="pv-thumb-item ${v.color === selectedVariant.color ? 'active' : ''}" onclick="selectVariantByIndex(${idx})">
-                <img src="${v.img}" alt="${v.color}">
+                <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
             </div>
         `).join("");
 
         document.getElementById("pvColorsRow").innerHTML = variants.map((v, idx) => `
             <div class="variant-img-chip ${v.color === selectedVariant.color ? 'selected' : ''}" onclick="selectVariantByIndex(${idx})">
-                <img src="${v.img}" alt="${v.color}">
+                <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
                 <span>${v.color}</span>
             </div>
         `).join("");
@@ -1682,12 +1847,7 @@
             imgEl.style.display = "none";
             vidHolder.style.display = "block";
             const url = currentOpenedProduct.videoUrl.trim();
-            if (url.includes("youtube.com") || url.includes("youtu.be")) {
-                const vidId = url.split("v=")[1]?.split("&")[0] || url.split("/").pop();
-                vidHolder.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-            } else {
-                vidHolder.innerHTML = `<video src="${url}" controls autoplay playsinline></video>`;
-            }
+            vidHolder.innerHTML = `<video src="${url}" controls autoplay playsinline style="width:100%;height:100%;object-fit:contain;"></video>`;
             btn.innerHTML = "🖼️ العودة لصور الألوان";
         } else {
             renderProductViewMediaAndVariants();
@@ -1779,13 +1939,14 @@
         });
         saveState();
 
+        const isWebUrl = selectedVariant.img && selectedVariant.img.startsWith("http");
         const msg = `*طلب مباشر - متجر شُعيبيّه* 🛍️\n` +
                     `*رقم الطلب:* ${orderId}\n` +
                     `*المنتج:* ${currentOpenedProduct.name}\n` +
                     `*اللون / الشكل المختار:* ${selectedVariant.color}\n` +
                     `*المقاس:* ${selectedSize}\n` +
-                    `*السعر:* ${currentOpenedProduct.price.toLocaleString()} ر.ي\n` +
-                    `*صورة اللون المختار:* ${selectedVariant.img}`;
+                    `*السعر:* ${currentOpenedProduct.price.toLocaleString()} ر.ي` +
+                    (isWebUrl ? `\n*صورة اللون:* ${selectedVariant.img}` : `\n*(تم حفظ صورة اللون المختار في لوحة الطلبات برقم ${orderId})*`);
 
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
     }
@@ -1804,7 +1965,7 @@
                 total += item.price * item.qty;
                 return `
                 <div class="cart-row">
-                    <img src="${item.image}" alt="${item.color}">
+                    <img src="${item.image}" onerror="this.src=FALLBACK_IMAGE" alt="${item.color}">
                     <div style="flex:1;">
                         <div style="font-weight:800; font-size:0.9rem;">${item.name}</div>
                         <div style="font-size:0.78rem; color:var(--text-muted);">اللون: <strong>${item.color}</strong> | المقاس: ${item.size} × ${item.qty}</div>
@@ -1844,7 +2005,7 @@
         const totalBuy = cart.reduce((s, i) => s + ((i.buyPrice || Math.round(i.price * 0.7)) * i.qty), 0);
 
         const itemsDetails = cart.map((item, idx) =>
-            `${idx + 1}. *${item.name}*\n   - اللون/الشكل: ${item.color}\n   - المقاس: ${item.size} | الكمية: ${item.qty}\n   - السعر: ${(item.price * item.qty).toLocaleString()} ر.ي\n   - صورة اللون المختار: ${item.image}`
+            `${idx + 1}. *${item.name}*\n   - اللون/الشكل: *${item.color}*\n   - المقاس: ${item.size} | الكمية: ${item.qty}\n   - السعر: ${(item.price * item.qty).toLocaleString()} ر.ي`
         ).join("\n\n");
 
         ordersList.unshift({
@@ -1869,7 +2030,7 @@
                   `*الجوال:* ${phone}\n` +
                   `*العنوان:* ${address}\n`;
         if (mapUrl) msg += `*موقع GPS:* ${mapUrl}\n`;
-        msg += `----------------\n*الأصناف المطلوبة:*\n${itemsDetails}\n----------------\n*الإجمالي الكلي:* ${total.toLocaleString()} ر.ي`;
+        msg += `----------------\n*الأصناف والألوان المطلوبة:*\n${itemsDetails}\n----------------\n*الإجمالي الكلي:* ${total.toLocaleString()} ر.ي`;
 
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
         closeModal("cartModal");
@@ -1883,7 +2044,7 @@
     }
 
     /* =========================================================
-       منظومة الإدارة المفصولة (جوال vs كمبيوتر) + الصلاحيات
+       منظومة الإدارة (رفع من المعرض + واجهة الجوال + واجهة الكمبيوتر)
        ========================================================= */
     function doLogin() {
         const u = document.getElementById("loginUser").value.trim();
@@ -1916,7 +2077,6 @@
         populateAdminSelects();
         refreshAllAdminData();
 
-        // إذا كان الجهاز جوال حقيقي يفتح واجهة الجوال السريعة فوراً، وإذا كان كمبيوتر يفتح واجهة الكمبيوتر الشاملة
         if (loggedInUser.role === "accountant" || loggedInUser.role === "category_staff") {
             setAdminDisplayMode("desktop");
         } else if (isRealMobileDevice()) {
@@ -2127,7 +2287,7 @@
             const profit = (o.totalSell || 0) - (o.totalBuy || 0);
             const itemsSummary = (o.items || []).map(i => `
                 <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-                    <img src="${i.image}" style="width:28px;height:28px;border-radius:6px;object-fit:cover;">
+                    <img src="${i.image}" onerror="this.src=FALLBACK_IMAGE" style="width:30px;height:30px;border-radius:6px;object-fit:cover;">
                     <span>${i.name} (<strong>${i.color}</strong> | ${i.size}) × ${i.qty}</span>
                 </div>
             `).join("");
@@ -2186,13 +2346,25 @@
         refreshAllAdminData();
     }
 
+    /* =========================================================
+       بناء الألوان مع رفع صورة كل لون من معرض الجوال
+       ========================================================= */
+    function resetVariantBuilder() {
+        document.getElementById("variantsInputsContainer").innerHTML = "";
+        addVariantInputRow();
+    }
+
     function addVariantInputRow() {
         const container = document.getElementById("variantsInputsContainer");
         const div = document.createElement("div");
         div.className = "variant-builder-row";
         div.innerHTML = `
-            <input type="text" class="v-color-name" placeholder="اسم اللون/الشكل (مثال: كحلي)" style="padding:8px; border-radius:8px; border:1px solid var(--border);">
-            <input type="url" class="v-color-img" placeholder="رابط صورة هذا اللون (URL)" style="padding:8px; border-radius:8px; border:1px solid var(--border);">
+            <input type="text" class="v-color-name" placeholder="اسم اللون/الشكل (مثال: أحمر ملكي)" style="flex:1; min-width:140px; padding:9px; border-radius:8px; border:1px solid var(--border); background:#fff;">
+            <label class="upload-gallery-btn" style="flex:1; min-width:170px; width:auto; padding:8px 12px;">
+                📷 اختر صورة هذا اللون من المعرض
+                <input type="file" accept="image/*" style="display:none;" onchange="handleVariantImageUpload(this)">
+            </label>
+            <img class="preview-mini-img v-preview-img" alt="معاينة اللون">
             <button type="button" class="btn-del" onclick="this.parentElement.remove()">✕</button>
         `;
         container.appendChild(div);
@@ -2203,22 +2375,25 @@
         const category = document.getElementById("pCat").value;
         const buyPrice = parseFloat(document.getElementById("pBuyPrice").value);
         const price = parseFloat(document.getElementById("pSellPrice").value);
-        const image = document.getElementById("pImg").value.trim();
-        const videoUrl = document.getElementById("pVideo").value.trim();
         const sizesRaw = document.getElementById("pSizes").value.trim();
         const desc = document.getElementById("pDesc").value.trim();
-
-        if (!name || isNaN(buyPrice) || isNaN(price) || !image) {
-            return alert("يرجى إكمال اسم المنتج، سعر الشراء، سعر البيع، ورابط الصورة الرئيسية.");
-        }
 
         const variants = [];
         document.querySelectorAll("#variantsInputsContainer .variant-builder-row").forEach(row => {
             const cName = row.querySelector(".v-color-name").value.trim();
-            const cImg = row.querySelector(".v-color-img").value.trim();
+            const cImg = row.getAttribute("data-img") || uploadedMainImageBase64;
             if (cName && cImg) variants.push({ color: cName, img: cImg });
         });
-        if (variants.length === 0) variants.push({ color: "اللون الأساسي", img: image });
+
+        const finalMainImg = uploadedMainImageBase64 || (variants[0] ? variants[0].img : "");
+
+        if (!name || isNaN(buyPrice) || isNaN(price) || !finalMainImg) {
+            return alert("يرجى كتابة اسم المنتج، السعر، واختيار صورة المنتج من معرض الجوال.");
+        }
+
+        if (variants.length === 0) {
+            variants.push({ color: "اللون الأساسي", img: finalMainImg });
+        }
 
         const sizes = sizesRaw ? sizesRaw.split(",").map(s => s.trim()).filter(Boolean) : ["قياس موحد"];
 
@@ -2230,8 +2405,8 @@
             price,
             oldPrice: Math.round(price * 1.25),
             desc,
-            image: variants[0].img || image,
-            videoUrl,
+            image: variants[0].img || finalMainImg,
+            videoUrl: uploadedMainVideoData || "",
             variants,
             sizes
         });
@@ -2241,14 +2416,19 @@
         populateAdminSelects();
         refreshAllAdminData();
 
+        // تصفير الحقول بعد الحفظ
         document.getElementById("pName").value = "";
         document.getElementById("pBuyPrice").value = "";
         document.getElementById("pSellPrice").value = "";
-        document.getElementById("pImg").value = "";
-        document.getElementById("pVideo").value = "";
         document.getElementById("pSizes").value = "";
         document.getElementById("pDesc").value = "";
-        alert("تمت إضافة المنتج مع ألوانه وصوره بنجاح!");
+        uploadedMainImageBase64 = "";
+        uploadedMainVideoData = "";
+        document.getElementById("mainImgPreview").style.display = "none";
+        document.getElementById("videoUploadStatus").textContent = "";
+        resetVariantBuilder();
+
+        alert("✅ تم حفظ ونشر المنتج مع صوره وألوانه من معرض جوالك بنجاح!");
     }
 
     function renderAdminProductsTable() {
@@ -2259,12 +2439,12 @@
         document.getElementById("adminProductsList").innerHTML = list.map(p => {
             const vList = (p.variants || []).map(v => `
                 <span style="display:inline-flex; align-items:center; gap:4px; background:#f1f5f9; padding:2px 8px; border-radius:12px; font-size:0.75rem; margin:2px;">
-                    <img src="${v.img}" style="width:16px;height:16px;border-radius:50%;object-fit:cover;"> ${v.color}
+                    <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" style="width:16px;height:16px;border-radius:50%;object-fit:cover;"> ${v.color}
                 </span>
             `).join("");
             return `
             <tr>
-                <td><img src="${p.image}" style="width:42px;height:42px;border-radius:8px;object-fit:cover;"></td>
+                <td><img src="${p.image}" onerror="this.src=FALLBACK_IMAGE" style="width:42px;height:42px;border-radius:8px;object-fit:cover;"></td>
                 <td><strong>${p.name}</strong></td>
                 <td>${p.category}</td>
                 <td>${vList}</td>
