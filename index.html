@@ -2691,3 +2691,73 @@
     visibility: hidden !important;
   }
 </style>
+<!-- كود إخفاء وحذف شعار نتليفاي نهائياً من الجذور -->
+<style>
+  a[href*="netlify.com"],
+  a[href*="netlify.app"]:not([href*="shuaibiya"]),
+  img[alt*="Netlify"],
+  img[src*="netlify"],
+  div[class*="netlify"],
+  div[id*="netlify"],
+  iframe[src*="netlify"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+    position: fixed !important;
+    bottom: -9999px !important;
+  }
+</style>
+
+<script>
+  (function removeNetlifyBadge() {
+    const cleanUp = () => {
+      // 1. البحث عن أي رابط أو صورة أو عنصر يشير إلى Netlify وحذفه فوراً
+      const selectors = [
+        'a[href*="netlify.com"]',
+        'img[alt*="Netlify"]',
+        'img[src*="netlify"]',
+        '[id*="netlify"]',
+        '[class*="netlify"]'
+      ];
+      
+      selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+          // إذا كان العنصر محاطاً بحاوية ثابتة في أسفل الشاشة، نحذف الحاوية بالكامل
+          const parent = el.closest('div, aside, footer');
+          if (parent && !parent.classList.contains('container') && parent.id !== 'productsGrid') {
+            const style = window.getComputedStyle(parent);
+            if (style.position === 'fixed' || style.position === 'absolute') {
+              parent.remove();
+            }
+          }
+          el.remove();
+        });
+      });
+
+      // 2. فحص أي عنصر عائم (Fixed) تم حقنه خارج حاوية المتجر الأساسية
+      document.querySelectorAll('body > *').forEach(el => {
+        if (
+          !el.classList.contains('container') &&
+          !el.classList.contains('product-view-screen') &&
+          !el.classList.contains('bottom-nav') &&
+          !el.classList.contains('modal-overlay') &&
+          el.tagName !== 'SCRIPT' &&
+          el.tagName !== 'STYLE'
+        ) {
+          el.remove();
+        }
+      });
+    };
+
+    // تشغيل التنظيف فور التحميل
+    cleanUp();
+    window.addEventListener('load', cleanUp);
+
+    // مراقب مستمر (MutationObserver) يحذف الشعار في نفس أجزاء الثانية التي يحاول فيها الظهور
+    const observer = new MutationObserver(cleanUp);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>
