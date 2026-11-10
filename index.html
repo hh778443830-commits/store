@@ -62,6 +62,30 @@
             .container { max-width: 1240px; }
         }
 
+        /* إشعار التوست السريع عند الإضافة للسلة */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            z-index: 9999;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* شريط الإعلان العلوي */
         .top-announcement {
             background-color: var(--dark);
@@ -176,7 +200,7 @@
             pointer-events: none;
         }
 
-        /* دوائر الأقسام */
+        /* دوائر الأقسام (تدعم الصور المخصصة والأيقونات) */
         .categories-wrapper {
             padding: 16px;
             border-bottom: 1px solid var(--border);
@@ -199,21 +223,30 @@
             position: relative;
         }
         .cat-circle-icon {
-            width: 62px;
-            height: 62px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background-color: #f1f5f9;
             color: #475569;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid transparent;
+            border: 2.5px solid transparent;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .cat-circle-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .cat-circle-item.active .cat-circle-icon {
             background-color: var(--primary-light);
             color: var(--primary);
             border-color: var(--primary);
+            transform: scale(1.05);
         }
         .cat-circle-item.locked .cat-circle-icon {
             background-color: #e2e8f0;
@@ -222,8 +255,8 @@
         }
         .lock-badge {
             position: absolute;
-            bottom: -2px;
-            left: -2px;
+            bottom: 0px;
+            left: 0px;
             background: var(--dark);
             color: #fff;
             width: 22px;
@@ -234,6 +267,7 @@
             justify-content: center;
             font-size: 0.65rem;
             border: 2px solid #fff;
+            z-index: 3;
         }
         .cat-circle-label {
             font-size: 0.8rem;
@@ -342,6 +376,18 @@
             font-weight: 800;
             z-index: 4;
         }
+        .multi-img-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            z-index: 4;
+        }
         .swipe-dots {
             position: absolute;
             bottom: 8px;
@@ -430,7 +476,7 @@
         .old-price { font-size: 0.75rem; color: var(--text-muted); text-decoration: line-through; }
 
         /* =========================================================
-           شاشة تفاصيل المنتج والطلبات (عرض كامل للصورة بدون أي قص أو تشوه)
+           شاشة تفاصيل المنتج والطلبات
            ========================================================= */
         .product-view-screen {
             position: fixed;
@@ -470,7 +516,6 @@
             color: var(--dark);
         }
 
-        /* حاوية الصورة الرئيسية تعرض الصورة كاملة بنسبة 100% بدون قص */
         .pv-media-container {
             position: relative;
             width: 100%;
@@ -534,7 +579,6 @@
             box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
         }
 
-        /* شريط الصور المصغرة تحت الصورة الكبيرة */
         .pv-thumbs {
             display: flex;
             align-items: center;
@@ -577,7 +621,6 @@
             display: block;
         }
 
-        /* بطاقة تفاصيل وطلب المنتج المنسقة */
         .pv-details-box {
             padding: 20px 18px 28px;
             max-width: 550px;
@@ -711,6 +754,76 @@
             gap: 6px;
         }
 
+        /* =========================================================
+           شاشة وبوابة شي إن (SHEIN) المدمجة
+           ========================================================= */
+        .shein-portal-screen {
+            position: fixed;
+            inset: 0;
+            background: #f8fafc;
+            z-index: 250;
+            display: none;
+            flex-direction: column;
+        }
+        .shein-portal-screen.active { display: flex; }
+
+        .shein-top-bar {
+            background: #000000;
+            color: #ffffff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .shein-brand-badge {
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .shein-body-area {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 14px;
+            gap: 14px;
+        }
+        .shein-guide-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .shein-iframe-box {
+            flex: 1;
+            min-height: 320px;
+            background: #fff;
+            border-radius: 16px;
+            border: 1.5px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .shein-bottom-bar {
+            background: #ffffff;
+            border-top: 2px solid #000;
+            padding: 14px 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            flex-shrink: 0;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.08);
+        }
+
         /* شريط التنقل السفلي */
         .bottom-nav {
             position: fixed;
@@ -733,6 +846,15 @@
             background: none; border: none; cursor: pointer;
         }
         .nav-tab.active { color: var(--primary); }
+        .shein-nav-pill {
+            background: #000;
+            color: #fff;
+            font-weight: 900;
+            font-size: 0.65rem;
+            padding: 2px 7px;
+            border-radius: 6px;
+            letter-spacing: 0.8px;
+        }
 
         /* النوافذ المنبثقة */
         .modal-overlay {
@@ -792,6 +914,9 @@
         .btn-primary-full {
             width: 100%; background: var(--primary); color: #fff; border: none; padding: 13px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer;
         }
+        .btn-whatsapp-full {
+            width: 100%; background: var(--whatsapp); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
         .btn-del { background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.78rem; cursor: pointer; }
         .btn-act { background: #e0f2fe; color: #0284c7; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 0.78rem; cursor: pointer; }
 
@@ -818,12 +943,47 @@
             border-color: #3b82f6;
         }
         .preview-mini-img {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 8px;
             object-fit: cover;
             border: 1px solid var(--border);
-            display: none;
+        }
+        .multi-images-preview-strip {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .multi-img-thumb-wrap {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1.5px solid var(--primary);
+            background: #fff;
+        }
+        .multi-img-thumb-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .multi-img-thumb-wrap button {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(220,38,38,0.9);
+            color: #fff;
+            border: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* لوحة التحكم */
@@ -1006,7 +1166,6 @@
         .admin-table th { background: #f1f5f9; color: var(--text-main); padding: 11px 10px; font-weight: 800; border-bottom: 2px solid var(--border); text-align: right; white-space: nowrap; }
         .admin-table td { padding: 10px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: middle; }
 
-        /* بطاقات الطلبات في الجوال والإدارة */
         .order-card-item {
             background: #ffffff;
             border: 1px solid var(--border);
@@ -1046,6 +1205,11 @@
     </style>
 </head>
 <body>
+
+<!-- إشعار الإضافة السريعة للسلة -->
+<div class="toast-notification" id="quickToast">
+    <span>✅ تمت الإضافة إلى الحقيبة بنجاح</span>
+</div>
 
 <div class="container">
     <div class="top-announcement">
@@ -1088,7 +1252,6 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <!-- تم إزالة أي تلميح يخص الإدارة من شريط البحث -->
             <input type="text" id="unifiedSearchInput" placeholder="ابحثي في الأقسام والمنتجات...">
         </div>
     </header>
@@ -1122,7 +1285,7 @@
     <section class="products-grid" id="productsGrid"></section>
 </div>
 
-<!-- شاشة تفاصيل المنتج والطلب (تعرض الصورة كاملة وبدون تشوه) -->
+<!-- شاشة تفاصيل المنتج والطلب -->
 <div class="product-view-screen" id="productViewScreen">
     <div class="pv-header">
         <button class="pv-back-btn" onclick="closeProductView()">
@@ -1155,8 +1318,10 @@
         <p class="pv-desc" id="pvDesc"></p>
 
         <div class="pv-options">
-            <div class="pv-option-label">اللون / الشكل المختار: <span id="pvSelectedColorLabel"></span></div>
-            <div class="shein-variant-cards" id="pvColorsRow"></div>
+            <div id="pvColorSectionWrap">
+                <div class="pv-option-label">اللون / الشكل المختار: <span id="pvSelectedColorLabel"></span></div>
+                <div class="shein-variant-cards" id="pvColorsRow"></div>
+            </div>
 
             <div class="pv-option-label">المقاس / الحجم: <span id="pvSelectedSizeLabel"></span></div>
             <div class="chips-row" id="pvSizesRow"></div>
@@ -1165,17 +1330,73 @@
 
     <div class="pv-bottom-actions">
         <button class="btn-add-cart-dark" onclick="addActiveProductToCart()">
-            <span>إضافة للسلة</span>
+            <span>إضافة للسلة 🛒</span>
         </button>
         <button class="btn-whatsapp-direct" onclick="orderActiveProductDirectWhatsApp()">
-            <span>اطلبي هذا اللون واتساب</span>
+            <span>اطلبي هذا المنتج واتساب</span>
         </button>
     </div>
 </div>
 
-<!-- شريط التنقل السفلي -->
+<!-- =========================================================================
+     شاشة وبوابة شي إن (SHEIN) للطلب المباشر وإرسال رابط الحقيبة للإدارة
+     ========================================================================= -->
+<div class="shein-portal-screen" id="sheinPortalScreen">
+    <div class="shein-top-bar">
+        <button class="pv-back-btn" onclick="closeSheinPortal()" style="background:#222; color:#fff;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <span>رجوع للمتجر</span>
+        </button>
+        <div class="shein-brand-badge">
+            <span>SHEIN | شي إن</span>
+        </div>
+        <button onclick="window.open('https://ar.shein.com', '_blank')" style="background:#fff; color:#000; border:none; padding:6px 12px; border-radius:20px; font-weight:800; font-size:0.78rem; cursor:pointer;">
+            فتح التطبيق ↗
+        </button>
+    </div>
+
+    <div class="shein-body-area">
+        <div class="shein-guide-card">
+            <h3 style="font-size:1.05rem; font-weight:900; margin-bottom:8px; color:#000;">🛍️ اطلبي من شي إن عبر متجر شُعيبيّه بسهولة!</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">
+                1. اضغطي زر <strong>"تصفح شي إن واختيار المنتجات"</strong> بالأسفل وأضيفي كل ما يعجبك إلى حقيبتك في شي إن.<br>
+                2. من داخل حقيبة شي إن، اضغطي زر <strong>مشاركة الحقيبة (Share Bag)</strong> وانسخي رابط الحقيبة.<br>
+                3. الصقي رابط الحقيبة في الخانة بالأسفل واضغطي <strong>إرسال الحقيبة للإدارة</strong>.
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a href="https://ar.shein.com" target="_blank" style="flex:1; background:#000; color:#fff; text-decoration:none; padding:12px; border-radius:12px; font-weight:800; font-size:0.9rem; text-align:center;">
+                    🌐 تصفح موقع/تطبيق شي إن الآن
+                </a>
+            </div>
+        </div>
+
+        <div class="shein-iframe-box">
+            <div style="background:#f1f5f9; padding:8px 12px; font-size:0.78rem; font-weight:700; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border);">
+                <span>نافذة شي إن المدمجة</span>
+                <a href="https://ar.shein.com" target="_blank" style="color:var(--primary); font-weight:800; text-decoration:none;">فتح في نافذة كاملة ↗</a>
+            </div>
+            <iframe src="https://ar.shein.com" style="width:100%; flex:1; border:none;"></iframe>
+        </div>
+    </div>
+
+    <!-- الشريط السفلي الثابت لإرسال حقيبة شي إن للإدارة -->
+    <div class="shein-bottom-bar">
+        <div style="font-size:0.84rem; font-weight:900; margin-bottom:8px; color:#000;">
+            🔗 خلصتي تنقي طلباتك؟ الصقي رابط حقيبة شي إن هنا وأرسليه للإدارة:
+        </div>
+        <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input type="text" id="sheinCustName" placeholder="اسمك (اختياري)" style="flex:1; padding:10px 12px; border-radius:10px; border:1.5px solid var(--border); font-size:0.85rem;">
+            <input type="url" id="sheinBagUrlInput" placeholder="الصقي رابط حقيبة شي إن هنا..." style="flex:2; padding:10px 12px; border-radius:10px; border:1.5px solid #000; font-size:0.85rem;">
+        </div>
+        <button class="btn-whatsapp-full" style="background:#000;" onclick="sendSheinBagToAdminWhatsApp()">
+            <span>📤 إرسال رابط حقيبة شي إن لواتساب الإدارة</span>
+        </button>
+    </div>
+</div>
+
+<!-- شريط التنقل السفلي (تم وضع خيار شي إن مكان الملابس) -->
 <nav class="bottom-nav">
-    <button class="nav-tab active" onclick="selectCategory('الكل')">
+    <button class="nav-tab active" id="navHomeBtn" onclick="selectCategory('الكل')">
         <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>الرئيسية</span>
     </button>
@@ -1183,9 +1404,9 @@
         <svg class="svg-icon" viewBox="0 0 24 24"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg>
         <span>المفروشات</span>
     </button>
-    <button class="nav-tab" onclick="selectCategory('ملابس')">
-        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
-        <span>ملابس</span>
+    <button class="nav-tab" onclick="openSheinPortal()">
+        <span class="shein-nav-pill">SHEIN</span>
+        <span style="font-weight:900; color:#000;">شي إن</span>
     </button>
     <button class="nav-tab" onclick="showFavoritesOnly()">
         <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -1197,30 +1418,74 @@
     </button>
 </nav>
 
-<!-- سلة المشتريات وإتمام الطلب -->
+<!-- =========================================================================
+     سلة المشتريات (مرحلتان: 1. مراجعة الحقيبة -> 2. رفع الطلبية واتساب)
+     ========================================================================= -->
 <div class="modal-overlay" id="cartModal">
     <div class="modal-card">
         <div class="modal-head">
-            <h3>حقيبة التسوق وإتمام الطلب</h3>
+            <h3 id="cartModalTitle">حقيبة التسوق الخاصة بك</h3>
             <button class="close-btn" onclick="closeModal('cartModal')">✕</button>
         </div>
-        <div id="cartItemsList"></div>
-        <div id="cartFormWrap">
-            <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.1rem; padding:12px; background:#fff1f2; border-radius:10px; margin-bottom:14px;">
-                <span>الإجمالي:</span>
-                <span id="cartTotalVal" style="color:var(--primary);">0 ر.ي</span>
-            </div>
-            <div class="form-field"><label>الاسم الكامل *</label><input type="text" id="custName" placeholder="أدخلي اسمك الكامل"></div>
-            <div class="form-field"><label>رقم الجوال *</label><input type="tel" id="custPhone" placeholder="أدخلي رقم الجوال للتواصل"></div>
-            <div class="form-field"><label>العنوان بالتفصيل *</label><input type="text" id="custAddress" placeholder="المحافظة - المديرية - الحي"></div>
-            <div class="form-field">
-                <label>تحديد الموقع على الخريطة (GPS)</label>
-                <div style="display:flex; gap:8px;">
-                    <input type="text" id="custMapLink" placeholder="اضغطي زر تحديد الموقع..." readonly>
-                    <button type="button" onclick="getGPSLocation()" style="padding:0 14px; border-radius:10px; border:1px solid var(--primary); background:var(--primary-light); color:var(--primary); font-weight:800; cursor:pointer;">موقعي</button>
+
+        <!-- المرحلة 1: عرض المنتجات فقط بدون طلب بيانات -->
+        <div id="cartStep1Review">
+            <div id="cartItemsList"></div>
+            <div id="cartStep1Footer" style="display:none;">
+                <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.1rem; padding:12px; background:#fff1f2; border-radius:10px; margin:14px 0;">
+                    <span>إجمالي الحقيبة:</span>
+                    <span id="cartTotalVal" style="color:var(--primary);">0 ر.ي</span>
                 </div>
+                <button class="btn-whatsapp-full" onclick="showCartCheckoutStep2()">
+                    <span>متابعة لرفع الطلبية واتساب ⬅</span>
+                </button>
             </div>
-            <button class="btn-primary-full" onclick="sendCartOrderWhatsApp()">تأكيد وإرسال الطلب عبر واتساب</button>
+        </div>
+
+        <!-- المرحلة 2: تظهر فقط عندما تضغط العميلة على رفع الطلبية واتساب -->
+        <div id="cartStep2Checkout" style="display:none;">
+            <div style="background:#f8fafc; padding:10px 12px; border-radius:10px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border);">
+                <span style="font-size:0.85rem; font-weight:800;">إجمالي الحقيبة: <strong id="cartTotalValStep2" style="color:var(--primary);">0 ر.ي</strong></span>
+                <button type="button" onclick="backToCartStep1()" style="background:none; border:none; color:#0284c7; font-weight:800; font-size:0.82rem; cursor:pointer;">✏️ تعديل المنتجات</button>
+            </div>
+
+            <div class="form-field">
+                <label>الاسم الكامل *</label>
+                <input type="text" id="custName" placeholder="أدخلي اسمك الكامل">
+            </div>
+            <div class="form-field">
+                <label>رقم الجوال *</label>
+                <input type="tel" id="custPhone" placeholder="أدخلي رقم الجوال للتواصل">
+            </div>
+            <div class="form-field">
+                <label>الموقع / العنوان (اضغطي زر تحديد الموقع ليتعبأ تلقائياً) *</label>
+                <div style="display:flex; gap:8px; margin-bottom:6px;">
+                    <button type="button" onclick="getGPSLocation()" style="width:100%; padding:11px; border-radius:10px; border:1.5px solid var(--primary); background:var(--primary-light); color:var(--primary); font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <span>📍 اضغطي هنا لتحديد موقعك تلقائياً (بدون كتابة)</span>
+                    </button>
+                </div>
+                <input type="text" id="custAddress" placeholder="رابط موقعك سيتعبأ هنا تلقائياً (أو اكتبي الحي/الشارع)">
+            </div>
+
+            <button class="btn-whatsapp-full" onclick="sendCartOrderWhatsApp()">
+                <span>✅ إتمام الطلب وإرسال الحقيبة واتساب</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة استعراض الحقيبة المشتركة (تفتح تلقائياً عند الضغط على رابط الحقيبة من واتساب) -->
+<div class="modal-overlay" id="sharedBagModal">
+    <div class="modal-card">
+        <div class="modal-head">
+            <h3 id="sharedBagTitle">📦 تفاصيل حقيبة العميلة</h3>
+            <button class="close-btn" onclick="closeSharedBagModal()">✕</button>
+        </div>
+        <div id="sharedBagInfoBox" style="background:#fff1f2; padding:12px; border-radius:12px; margin-bottom:14px; font-size:0.88rem; line-height:1.7;"></div>
+        <div id="sharedBagItemsList"></div>
+        <div style="display:flex; gap:10px; margin-top:14px;">
+            <button class="btn-primary-full" onclick="restoreSharedBagToCart()">🛒 نسخ هذه المنتجات إلى السلة</button>
+            <button class="close-btn" style="width:auto; padding:0 18px; border-radius:12px;" onclick="closeSharedBagModal()">إغلاق</button>
         </div>
     </div>
 </div>
@@ -1238,7 +1503,7 @@
     </div>
 </div>
 
-<!-- تسجيل الدخول للإدارة (بدون أي تلميحات لاسم المستخدم أو الباسورد) -->
+<!-- تسجيل الدخول للإدارة -->
 <div class="modal-overlay" id="loginModal">
     <div class="modal-card" style="max-width:390px;">
         <div class="modal-head">
@@ -1278,7 +1543,7 @@
             </div>
         </div>
 
-        <!-- 1. واجهة الجوال السريعة (إضافة ومتابعة الطلبات بتصميم مرتب) -->
+        <!-- 1. واجهة الجوال السريعة -->
         <div class="mobile-only-workspace" id="mobileWorkspace">
             <div style="background:#fff; padding:16px; border-radius:16px; border:2px solid var(--primary); margin-bottom:18px; box-shadow:var(--shadow);">
                 <h3 style="color:var(--primary); font-weight:900; margin-bottom:6px;">📱 تسجيل طلب جديد سريع</h3>
@@ -1296,8 +1561,11 @@
 
             <div style="background:#fff; padding:16px; border-radius:16px; border:1px solid var(--border); margin-bottom:18px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                    <h4 style="font-weight:900;">👗 إضافة أو تعديل المنتجات والألوان</h4>
-                    <button class="btn-act" onclick="setAdminDisplayMode('desktop'); switchAdminTab('tabProducts');">افتح نافذة رفع المنتجات ⬅</button>
+                    <h4 style="font-weight:900;">👗 إضافة منتجات (عدة صور) أو تعديل صور الأقسام</h4>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-act" onclick="setAdminDisplayMode('desktop'); switchAdminTab('tabProducts');">رفع المنتجات ⬅</button>
+                        <button class="btn-act" onclick="setAdminDisplayMode('desktop'); switchAdminTab('tabCategories');">صور الأقسام ⬅</button>
+                    </div>
                 </div>
             </div>
 
@@ -1312,8 +1580,8 @@
             <div class="erp-sidebar" id="erpSidebarNav">
                 <button class="erp-nav-btn active" data-tab="tabDashboard" onclick="switchAdminTab('tabDashboard')">📊 الإحصائيات والرسوم البيانية</button>
                 <button class="erp-nav-btn" data-tab="tabOrders" onclick="switchAdminTab('tabOrders')">📦 إدارة وتنفيذ الطلبات</button>
-                <button class="erp-nav-btn" data-tab="tabProducts" onclick="switchAdminTab('tabProducts')">👗 المنتجات (رفع من المعرض)</button>
-                <button class="erp-nav-btn" data-tab="tabCategories" onclick="switchAdminTab('tabCategories')">🗂️ إضافة وقفل الأقسام</button>
+                <button class="erp-nav-btn" data-tab="tabProducts" onclick="switchAdminTab('tabProducts')">👗 المنتجات (رفع عدة صور)</button>
+                <button class="erp-nav-btn" data-tab="tabCategories" onclick="switchAdminTab('tabCategories')">🗂️ الأقسام وتغيير صورها</button>
                 <button class="erp-nav-btn" data-tab="tabFinance" onclick="switchAdminTab('tabFinance')">💰 المحاسبة والمصاريف</button>
                 <button class="erp-nav-btn" data-tab="tabStaff" onclick="switchAdminTab('tabStaff')">👥 الموظفون والصلاحيات</button>
             </div>
@@ -1363,8 +1631,8 @@
                                     <th>رقم الطلب</th>
                                     <th>التاريخ</th>
                                     <th>العميل والجوال</th>
-                                    <th>العنوان</th>
-                                    <th>الأصناف واللون المختار</th>
+                                    <th>العنوان / الموقع</th>
+                                    <th>الأصناف المطلوبة</th>
                                     <th>الإجمالي</th>
                                     <th>الربح</th>
                                     <th>الحالة</th>
@@ -1376,10 +1644,10 @@
                     </div>
                 </div>
 
-                <!-- إضافة المنتجات مباشرة من معرض الجوال -->
+                <!-- إضافة المنتجات (يدعم رفع عدة صور للمنتج الواحد بدون إلزام الألوان) -->
                 <div class="admin-panel-section" id="tabProducts">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
-                        <h4 style="margin-bottom:12px; font-weight:900; color:var(--primary);">+ إضافة منتج جديد (رفع الصور والفيديو مباشرة من معرض الجوال)</h4>
+                        <h4 style="margin-bottom:12px; font-weight:900; color:var(--primary);">+ إضافة منتج جديد (يمكنك اختيار عدة صور للمنتج دفعة واحدة من المعرض)</h4>
                         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:12px;">
                             <input type="text" id="pName" placeholder="اسم المنتج *" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
                             <select id="pCat" style="padding:10px; border-radius:8px; border:1px solid var(--border);"></select>
@@ -1388,12 +1656,12 @@
                         </div>
 
                         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-bottom:12px;">
-                            <div style="display:flex; align-items:center; gap:10px;">
+                            <div>
                                 <label class="upload-gallery-btn">
-                                    📷 اختر الصورة الرئيسية من المعرض *
-                                    <input type="file" accept="image/*" style="display:none;" onchange="handleMainImageUpload(this)">
+                                    📷 اختر صورة أو عدة صور للمنتج من المعرض *
+                                    <input type="file" accept="image/*" multiple style="display:none;" onchange="handleMultiProductImagesUpload(this)">
                                 </label>
-                                <img id="mainImgPreview" class="preview-mini-img" alt="معاينة">
+                                <div class="multi-images-preview-strip" id="multiImagesPreviewStrip"></div>
                             </div>
 
                             <div style="display:flex; align-items:center; gap:10px;">
@@ -1404,15 +1672,16 @@
                                 <span id="videoUploadStatus" style="font-size:0.78rem; font-weight:800; color:#059669; white-space:nowrap;"></span>
                             </div>
 
-                            <input type="text" id="pSizes" placeholder="المقاسات مفصولة بفاصلة (مثال: S, M, L, XL)" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
+                            <input type="text" id="pSizes" placeholder="المقاسات مفصولة بفاصلة (مثال: S, M, L, XL)" style="padding:10px; border-radius:8px; border:1px solid var(--border); height:44px;">
                         </div>
 
                         <textarea id="pDesc" rows="2" placeholder="وصف المنتج وخامته..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;"></textarea>
 
-                        <div style="background:#fff; padding:14px; border-radius:12px; border:1.5px dashed var(--primary); margin-bottom:14px;">
+                        <!-- خيار الألوان اختياري تماماً -->
+                        <div style="background:#fff; padding:14px; border-radius:12px; border:1.5px dashed #cbd5e1; margin-bottom:14px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-                                <strong style="font-size:0.88rem; color:var(--primary);">🎨 الألوان / الأشكال (ارفع صورة لكل لون من استوديو الجوال):</strong>
-                                <button type="button" onclick="addVariantInputRow()" class="btn-act">+ إضافة لون / شكل جديد</button>
+                                <strong style="font-size:0.86rem; color:var(--text-main);">🎨 الألوان المحددة (اختياري فقط - إذا كان المنتج بدون ألوان اتركها فارغة):</strong>
+                                <button type="button" onclick="addVariantInputRow()" class="btn-act">+ إضافة لون اختياري</button>
                             </div>
                             <div id="variantsInputsContainer"></div>
                         </div>
@@ -1423,33 +1692,41 @@
                     <h4 style="font-weight:800; margin-bottom:8px;">المنتجات المسجلة</h4>
                     <div style="overflow-x:auto;">
                         <table class="admin-table">
-                            <thead><tr><th>الصورة</th><th>الاسم</th><th>القسم</th><th>الألوان وصورها</th><th>فيديو</th><th>الشراء</th><th>البيع</th><th>حذف</th></tr></thead>
+                            <thead><tr><th>الصور</th><th>الاسم</th><th>القسم</th><th>عدد الصور</th><th>فيديو</th><th>الشراء</th><th>البيع</th><th>حذف</th></tr></thead>
                             <tbody id="adminProductsList"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- إضافة وقفل الأقسام -->
+                <!-- إدارة الأقسام وتغيير أيقوناتها إلى صور من المعرض -->
                 <div class="admin-panel-section" id="tabCategories">
                     <div style="background:#f8fafc; padding:16px; border-radius:14px; margin-bottom:20px; border:1px solid var(--border);">
-                        <h4 style="margin-bottom:12px; font-weight:800;">+ إضافة قسم جديد للمتجر</h4>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <input type="text" id="newCatName" placeholder="اسم القسم الجديد (مثال: إلكترونيات)" style="flex:2; padding:10px; border-radius:8px; border:1px solid var(--border);">
-                            <select id="newCatIcon" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--border);">
+                        <h4 style="margin-bottom:12px; font-weight:800;">+ إضافة قسم جديد للمتجر (مع إمكانية رفع صورة للقسم من المعرض)</h4>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; align-items:center;">
+                            <input type="text" id="newCatName" placeholder="اسم القسم الجديد (مثال: عطور)" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <label class="upload-gallery-btn" style="padding:8px 12px;">
+                                    🖼️ اختر صورة للقسم من المعرض
+                                    <input type="file" accept="image/*" style="display:none;" onchange="handleNewCategoryImageUpload(this)">
+                                </label>
+                                <img id="newCatImgPreview" class="preview-mini-img" style="display:none;" alt="معاينة">
+                            </div>
+                            <select id="newCatIcon" style="padding:10px; border-radius:8px; border:1px solid var(--border);">
+                                <option value="star">⭐ أو اختر رمز افتراضي</option>
                                 <option value="electronics">📱 إلكترونيات</option>
                                 <option value="fashion">👗 ملابس وأزياء</option>
                                 <option value="home">🏠 مفروشات ومنزل</option>
+                                <option value="kitchen">🍲 أدوات منزلية</option>
                                 <option value="beauty">✨ تجميل وعناية</option>
                                 <option value="spices">🌿 بهارات وأغذية</option>
-                                <option value="star">⭐ قسم عام</option>
                             </select>
-                            <button onclick="addNewCategoryAdmin()" style="padding:10px 22px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer;">+ إضافة القسم</button>
+                            <button onclick="addNewCategoryAdmin()" style="padding:11px 22px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer;">+ إضافة القسم</button>
                         </div>
                     </div>
 
-                    <h4 style="font-weight:800; margin-bottom:8px;">الأقسام الحالية</h4>
+                    <h4 style="font-weight:800; margin-bottom:8px;">الأقسام الحالية (يمكنك تغيير صورة أي قسم مثل المفروشات والأدوات المنزلية من المعرض)</h4>
                     <table class="admin-table">
-                        <thead><tr><th>اسم القسم</th><th>الحالة للعميل</th><th>قفل / فتح القسم</th><th>حذف</th></tr></thead>
+                        <thead><tr><th>صورة / رمز القسم</th><th>اسم القسم</th><th>تغيير الصورة من المعرض</th><th>الحالة</th><th>قفل / فتح</th><th>حذف</th></tr></thead>
                         <tbody id="adminCategoriesTable"></tbody>
                     </table>
                 </div>
@@ -1500,7 +1777,6 @@
 <script>
     const WHATSAPP_NUMBER = "967776371235";
 
-    // بيانات دخول المدير الرئيسية المحدثة
     const MASTER_ADMIN_USER = "harith";
     const MASTER_ADMIN_PASS = "hh771415160@";
 
@@ -1517,13 +1793,13 @@
     };
 
     const DEFAULT_CATEGORIES = [
-        { name: "الكل", iconKey: "star", locked: false },
-        { name: "المفروشات", iconKey: "home", locked: false },
-        { name: "ملابس", iconKey: "fashion", locked: false },
-        { name: "إلكترونيات", iconKey: "electronics", locked: false },
-        { name: "أدوات منزلية", iconKey: "kitchen", locked: false },
-        { name: "تجميل", iconKey: "beauty", locked: false },
-        { name: "بهارات", iconKey: "spices", locked: false }
+        { name: "الكل", iconKey: "star", customImg: "", locked: false },
+        { name: "المفروشات", iconKey: "home", customImg: "", locked: false },
+        { name: "ملابس", iconKey: "fashion", customImg: "", locked: false },
+        { name: "إلكترونيات", iconKey: "electronics", customImg: "", locked: false },
+        { name: "أدوات منزلية", iconKey: "kitchen", customImg: "", locked: false },
+        { name: "تجميل", iconKey: "beauty", customImg: "", locked: false },
+        { name: "بهارات", iconKey: "spices", customImg: "", locked: false }
     ];
 
     const INITIAL_PRODUCTS = [
@@ -1534,14 +1810,15 @@
             buyPrice: 11000,
             price: 15000,
             oldPrice: 21000,
-            desc: "خامة تركية أصلية ثقيلة مع تطريز بارز، متوفرة بعدة ألوان ملكية تناسب الصالات والمجالس.",
+            desc: "خامة تركية أصلية ثقيلة مع تطريز بارز، متوفرة بعدة صور وألوان ملكية تناسب الصالات والمجالس.",
             image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80",
-            videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            variants: [
-                { color: "بيج ملكي", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80" },
-                { color: "رمادي مودرن", img: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80" },
-                { color: "عنابي فخم", img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80" }
+            images: [
+                "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80",
+                "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80",
+                "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80"
             ],
+            videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+            variants: [],
             sizes: ["مترين × 2.5", "3 متر × 2.5"]
         },
         {
@@ -1553,11 +1830,12 @@
             oldPrice: 25000,
             desc: "طقم سرير مزدوج 6 قطع ناعم جداً ومريح للنوم مع ثبات عالي للألوان.",
             image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80",
-            videoUrl: "",
-            variants: [
-                { color: "أبيض فندقي", img: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80" },
-                { color: "وردي ناعم", img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80" }
+            images: [
+                "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=700&q=80",
+                "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=700&q=80"
             ],
+            videoUrl: "",
+            variants: [],
             sizes: ["نفرين (كينج)", "نفرونص"]
         }
     ];
@@ -1573,13 +1851,17 @@
     let activeCategory = "الكل";
     let searchQuery = "";
     let currentOpenedProduct = null;
+    let activeMediaIndex = 0;
     let selectedVariant = null;
     let selectedSize = "";
     let isShowingVideo = false;
     let loggedInUser = null;
 
-    let uploadedMainImageBase64 = "";
+    // مصفوفة الصور المتعددة المرفوعة للمنتج الجديد
+    let uploadedProductImagesList = [];
     let uploadedMainVideoData = "";
+    let uploadedNewCategoryImg = "";
+    let currentSharedBagItems = [];
 
     function saveState() {
         try {
@@ -1596,6 +1878,13 @@
         document.getElementById("headerCartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
     }
 
+    function showQuickToast(msg) {
+        const toast = document.getElementById("quickToast");
+        toast.innerHTML = `<span>${msg}</span>`;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
     function compressImageFromGallery(file, callback) {
         if (!file) return;
         const reader = new FileReader();
@@ -1603,7 +1892,7 @@
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement("canvas");
-                const MAX_WIDTH = 850;
+                const MAX_WIDTH = 800;
                 let width = img.width;
                 let height = img.height;
                 if (width > MAX_WIDTH) {
@@ -1614,7 +1903,7 @@
                 canvas.height = height;
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, width, height);
-                const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+                const dataUrl = canvas.toDataURL("image/jpeg", 0.80);
                 callback(dataUrl);
             };
             img.src = e.target.result;
@@ -1622,15 +1911,34 @@
         reader.readAsDataURL(file);
     }
 
-    function handleMainImageUpload(input) {
-        const file = input.files[0];
-        if (!file) return;
-        compressImageFromGallery(file, (compressedData) => {
-            uploadedMainImageBase64 = compressedData;
-            const prev = document.getElementById("mainImgPreview");
-            prev.src = compressedData;
-            prev.style.display = "block";
+    /* =========================================================
+       رفع عدة صور لمنتج واحد من المعرض بدون شرط تحديد لون لكل صورة
+       ========================================================= */
+    function handleMultiProductImagesUpload(input) {
+        const files = Array.from(input.files || []);
+        if (!files.length) return;
+        files.forEach(file => {
+            compressImageFromGallery(file, (compressedData) => {
+                uploadedProductImagesList.push(compressedData);
+                renderMultiImagesPreviewStrip();
+            });
         });
+        input.value = "";
+    }
+
+    function renderMultiImagesPreviewStrip() {
+        const strip = document.getElementById("multiImagesPreviewStrip");
+        strip.innerHTML = uploadedProductImagesList.map((imgSrc, idx) => `
+            <div class="multi-img-thumb-wrap">
+                <img src="${imgSrc}" alt="صورة ${idx + 1}">
+                <button type="button" onclick="removeUploadedProductImage(${idx})">✕</button>
+            </div>
+        `).join("");
+    }
+
+    function removeUploadedProductImage(idx) {
+        uploadedProductImagesList.splice(idx, 1);
+        renderMultiImagesPreviewStrip();
     }
 
     function handleMainVideoUpload(input) {
@@ -1658,6 +1966,33 @@
         });
     }
 
+    /* رفع وتغيير صور الأقسام من المعرض */
+    function handleNewCategoryImageUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        compressImageFromGallery(file, (compressedData) => {
+            uploadedNewCategoryImg = compressedData;
+            const prev = document.getElementById("newCatImgPreview");
+            prev.src = compressedData;
+            prev.style.display = "block";
+        });
+    }
+
+    function changeExistingCategoryImage(catName, input) {
+        const file = input.files[0];
+        if (!file) return;
+        compressImageFromGallery(file, (compressedData) => {
+            const c = categories.find(x => x.name === catName);
+            if (c) {
+                c.customImg = compressedData;
+                saveState();
+                renderCategories();
+                renderAdminCategoriesTable();
+                showQuickToast(`✅ تم تحديث صورة قسم "${catName}"`);
+            }
+        });
+    }
+
     function isRealMobileDevice() {
         const ua = navigator.userAgent || "";
         const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
@@ -1670,7 +2005,7 @@
         renderProducts();
         saveState();
         setupProductMediaSwipe();
-        resetVariantBuilder();
+        checkSharedBagLinkOnLoad();
 
         document.getElementById("unifiedSearchInput").addEventListener("input", (e) => {
             const val = e.target.value.trim();
@@ -1687,14 +2022,115 @@
         });
     });
 
+    /* =========================================================
+       فحص رابط الحقيبة المباشر عند ضغط المدير أو العميلة على الرابط من واتساب
+       ========================================================= */
+    function checkSharedBagLinkOnLoad() {
+        const params = new URLSearchParams(window.location.search);
+        const bagDataEncoded = params.get("bag");
+        if (!bagDataEncoded) return;
+
+        try {
+            const decodedJson = decodeURIComponent(escape(atob(bagDataEncoded)));
+            const bagPayload = JSON.parse(decodedJson);
+            if (!bagPayload || !Array.isArray(bagPayload.i)) return;
+
+            currentSharedBagItems = [];
+            let totalAmount = 0;
+
+            bagPayload.i.forEach(entry => {
+                // entry: [prodId, qty, size, colorOrImgIdx]
+                const p = products.find(x => x.id === entry[0]);
+                const qty = entry[1] || 1;
+                const size = entry[2] || "موحد";
+                const colorLabel = entry[3] || "الصورة المختارة";
+                if (p) {
+                    const gallery = getProductGalleryList(p);
+                    currentSharedBagItems.push({
+                        id: p.id,
+                        name: p.name,
+                        price: p.price,
+                        buyPrice: p.buyPrice || Math.round(p.price * 0.7),
+                        color: colorLabel,
+                        image: gallery[0]?.img || p.image,
+                        size: size,
+                        qty: qty
+                    });
+                    totalAmount += p.price * qty;
+                } else {
+                    // في حال كان المنتج مضافاً محلياً عند العميلة فقط، نعرض اسمه وسعره المرسل في الرابط
+                    const fallbackName = entry[4] || "منتج من المتجر";
+                    const fallbackPrice = entry[5] || 0;
+                    currentSharedBagItems.push({
+                        id: Date.now() + Math.random(),
+                        name: fallbackName,
+                        price: fallbackPrice,
+                        buyPrice: Math.round(fallbackPrice * 0.7),
+                        color: colorLabel,
+                        image: FALLBACK_IMAGE,
+                        size: size,
+                        qty: qty
+                    });
+                    totalAmount += fallbackPrice * qty;
+                }
+            });
+
+            document.getElementById("sharedBagTitle").textContent = `🛍️ حقيبة: ${bagPayload.n || 'عميلة المتجر'}`;
+            document.getElementById("sharedBagInfoBox").innerHTML = `
+                <div><strong>اسم الحقيبة / العميلة:</strong> ${bagPayload.n || 'غير محدد'}</div>
+                <div><strong>رقم الجوال:</strong> ${bagPayload.p || 'غير محدد'}</div>
+                <div><strong>الموقع / العنوان:</strong> ${bagPayload.a ? `<a href="${bagPayload.a}" target="_blank" style="color:var(--primary);font-weight:800;">${bagPayload.a}</a>` : 'غير محدد'}</div>
+                <div style="margin-top:6px; font-size:1.05rem; color:var(--primary);"><strong>إجمالي الحقيبة: ${totalAmount.toLocaleString()} ر.ي</strong></div>
+            `;
+
+            document.getElementById("sharedBagItemsList").innerHTML = currentSharedBagItems.map(item => `
+                <div class="cart-row">
+                    <img src="${item.image}" onerror="this.src=FALLBACK_IMAGE" alt="${item.name}">
+                    <div style="flex:1;">
+                        <div style="font-weight:800; font-size:0.92rem;">${item.name}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">الشكل/اللون: <strong>${item.color}</strong> | المقاس: ${item.size} × <strong>${item.qty}</strong></div>
+                        <div style="color:var(--primary); font-weight:900;">${(item.price * item.qty).toLocaleString()} ر.ي</div>
+                    </div>
+                </div>
+            `).join("");
+
+            openModal("sharedBagModal");
+        } catch (e) {
+            console.warn("Could not parse shared bag URL", e);
+        }
+    }
+
+    function closeSharedBagModal() {
+        closeModal("sharedBagModal");
+        // تنظيف الرابط من المتصفح دون إعادة تحميل
+        if (window.history && window.history.replaceState) {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+    }
+
+    function restoreSharedBagToCart() {
+        if (!currentSharedBagItems.length) return;
+        cart = [...currentSharedBagItems];
+        saveState();
+        closeSharedBagModal();
+        openCartModal();
+    }
+
+    /* =========================================================
+       عرض الأقسام (الصورة المخصصة أو الرمز)
+       ========================================================= */
     function renderCategories() {
         const container = document.getElementById("categoriesContainer");
         container.innerHTML = categories.map(c => {
-            const svg = ICONS_LIBRARY[c.iconKey] || ICONS_LIBRARY.star;
+            const iconHtml = (c.customImg && c.customImg.trim() !== "")
+                ? `<img src="${c.customImg}" onerror="this.src=FALLBACK_IMAGE" alt="${c.name}">`
+                : (ICONS_LIBRARY[c.iconKey] || ICONS_LIBRARY.star);
+
             return `
             <div class="cat-circle-item ${c.name === activeCategory ? 'active' : ''} ${c.locked ? 'locked' : ''}" onclick="selectCategory('${c.name}')">
                 <div class="cat-circle-icon">
-                    ${svg}
+                    ${iconHtml}
                     ${c.locked ? `<span class="lock-badge">🔒</span>` : ''}
                 </div>
                 <span class="cat-circle-label">${c.name} ${c.locked ? '(مقفل)' : ''}</span>
@@ -1704,6 +2140,7 @@
     }
 
     function selectCategory(catName) {
+        closeSheinPortal();
         const catObj = categories.find(c => c.name === catName);
         if (catObj && catObj.locked) {
             alert(`عذراً، قسم "${catName}" مقفل حالياً للصيانة أو الجرد.`);
@@ -1716,6 +2153,7 @@
     }
 
     function showFavoritesOnly() {
+        closeSheinPortal();
         activeCategory = "المفضلة";
         document.getElementById("currentSectionTitle").textContent = "منتجاتك المفضلة";
         renderCategories();
@@ -1728,6 +2166,27 @@
         else favorites.push(prodId);
         saveState();
         renderProducts();
+    }
+
+    /* استخراج كافة صور المنتج (سواء كانت صوراً متعددة أو ألواناً) */
+    function getProductGalleryList(p) {
+        const list = [];
+        if (Array.isArray(p.images) && p.images.length > 0) {
+            p.images.forEach((imgUrl, idx) => {
+                list.push({ label: `صورة ${idx + 1}`, img: imgUrl });
+            });
+        }
+        if (Array.isArray(p.variants) && p.variants.length > 0) {
+            p.variants.forEach(v => {
+                if (v.img && !list.some(x => x.img === v.img)) {
+                    list.push({ label: v.color || `صورة ${list.length + 1}`, img: v.img });
+                }
+            });
+        }
+        if (list.length === 0) {
+            list.push({ label: "الصورة الأساسية", img: p.image || FALLBACK_IMAGE });
+        }
+        return list;
     }
 
     function renderProducts() {
@@ -1749,19 +2208,19 @@
 
         grid.innerHTML = filtered.map(p => {
             const isFav = favorites.includes(p.id);
-            const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
+            const gallery = getProductGalleryList(p);
 
-            const swatchesHtml = variants.map((v, vIdx) => `
-                <div class="swatch-thumb ${vIdx === 0 ? 'active' : ''}" 
-                     onclick="previewCardVariant(event, ${p.id}, ${vIdx}, this)" 
-                     title="${v.color}">
-                    <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
+            const swatchesHtml = gallery.length > 1 ? gallery.map((g, gIdx) => `
+                <div class="swatch-thumb ${gIdx === 0 ? 'active' : ''}" 
+                     onclick="previewCardImage(event, ${p.id}, ${gIdx}, this)" 
+                     title="${g.label}">
+                    <img src="${g.img}" onerror="this.src=FALLBACK_IMAGE" alt="${g.label}">
                 </div>
-            `).join("");
+            `).join("") : "";
 
-            const dotsHtml = variants.length > 1 ? `
+            const dotsHtml = gallery.length > 1 ? `
                 <div class="swipe-dots" id="dots-${p.id}">
-                    ${variants.map((_, idx) => `<span class="swipe-dot ${idx === 0 ? 'active' : ''}"></span>`).join("")}
+                    ${gallery.map((_, idx) => `<span class="swipe-dot ${idx === 0 ? 'active' : ''}"></span>`).join("")}
                 </div>
             ` : '';
 
@@ -1773,14 +2232,13 @@
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav(event, ${p.id})">
                         <svg class="svg-icon" style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
+                    ${gallery.length > 1 ? `<div class="multi-img-badge">📷 ${gallery.length} صور</div>` : ''}
                     ${p.videoUrl ? `<div class="video-indicator-badge">▶ فيديو</div>` : ''}
-                    <img id="card-img-${p.id}" src="${variants[0].img}" onerror="this.src=FALLBACK_IMAGE" alt="${p.name}">
+                    <img id="card-img-${p.id}" src="${gallery[0].img}" onerror="this.src=FALLBACK_IMAGE" alt="${p.name}">
                     ${dotsHtml}
                 </div>
                 <div class="card-body">
-                    <div class="shein-color-swatches" onclick="event.stopPropagation()">
-                        ${swatchesHtml}
-                    </div>
+                    ${swatchesHtml ? `<div class="shein-color-swatches" onclick="event.stopPropagation()">${swatchesHtml}</div>` : ''}
                     <div class="card-title">${p.name}</div>
                     <div class="card-price-row">
                         <span class="card-price">${p.price.toLocaleString()} ر.ي</span>
@@ -1792,18 +2250,18 @@
         }).join("");
     }
 
-    function previewCardVariant(e, prodId, variantIndex, thumbEl) {
+    function previewCardImage(e, prodId, imgIndex, thumbEl) {
         e.stopPropagation();
         const p = products.find(x => x.id === prodId);
         if (!p) return;
-        const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
-        const targetVar = variants[variantIndex] || variants[0];
+        const gallery = getProductGalleryList(p);
+        const target = gallery[imgIndex] || gallery[0];
 
         const imgEl = document.getElementById(`card-img-${prodId}`);
-        if (imgEl) imgEl.src = targetVar.img;
+        if (imgEl) imgEl.src = target.img;
 
         const card = thumbEl.closest(".product-card");
-        if (card) card.setAttribute("data-vindex", variantIndex);
+        if (card) card.setAttribute("data-vindex", imgIndex);
 
         const allThumbs = thumbEl.parentElement.querySelectorAll(".swatch-thumb");
         allThumbs.forEach(t => t.classList.remove("active"));
@@ -1811,7 +2269,7 @@
 
         const dotsWrap = document.getElementById(`dots-${prodId}`);
         if (dotsWrap) {
-            dotsWrap.querySelectorAll(".swipe-dot").forEach((d, i) => d.classList.toggle("active", i === variantIndex));
+            dotsWrap.querySelectorAll(".swipe-dot").forEach((d, i) => d.classList.toggle("active", i === imgIndex));
         }
     }
 
@@ -1822,12 +2280,14 @@
         if (Math.abs(diff) < 35) return;
         e.stopPropagation();
         const p = products.find(x => x.id === prodId);
-        if (!p || !p.variants || p.variants.length <= 1) return;
+        if (!p) return;
+        const gallery = getProductGalleryList(p);
+        if (gallery.length <= 1) return;
 
         const card = document.querySelector(`.product-card[data-pid="${prodId}"]`);
         let curIdx = parseInt(card.getAttribute("data-vindex") || "0");
-        if (diff > 0) curIdx = (curIdx + 1) % p.variants.length;
-        else curIdx = (curIdx - 1 + p.variants.length) % p.variants.length;
+        if (diff > 0) curIdx = (curIdx + 1) % gallery.length;
+        else curIdx = (curIdx - 1 + gallery.length) % gallery.length;
 
         const thumbs = card.querySelectorAll(".swatch-thumb");
         if (thumbs[curIdx]) thumbs[curIdx].click();
@@ -1839,11 +2299,12 @@
         currentOpenedProduct = p;
         isShowingVideo = false;
 
-        const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
+        const gallery = getProductGalleryList(p);
         const card = document.querySelector(`.product-card[data-pid="${id}"]`);
         const preSelectedIdx = card ? parseInt(card.getAttribute("data-vindex") || "0") : 0;
 
-        selectedVariant = variants[preSelectedIdx] || variants[0];
+        activeMediaIndex = preSelectedIdx < gallery.length ? preSelectedIdx : 0;
+        selectedVariant = { color: gallery[activeMediaIndex].label, img: gallery[activeMediaIndex].img };
         selectedSize = p.sizes?.[0] || "قياس موحد";
 
         document.getElementById("pvHeaderCategory").textContent = p.category;
@@ -1868,8 +2329,9 @@
 
     function renderProductViewMediaAndVariants() {
         const p = currentOpenedProduct;
-        const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
-        const currentIdx = variants.findIndex(v => v.color === selectedVariant.color);
+        const gallery = getProductGalleryList(p);
+        const currentItem = gallery[activeMediaIndex] || gallery[0];
+        selectedVariant = { color: currentItem.label, img: currentItem.img };
 
         const imgEl = document.getElementById("pvMainImage");
         const vidHolder = document.getElementById("pvVideoHolder");
@@ -1879,29 +2341,36 @@
             vidHolder.innerHTML = "";
             imgEl.style.display = "block";
             imgEl.onerror = function() { this.src = FALLBACK_IMAGE; };
-            imgEl.src = selectedVariant.img;
+            imgEl.src = currentItem.img;
         }
 
-        document.getElementById("pvMediaCounter").textContent = `${(currentIdx >= 0 ? currentIdx : 0) + 1} / ${variants.length}`;
-        document.getElementById("pvSelectedColorLabel").textContent = selectedVariant.color;
+        document.getElementById("pvMediaCounter").textContent = `${activeMediaIndex + 1} / ${gallery.length}`;
+        document.getElementById("pvSelectedColorLabel").textContent = currentItem.label;
 
-        document.getElementById("pvThumbsContainer").innerHTML = variants.map((v, idx) => `
-            <div class="pv-thumb-item ${v.color === selectedVariant.color ? 'active' : ''}" onclick="selectVariantByIndex(${idx})">
-                <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
+        // عرض جميع صور المنتج في الشريط المصغر تحت الصورة الرئيسية
+        document.getElementById("pvThumbsContainer").innerHTML = gallery.map((g, idx) => `
+            <div class="pv-thumb-item ${idx === activeMediaIndex ? 'active' : ''}" onclick="selectGalleryImageByIndex(${idx})">
+                <img src="${g.img}" onerror="this.src=FALLBACK_IMAGE" alt="${g.label}">
             </div>
         `).join("");
 
-        document.getElementById("pvColorsRow").innerHTML = variants.map((v, idx) => `
-            <div class="variant-img-chip ${v.color === selectedVariant.color ? 'selected' : ''}" onclick="selectVariantByIndex(${idx})">
-                <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" alt="${v.color}">
-                <span>${v.color}</span>
-            </div>
-        `).join("");
+        // إذا كان للمنتج ألوان محددة أو عدة صور نعرضها للاختيار السريع
+        const colorSec = document.getElementById("pvColorSectionWrap");
+        if (gallery.length > 1 || (p.variants && p.variants.length > 0)) {
+            colorSec.style.display = "block";
+            document.getElementById("pvColorsRow").innerHTML = gallery.map((g, idx) => `
+                <div class="variant-img-chip ${idx === activeMediaIndex ? 'selected' : ''}" onclick="selectGalleryImageByIndex(${idx})">
+                    <img src="${g.img}" onerror="this.src=FALLBACK_IMAGE" alt="${g.label}">
+                    <span>${g.label}</span>
+                </div>
+            `).join("");
+        } else {
+            colorSec.style.display = "none";
+        }
     }
 
-    function selectVariantByIndex(idx) {
-        const variants = currentOpenedProduct.variants?.length ? currentOpenedProduct.variants : [{ color: "الافتراضي", img: currentOpenedProduct.image }];
-        selectedVariant = variants[idx] || variants[0];
+    function selectGalleryImageByIndex(idx) {
+        activeMediaIndex = idx;
         isShowingVideo = false;
         document.getElementById("pvVideoBtn").innerHTML = "▶ فيديو شرح المنتج";
         renderProductViewMediaAndVariants();
@@ -1919,7 +2388,7 @@
             vidHolder.style.display = "block";
             const url = currentOpenedProduct.videoUrl.trim();
             vidHolder.innerHTML = `<video src="${url}" controls autoplay playsinline style="width:100%;height:100%;object-fit:contain;"></video>`;
-            btn.innerHTML = "🖼️ العودة لصور الألوان";
+            btn.innerHTML = "🖼️ العودة لصور المنتج";
         } else {
             renderProductViewMediaAndVariants();
             btn.innerHTML = "▶ فيديو شرح المنتج";
@@ -1934,11 +2403,12 @@
             if (!currentOpenedProduct || isShowingVideo) return;
             const diff = e.changedTouches[0].screenX - startX;
             if (Math.abs(diff) < 40) return;
-            const variants = currentOpenedProduct.variants?.length ? currentOpenedProduct.variants : [{ color: "الافتراضي", img: currentOpenedProduct.image }];
-            let idx = variants.findIndex(v => v.color === selectedVariant.color);
-            if (diff > 0) idx = (idx + 1) % variants.length;
-            else idx = (idx - 1 + variants.length) % variants.length;
-            selectVariantByIndex(idx);
+            const gallery = getProductGalleryList(currentOpenedProduct);
+            if (gallery.length <= 1) return;
+            let idx = activeMediaIndex;
+            if (diff > 0) idx = (idx + 1) % gallery.length;
+            else idx = (idx - 1 + gallery.length) % gallery.length;
+            selectGalleryImageByIndex(idx);
         }, { passive: true });
     }
 
@@ -1964,6 +2434,9 @@
         document.getElementById("productViewScreen").classList.remove("active");
     }
 
+    /* =========================================================
+       إضافة المنتج للسلة مباشرة بدون إزعاج العميلة بطلب الاسم والموقع
+       ========================================================= */
     function addActiveProductToCart() {
         if (!currentOpenedProduct || !selectedVariant) return;
         const exist = cart.find(i => i.id === currentOpenedProduct.id && i.color === selectedVariant.color && i.size === selectedSize);
@@ -1981,56 +2454,31 @@
             });
         }
         saveState();
-        closeProductView();
-        openCartModal();
+        showQuickToast(`✅ أُضيف "${currentOpenedProduct.name}" إلى الحقيبة!`);
     }
 
     function orderActiveProductDirectWhatsApp() {
         if (!currentOpenedProduct || !selectedVariant) return;
-        const orderId = "ORD-" + Math.floor(10000 + Math.random() * 90000);
-
-        ordersList.unshift({
-            id: orderId,
-            date: new Date().toLocaleDateString("ar-YE"),
-            customerName: "طلب مباشر واتساب",
-            phone: "عبر واتساب",
-            address: "يحدد في المحادثة",
-            status: "قيد التجهيز",
-            items: [{
-                name: currentOpenedProduct.name,
-                color: selectedVariant.color,
-                size: selectedSize,
-                qty: 1,
-                price: currentOpenedProduct.price,
-                buyPrice: currentOpenedProduct.buyPrice || Math.round(currentOpenedProduct.price * 0.7),
-                image: selectedVariant.img
-            }],
-            totalSell: currentOpenedProduct.price,
-            totalBuy: currentOpenedProduct.buyPrice || Math.round(currentOpenedProduct.price * 0.7)
-        });
-        saveState();
-
-        const isWebUrl = selectedVariant.img && selectedVariant.img.startsWith("http");
-        const msg = `*طلب مباشر - متجر شُعيبيّه* 🛍️\n` +
-                    `*رقم الطلب:* ${orderId}\n` +
-                    `*المنتج:* ${currentOpenedProduct.name}\n` +
-                    `*اللون / الشكل المختار:* ${selectedVariant.color}\n` +
-                    `*المقاس:* ${selectedSize}\n` +
-                    `*السعر:* ${currentOpenedProduct.price.toLocaleString()} ر.ي` +
-                    (isWebUrl ? `\n*صورة اللون:* ${selectedVariant.img}` : `\n*(تم حفظ صورة اللون المختار في لوحة الطلبات برقم ${orderId})*`);
-
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+        // يضع المنتج في الحقيبة ويفتح مرحلة إتمام الطلب مباشرة
+        addActiveProductToCart();
+        closeProductView();
+        openCartModal();
+        showCartCheckoutStep2();
     }
 
+    /* =========================================================
+       نافذة الحقيبة (المرحلة 1: استعراض السلة -> المرحلة 2: الاسم والرقم والموقع)
+       ========================================================= */
     function openCartModal() {
         const listEl = document.getElementById("cartItemsList");
-        const formWrap = document.getElementById("cartFormWrap");
+        const step1Footer = document.getElementById("cartStep1Footer");
+        backToCartStep1();
 
         if (cart.length === 0) {
-            listEl.innerHTML = `<p style="text-align:center; padding:30px; color:var(--text-muted); font-weight:700;">حقيبة التسوق فارغة حالياً.</p>`;
-            formWrap.style.display = "none";
+            listEl.innerHTML = `<p style="text-align:center; padding:30px; color:var(--text-muted); font-weight:700;">حقيبة التسوق فارغة حالياً. اختاري منتجاتك المفضلة أولاً!</p>`;
+            step1Footer.style.display = "none";
         } else {
-            formWrap.style.display = "block";
+            step1Footer.style.display = "block";
             let total = 0;
             listEl.innerHTML = cart.map((item, idx) => {
                 total += item.price * item.qty;
@@ -2039,7 +2487,7 @@
                     <img src="${item.image}" onerror="this.src=FALLBACK_IMAGE" alt="${item.color}">
                     <div style="flex:1;">
                         <div style="font-weight:800; font-size:0.9rem;">${item.name}</div>
-                        <div style="font-size:0.78rem; color:var(--text-muted);">اللون: <strong>${item.color}</strong> | المقاس: ${item.size} × ${item.qty}</div>
+                        <div style="font-size:0.78rem; color:var(--text-muted);">الشكل/اللون: <strong>${item.color}</strong> | المقاس: ${item.size} × ${item.qty}</div>
                         <div style="color:var(--primary); font-weight:900;">${(item.price * item.qty).toLocaleString()} ر.ي</div>
                     </div>
                     <button class="btn-del" onclick="removeFromCart(${idx})">حذف</button>
@@ -2047,37 +2495,82 @@
                 `;
             }).join("");
             document.getElementById("cartTotalVal").textContent = total.toLocaleString() + " ر.ي";
+            document.getElementById("cartTotalValStep2").textContent = total.toLocaleString() + " ر.ي";
         }
         openModal("cartModal");
     }
 
-    function removeFromCart(idx) { cart.splice(idx, 1); saveState(); openCartModal(); }
+    function showCartCheckoutStep2() {
+        if (cart.length === 0) return;
+        document.getElementById("cartModalTitle").textContent = "إتمام الطلب ورفع الحقيبة واتساب";
+        document.getElementById("cartStep1Review").style.display = "none";
+        document.getElementById("cartStep2Checkout").style.display = "block";
+    }
 
+    function backToCartStep1() {
+        document.getElementById("cartModalTitle").textContent = "حقيبة التسوق الخاصة بك";
+        document.getElementById("cartStep1Review").style.display = "block";
+        document.getElementById("cartStep2Checkout").style.display = "none";
+    }
+
+    function removeFromCart(idx) {
+        cart.splice(idx, 1);
+        saveState();
+        openCartModal();
+    }
+
+    /* =========================================================
+       تحديد الموقع وتعبئته تلقائياً في خانة العنوان بدون إلزام الكتابة
+       ========================================================= */
     function getGPSLocation() {
-        const input = document.getElementById("custMapLink");
+        const addrInput = document.getElementById("custAddress");
         if (!navigator.geolocation) return alert("الجهاز لا يدعم تحديد الموقع.");
-        input.value = "جاري تحديد الموقع...";
+        addrInput.value = "جاري تحديد موقعك تلقائياً...";
         navigator.geolocation.getCurrentPosition(
-            pos => { input.value = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`; },
-            () => { input.value = ""; alert("يرجى تفعيل GPS في جوالك."); }
+            pos => {
+                const mapLink = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                addrInput.value = mapLink;
+                showQuickToast("📍 تم تحديد الموقع وتعبئة الرابط تلقائياً!");
+            },
+            () => {
+                addrInput.value = "";
+                alert("يرجى تفعيل الموقع (GPS) في جوالك للمتابعة.");
+            }
         );
+    }
+
+    /* =========================================================
+       إرسال الطلب إلى واتساب باسم الحقيبة والإجمالي ورابط الحقيبة المباشر
+       ========================================================= */
+    function generateDirectShareableBagUrl(custName, custPhone, custAddress) {
+        // نضغط بيانات السلة في كود خفيف يفتح في أي جوال مباشرة
+        const compactPayload = {
+            n: custName,
+            p: custPhone,
+            a: custAddress,
+            i: cart.map(item => [item.id, item.qty, item.size, item.color, item.name, item.price])
+        };
+        const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(compactPayload))));
+        const baseUrl = window.location.origin + window.location.pathname;
+        return `${baseUrl}?bag=${encodeURIComponent(encoded)}`;
     }
 
     function sendCartOrderWhatsApp() {
         const name = document.getElementById("custName").value.trim();
         const phone = document.getElementById("custPhone").value.trim();
         const address = document.getElementById("custAddress").value.trim();
-        const mapUrl = document.getElementById("custMapLink").value.trim();
 
-        if (!name || !phone || !address) return alert("يرجى إدخال الاسم، الجوال، والعنوان.");
+        if (!name || !phone || !address) {
+            return alert("يرجى إدخال الاسم، رقم الجوال، والضغط على زر تحديد الموقع.");
+        }
 
-        const orderId = "ORD-" + Math.floor(10000 + Math.random() * 90000);
+        const bagNumber = Math.floor(1000 + Math.random() * 9000);
+        const bagName = `حقيبة ${name} #${bagNumber}`;
+        const orderId = "BAG-" + bagNumber;
         const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
         const totalBuy = cart.reduce((s, i) => s + ((i.buyPrice || Math.round(i.price * 0.7)) * i.qty), 0);
 
-        const itemsDetails = cart.map((item, idx) =>
-            `${idx + 1}. *${item.name}*\n   - اللون/الشكل: *${item.color}*\n   - المقاس: ${item.size} | الكمية: ${item.qty}\n   - السعر: ${(item.price * item.qty).toLocaleString()} ر.ي`
-        ).join("\n\n");
+        const bagDirectUrl = generateDirectShareableBagUrl(name, phone, address);
 
         ordersList.unshift({
             id: orderId,
@@ -2085,26 +2578,60 @@
             customerName: name,
             phone: phone,
             address: address,
-            mapUrl: mapUrl,
+            bagUrl: bagDirectUrl,
             status: "قيد التجهيز",
             items: [...cart],
             totalSell: total,
             totalBuy: totalBuy
         });
 
+        const itemsLines = cart.map((item, idx) =>
+            `${idx + 1}. ${item.name} (${item.color} | ${item.size}) × ${item.qty}`
+        ).join("\n");
+
         cart = [];
         saveState();
 
-        let msg = `*طلب جديد - متجر شُعيبيّه* 🛍️\n` +
-                  `*رقم الطلب:* ${orderId}\n` +
-                  `*العميل:* ${name}\n` +
-                  `*الجوال:* ${phone}\n` +
-                  `*العنوان:* ${address}\n`;
-        if (mapUrl) msg += `*موقع GPS:* ${mapUrl}\n`;
-        msg += `----------------\n*الأصناف والألوان المطلوبة:*\n${itemsDetails}\n----------------\n*الإجمالي الكلي:* ${total.toLocaleString()} ر.ي`;
+        const msg = `*🛍️ طلب جديد - متجر شُعيبيّه*\n` +
+                    `*اسم الحقيبة:* ${bagName}\n` +
+                    `*العميلة:* ${name}\n` +
+                    `*رقم الجوال:* ${phone}\n` +
+                    `*الموقع / العنوان:* ${address}\n` +
+                    `*إجمالي الحقيبة:* ${total.toLocaleString()} ر.ي\n` +
+                    `----------------\n` +
+                    `*المنتجات المختارة:*\n${itemsLines}\n` +
+                    `----------------\n` +
+                    `*🔗 رابط الحقيبة المباشر (اضغط هنا لفتح الحقيبة ومشاهدة المنتجات):*\n${bagDirectUrl}`;
 
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
         closeModal("cartModal");
+    }
+
+    /* =========================================================
+       بوابة شي إن (SHEIN) وإرسال رابط حقيبة شي إن لواتساب الإدارة
+       ========================================================= */
+    function openSheinPortal() {
+        closeProductView();
+        document.getElementById("sheinPortalScreen").classList.add("active");
+    }
+
+    function closeSheinPortal() {
+        document.getElementById("sheinPortalScreen").classList.remove("active");
+    }
+
+    function sendSheinBagToAdminWhatsApp() {
+        const custName = document.getElementById("sheinCustName").value.trim() || "عميلة شي إن";
+        const bagUrl = document.getElementById("sheinBagUrlInput").value.trim();
+
+        if (!bagUrl) {
+            return alert("يرجى لصق رابط حقيبة شي إن أولاً في الخانة المخصصة.");
+        }
+
+        const msg = `*🖤 طلب حقيبة شي إن (SHEIN) - متجر شُعيبيّه*\n` +
+                    `*اسم العميلة:* ${custName}\n` +
+                    `*🔗 رابط حقيبة شي إن المطلوبة:*\n${bagUrl}`;
+
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
     }
 
     function sendTailorWhatsApp() {
@@ -2115,7 +2642,7 @@
     }
 
     /* =========================================================
-       التحقق من دخول الإدارة (harith / hh771415160@)
+       منظومة الإدارة
        ========================================================= */
     function doLogin() {
         const u = document.getElementById("loginUser").value.trim();
@@ -2129,7 +2656,6 @@
             loggedInUser = { username: st.username, role: st.role, category: st.category || "الكل" };
         }
 
-        // تفريغ حقول الدخول بعد النجاح للأمان
         document.getElementById("loginUser").value = "";
         document.getElementById("loginPass").value = "";
 
@@ -2234,8 +2760,8 @@
         const p = products.find(x => x.id === prodId);
         const varSelect = document.getElementById("posVariantSelect");
         if (!p) { varSelect.innerHTML = ""; return; }
-        const variants = p.variants?.length ? p.variants : [{ color: "الافتراضي", img: p.image }];
-        varSelect.innerHTML = variants.map((v, i) => `<option value="${i}">اللون: ${v.color}</option>`).join("");
+        const gallery = getProductGalleryList(p);
+        varSelect.innerHTML = gallery.map((g, i) => `<option value="${i}">${g.label}</option>`).join("");
     }
 
     function createQuickMobileOrder() {
@@ -2248,7 +2774,8 @@
 
         if (!name || !phone || !prodId) return alert("يرجى إدخال اسم العميل، الجوال، واختيار المنتج.");
         const p = products.find(x => x.id === prodId);
-        const v = (p.variants && p.variants[varIdx]) ? p.variants[varIdx] : { color: "الافتراضي", img: p.image };
+        const gallery = getProductGalleryList(p);
+        const gItem = gallery[varIdx] || gallery[0];
 
         const orderId = "POS-" + Math.floor(10000 + Math.random() * 90000);
         ordersList.unshift({
@@ -2260,12 +2787,12 @@
             status: "قيد التجهيز",
             items: [{
                 name: p.name,
-                color: v.color,
+                color: gItem.label,
                 size: p.sizes?.[0] || "موحد",
                 qty: qty,
                 price: p.price,
                 buyPrice: p.buyPrice || Math.round(p.price * 0.7),
-                image: v.img
+                image: gItem.img
             }],
             totalSell: p.price * qty,
             totalBuy: (p.buyPrice || Math.round(p.price * 0.7)) * qty
@@ -2369,12 +2896,16 @@
                 </div>
             `).join("");
 
+            const addrHtml = (o.address && o.address.startsWith("http"))
+                ? `<a href="${o.address}" target="_blank" style="color:var(--primary); font-weight:800;">📍 فتح الموقع على الخريطة</a>`
+                : o.address;
+
             return `
             <tr>
                 <td><strong>${o.id}</strong></td>
                 <td>${o.date}</td>
                 <td>${o.customerName}<br><small style="color:var(--text-muted);">${o.phone}</small></td>
-                <td>${o.address}</td>
+                <td>${addrHtml}</td>
                 <td>${itemsSummary}</td>
                 <td><strong>${(o.totalSell || 0).toLocaleString()} ر.ي</strong></td>
                 <td style="color:#059669; font-weight:800;">${profit.toLocaleString()} ر.ي</td>
@@ -2394,7 +2925,12 @@
         if (ordersList.length === 0) {
             mobileCardsWrap.innerHTML = `<p style="text-align:center; padding:20px; color:var(--text-muted);">لا توجد طلبات مسجلة حتى الآن.</p>`;
         } else {
-            mobileCardsWrap.innerHTML = ordersList.map(o => `
+            mobileCardsWrap.innerHTML = ordersList.map(o => {
+                const addrHtml = (o.address && o.address.startsWith("http"))
+                    ? `<a href="${o.address}" target="_blank" style="color:var(--primary); font-weight:800;">📍 فتح موقع الزبون (GPS)</a>`
+                    : o.address;
+
+                return `
                 <div class="order-card-item">
                     <div class="order-card-header">
                         <div>
@@ -2405,10 +2941,10 @@
                     </div>
                     <div style="font-size:0.85rem; margin-bottom:8px;">
                         <strong>العميل:</strong> ${o.customerName} | <strong>الجوال:</strong> ${o.phone}<br>
-                        <strong>العنوان:</strong> ${o.address}
+                        <strong>الموقع:</strong> ${addrHtml}
                     </div>
                     <div style="background:#f8fafc; padding:8px; border-radius:8px; margin-bottom:10px; font-size:0.83rem;">
-                        ${(o.items || []).map(i => `• ${i.name} (اللون: <strong>${i.color}</strong> | المقاس: ${i.size}) × ${i.qty}`).join("<br>")}
+                        ${(o.items || []).map(i => `• ${i.name} (${i.color} | ${i.size}) × ${i.qty}`).join("<br>")}
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
                         <strong style="font-size:0.95rem;">الإجمالي: ${(o.totalSell || 0).toLocaleString()} ر.ي</strong>
@@ -2422,7 +2958,7 @@
                         </div>
                     </div>
                 </div>
-            `).join("");
+            `}).join("");
         }
     }
 
@@ -2441,22 +2977,17 @@
         refreshAllAdminData();
     }
 
-    function resetVariantBuilder() {
-        document.getElementById("variantsInputsContainer").innerHTML = "";
-        addVariantInputRow();
-    }
-
     function addVariantInputRow() {
         const container = document.getElementById("variantsInputsContainer");
         const div = document.createElement("div");
         div.className = "variant-builder-row";
         div.innerHTML = `
-            <input type="text" class="v-color-name" placeholder="اسم اللون/الشكل (مثال: أحمر ملكي)" style="flex:1; min-width:140px; padding:9px; border-radius:8px; border:1px solid var(--border); background:#fff;">
+            <input type="text" class="v-color-name" placeholder="اسم اللون (اختياري)" style="flex:1; min-width:140px; padding:9px; border-radius:8px; border:1px solid var(--border); background:#fff;">
             <label class="upload-gallery-btn" style="flex:1; min-width:170px; width:auto; padding:8px 12px;">
-                📷 اختر صورة هذا اللون من المعرض
+                📷 صورة اللون من المعرض
                 <input type="file" accept="image/*" style="display:none;" onchange="handleVariantImageUpload(this)">
             </label>
-            <img class="preview-mini-img v-preview-img" alt="معاينة اللون">
+            <img class="preview-mini-img v-preview-img" style="display:none;" alt="معاينة اللون">
             <button type="button" class="btn-del" onclick="this.parentElement.remove()">✕</button>
         `;
         container.appendChild(div);
@@ -2473,18 +3004,17 @@
         const variants = [];
         document.querySelectorAll("#variantsInputsContainer .variant-builder-row").forEach(row => {
             const cName = row.querySelector(".v-color-name").value.trim();
-            const cImg = row.getAttribute("data-img") || uploadedMainImageBase64;
+            const cImg = row.getAttribute("data-img") || uploadedProductImagesList[0] || "";
             if (cName && cImg) variants.push({ color: cName, img: cImg });
         });
 
-        const finalMainImg = uploadedMainImageBase64 || (variants[0] ? variants[0].img : "");
-
-        if (!name || isNaN(buyPrice) || isNaN(price) || !finalMainImg) {
-            return alert("يرجى كتابة اسم المنتج، السعر، واختيار صورة المنتج من معرض الجوال.");
+        const allImages = [...uploadedProductImagesList];
+        if (allImages.length === 0 && variants.length > 0) {
+            variants.forEach(v => allImages.push(v.img));
         }
 
-        if (variants.length === 0) {
-            variants.push({ color: "اللون الأساسي", img: finalMainImg });
+        if (!name || isNaN(buyPrice) || isNaN(price) || allImages.length === 0) {
+            return alert("يرجى كتابة اسم المنتج، السعر، واختيار صورة واحدة أو عدة صور للمنتج من معرض الجوال.");
         }
 
         const sizes = sizesRaw ? sizesRaw.split(",").map(s => s.trim()).filter(Boolean) : ["قياس موحد"];
@@ -2497,7 +3027,8 @@
             price,
             oldPrice: Math.round(price * 1.25),
             desc,
-            image: variants[0].img || finalMainImg,
+            image: allImages[0],
+            images: allImages,
             videoUrl: uploadedMainVideoData || "",
             variants,
             sizes
@@ -2513,13 +3044,13 @@
         document.getElementById("pSellPrice").value = "";
         document.getElementById("pSizes").value = "";
         document.getElementById("pDesc").value = "";
-        uploadedMainImageBase64 = "";
+        uploadedProductImagesList = [];
         uploadedMainVideoData = "";
-        document.getElementById("mainImgPreview").style.display = "none";
+        renderMultiImagesPreviewStrip();
         document.getElementById("videoUploadStatus").textContent = "";
-        resetVariantBuilder();
+        document.getElementById("variantsInputsContainer").innerHTML = "";
 
-        alert("✅ تم حفظ ونشر المنتج مع صوره وألوانه بنجاح!");
+        alert(`✅ تم حفظ ونشر المنتج مع (${allImages.length}) صور بنجاح!`);
     }
 
     function renderAdminProductsTable() {
@@ -2528,17 +3059,13 @@
             : products;
 
         document.getElementById("adminProductsList").innerHTML = list.map(p => {
-            const vList = (p.variants || []).map(v => `
-                <span style="display:inline-flex; align-items:center; gap:4px; background:#f1f5f9; padding:2px 8px; border-radius:12px; font-size:0.75rem; margin:2px;">
-                    <img src="${v.img}" onerror="this.src=FALLBACK_IMAGE" style="width:16px;height:16px;border-radius:50%;object-fit:cover;"> ${v.color}
-                </span>
-            `).join("");
+            const gallery = getProductGalleryList(p);
             return `
             <tr>
-                <td><img src="${p.image}" onerror="this.src=FALLBACK_IMAGE" style="width:42px;height:42px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid #e2e8f0;"></td>
+                <td><img src="${gallery[0].img}" onerror="this.src=FALLBACK_IMAGE" style="width:42px;height:42px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid #e2e8f0;"></td>
                 <td><strong>${p.name}</strong></td>
                 <td>${p.category}</td>
-                <td>${vList}</td>
+                <td><span class="status-pill status-shipped">${gallery.length} صور</span></td>
                 <td>${p.videoUrl ? '✅ يوجد' : '—'}</td>
                 <td>${(p.buyPrice || 0).toLocaleString()} ر.ي</td>
                 <td><strong>${p.price.toLocaleString()} ر.ي</strong></td>
@@ -2560,12 +3087,21 @@
         if (!name) return alert("يرجى كتابة اسم القسم الجديد.");
         if (categories.some(c => c.name === name)) return alert("هذا القسم موجود مسبقاً.");
 
-        categories.push({ name, iconKey, locked: false });
+        categories.push({
+            name,
+            iconKey,
+            customImg: uploadedNewCategoryImg || "",
+            locked: false
+        });
+
+        uploadedNewCategoryImg = "";
+        document.getElementById("newCatImgPreview").style.display = "none";
+        document.getElementById("newCatName").value = "";
+
         saveState();
         renderCategories();
         populateAdminSelects();
         renderAdminCategoriesTable();
-        document.getElementById("newCatName").value = "";
     }
 
     function toggleCategoryLock(catName) {
@@ -2589,22 +3125,37 @@
     }
 
     function renderAdminCategoriesTable() {
-        document.getElementById("adminCategoriesTable").innerHTML = categories.filter(c => c.name !== "الكل").map(c => `
+        document.getElementById("adminCategoriesTable").innerHTML = categories.map(c => {
+            const previewHtml = (c.customImg && c.customImg.trim() !== "")
+                ? `<img src="${c.customImg}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--primary);">`
+                : `<div style="width:42px;height:42px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">${ICONS_LIBRARY[c.iconKey] || ICONS_LIBRARY.star}</div>`;
+
+            return `
             <tr>
+                <td>${previewHtml}</td>
                 <td><strong>${c.name}</strong></td>
                 <td>
-                    ${c.locked
-                        ? `<span class="status-pill" style="background:#fee2e2; color:#dc2626;">🔒 مقفل للعميل</span>`
-                        : `<span class="status-pill status-completed">🟢 مفتوح ومتاح</span>`}
+                    <label class="btn-act" style="cursor:pointer; display:inline-block;">
+                        📷 تغيير الصورة من المعرض
+                        <input type="file" accept="image/*" style="display:none;" onchange="changeExistingCategoryImage('${c.name}', this)">
+                    </label>
                 </td>
                 <td>
-                    <button class="btn-act" onclick="toggleCategoryLock('${c.name}')">
-                        ${c.locked ? '🔓 فتح القسم' : '🔒 قفل القسم'}
-                    </button>
+                    ${c.locked
+                        ? `<span class="status-pill" style="background:#fee2e2; color:#dc2626;">🔒 مقفل</span>`
+                        : `<span class="status-pill status-completed">🟢 متاح</span>`}
                 </td>
-                <td><button class="btn-del" onclick="deleteCategoryAdmin('${c.name}')">حذف</button></td>
+                <td>
+                    ${c.name !== "الكل" ? `
+                    <button class="btn-act" onclick="toggleCategoryLock('${c.name}')">
+                        ${c.locked ? '🔓 فتح' : '🔒 قفل'}
+                    </button>` : '—'}
+                </td>
+                <td>
+                    ${c.name !== "الكل" ? `<button class="btn-del" onclick="deleteCategoryAdmin('${c.name}')">حذف</button>` : '—'}
+                </td>
             </tr>
-        `).join("");
+        `}).join("");
     }
 
     function addExpenseRecord() {
@@ -2682,17 +3233,9 @@
     function closeModal(id) { document.getElementById(id).classList.remove("active"); }
 </script>
 
-</body>
-</html>
-<style>
-  /* إخفاء شعار نتليفاي نهائياً */
-  #netlify-deploy-badge, img[alt*="Deploys by Netlify"] {
-    display: none !important;
-    visibility: hidden !important;
-  }
-</style>
 <!-- كود إخفاء وحذف شعار نتليفاي نهائياً من الجذور -->
 <style>
+  #netlify-deploy-badge,
   a[href*="netlify.com"],
   a[href*="netlify.app"]:not([href*="shuaibiya"]),
   img[alt*="Netlify"],
@@ -2714,7 +3257,6 @@
 <script>
   (function removeNetlifyBadge() {
     const cleanUp = () => {
-      // 1. البحث عن أي رابط أو صورة أو عنصر يشير إلى Netlify وحذفه فوراً
       const selectors = [
         'a[href*="netlify.com"]',
         'img[alt*="Netlify"]',
@@ -2725,7 +3267,6 @@
       
       selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
-          // إذا كان العنصر محاطاً بحاوية ثابتة في أسفل الشاشة، نحذف الحاوية بالكامل
           const parent = el.closest('div, aside, footer');
           if (parent && !parent.classList.contains('container') && parent.id !== 'productsGrid') {
             const style = window.getComputedStyle(parent);
@@ -2737,11 +3278,12 @@
         });
       });
 
-      // 2. فحص أي عنصر عائم (Fixed) تم حقنه خارج حاوية المتجر الأساسية
       document.querySelectorAll('body > *').forEach(el => {
         if (
           !el.classList.contains('container') &&
+          !el.classList.contains('toast-notification') &&
           !el.classList.contains('product-view-screen') &&
+          !el.classList.contains('shein-portal-screen') &&
           !el.classList.contains('bottom-nav') &&
           !el.classList.contains('modal-overlay') &&
           el.tagName !== 'SCRIPT' &&
@@ -2752,12 +3294,11 @@
       });
     };
 
-    // تشغيل التنظيف فور التحميل
     cleanUp();
     window.addEventListener('load', cleanUp);
-
-    // مراقب مستمر (MutationObserver) يحذف الشعار في نفس أجزاء الثانية التي يحاول فيها الظهور
     const observer = new MutationObserver(cleanUp);
     observer.observe(document.documentElement, { childList: true, subtree: true });
   })();
 </script>
+</body>
+</html>
