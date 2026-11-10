@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر شعيبيه | فخامة التسوق</title>
-    <!-- استدعاء خطوط Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ==========================================
-           1. المتغيرات والإعدادات العامة (CSS Variables & Reset)
-           ========================================== */
         :root {
             --bg-dark: #171416;
             --bg-card: #221e20;
@@ -24,7 +20,6 @@
             --text-main: #f5f2f4;
             --text-muted: #a89fa3;
             --danger: #e74c3c;
-            --success: #2ecc71;
             --border-color: rgba(181, 139, 85, 0.25);
             --font-heading: 'Tajawal', sans-serif;
             --font-body: 'IBM Plex Sans Arabic', sans-serif;
@@ -36,6 +31,7 @@
             padding: 0;
             box-sizing: border-box;
             outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -79,10 +75,9 @@
             box-shadow: 0 0 0 2px rgba(233, 164, 181, 0.15);
         }
 
-        /* تنسيق أيقونات SVG */
         .icon {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             stroke: currentColor;
             stroke-width: 1.8;
             stroke-linecap: round;
@@ -94,45 +89,45 @@
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         /* ==========================================
-           2. الهيدر وشريط التنقل (Header)
+           الهيدر المحسن للجوال والكمبيوتر
            ========================================== */
         header {
-            background-color: rgba(23, 20, 22, 0.92);
+            background-color: rgba(23, 20, 22, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 15px 0;
+            padding: 12px 0;
         }
 
         .header-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-family: var(--font-heading);
-            font-size: 1.7rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--pink);
-            letter-spacing: 0.5px;
         }
 
         .logo span {
             color: var(--gold);
             font-weight: 400;
-            font-size: 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
         }
 
         .search-bar {
@@ -142,9 +137,10 @@
         }
 
         .search-bar input {
-            padding-left: 40px;
+            padding: 9px 16px 9px 38px;
             background-color: var(--bg-card);
             border-radius: 30px;
+            font-size: 0.9rem;
         }
 
         .search-bar .search-icon {
@@ -159,20 +155,20 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .cart-btn {
-            position: relative;
             background-color: var(--bg-card);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 10px 18px;
+            padding: 8px 14px;
             border-radius: 30px;
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .cart-btn:hover {
@@ -198,34 +194,33 @@
             background-color: rgba(181, 139, 85, 0.2);
             color: var(--gold-light);
             border: 1px solid var(--gold);
-            padding: 8px 14px;
+            padding: 7px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         /* ==========================================
-           3. البانر الرئيسي (Hero Section)
+           البانر الرئيسي (Hero Section)
            ========================================== */
         .hero {
             position: relative;
-            background: radial-gradient(circle at 20% 50%, #2a2024 0%, #171416 70%);
+            background: radial-gradient(circle at 20% 50%, #2e2026 0%, #171416 75%);
             border-bottom: 1px solid var(--border-color);
-            padding: 80px 0;
+            padding: 45px 0;
             overflow: hidden;
         }
 
         .hero-watermark {
             position: absolute;
-            left: 5%;
+            left: 4%;
             top: 50%;
             transform: translateY(-50%);
             font-family: Georgia, 'Times New Roman', serif;
-            font-size: clamp(8rem, 22vw, 18rem);
+            font-size: clamp(6rem, 20vw, 15rem);
             font-weight: bold;
-            color: rgba(233, 164, 181, 0.04);
-            letter-spacing: -5px;
+            color: rgba(233, 164, 181, 0.05);
             user-select: none;
             pointer-events: none;
             line-height: 1;
@@ -234,24 +229,25 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 620px;
+            max-width: 600px;
         }
 
         .hero-tag {
             display: inline-block;
-            color: var(--gold);
+            color: var(--gold-light);
             border: 1px solid var(--gold);
-            padding: 4px 14px;
+            background-color: rgba(181, 139, 85, 0.1);
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
             color: var(--text-main);
-            margin-bottom: 15px;
-            line-height: 1.25;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
         .hero h1 span {
@@ -260,20 +256,20 @@
 
         .hero p {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 30px;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
         }
 
         .btn-primary {
             background-color: var(--pink);
             color: var(--bg-dark);
             font-weight: 700;
-            padding: 12px 28px;
+            padding: 10px 24px;
             border-radius: 30px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1rem;
+            gap: 8px;
+            font-size: 0.95rem;
         }
 
         .btn-primary:hover {
@@ -285,21 +281,6 @@
             background-color: var(--gold);
             color: var(--bg-dark);
             font-weight: 700;
-            padding: 10px 22px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-gold:hover {
-            background-color: var(--gold-light);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
             padding: 10px 20px;
             border-radius: 8px;
             display: inline-flex;
@@ -308,41 +289,51 @@
             gap: 8px;
         }
 
-        .btn-outline:hover {
-            border-color: var(--pink);
-            color: var(--pink);
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         /* ==========================================
-           4. شريط الأقسام (Categories Filter)
+           شريط الأقسام (Categories)
            ========================================== */
         .categories-section {
-            padding: 40px 0 20px;
+            padding: 22px 0 12px;
         }
 
         .categories-list {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: thin;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        .categories-list::-webkit-scrollbar {
+            display: none;
         }
 
         .cat-btn {
             background-color: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid var(--border-color);
-            padding: 10px 22px;
+            padding: 8px 18px;
             border-radius: 30px;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
+            gap: 6px;
+            font-size: 0.88rem;
             font-weight: 500;
         }
 
-        .cat-btn:hover, .cat-btn.active {
+        .cat-btn.active {
             background-color: var(--pink);
             color: var(--bg-dark);
             border-color: var(--pink);
@@ -350,22 +341,22 @@
         }
 
         /* ==========================================
-           5. شبكة المنتجات (Products Grid)
+           شبكة المنتجات (Products Grid)
            ========================================== */
         .products-section {
-            padding: 20px 0 70px;
+            padding: 10px 0 60px;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
         }
 
         .product-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
             overflow: hidden;
             transition: var(--transition);
             display: flex;
@@ -373,28 +364,22 @@
             position: relative;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
         .discount-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 10px;
+            right: 10px;
             background-color: var(--pink);
             color: var(--bg-dark);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 800;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
             z-index: 2;
         }
 
         .product-img-wrapper {
             width: 100%;
-            height: 240px;
+            height: 210px;
             overflow: hidden;
             background-color: #1c181a;
             cursor: pointer;
@@ -404,36 +389,32 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .product-card:hover .product-img-wrapper img {
-            transform: scale(1.06);
+            transition: transform 0.4s ease;
         }
 
         .product-info {
-            padding: 18px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
         .product-cat {
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             color: var(--gold);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .product-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             cursor: pointer;
             color: var(--text-main);
-        }
-
-        .product-title:hover {
-            color: var(--pink);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .product-price-row {
@@ -441,24 +422,23 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 12px;
+            padding-top: 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .prices {
             display: flex;
-            align-items: baseline;
-            gap: 8px;
+            flex-direction: column;
         }
 
         .current-price {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--pink);
         }
 
         .old-price {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-decoration: line-through;
         }
@@ -466,41 +446,38 @@
         .add-quick-btn {
             background-color: var(--bg-lighter);
             color: var(--gold-light);
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
 
         .add-quick-btn:hover {
             background-color: var(--pink);
             color: var(--bg-dark);
-            border-color: var(--pink);
         }
 
         /* ==========================================
-           6. النوافذ المنبثقة (Modals)
+           النوافذ المنبثقة (Modals)
            ========================================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background-color: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.25s ease;
+            padding: 15px;
         }
 
         .modal-overlay.active {
             display: flex;
-            opacity: 1;
         }
 
         .modal-box {
@@ -508,66 +485,57 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             width: 100%;
-            max-width: 650px;
+            max-width: 620px;
             max-height: 90vh;
             overflow-y: auto;
-            position: relative;
-            padding: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            padding: 20px;
         }
 
         .modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
         }
 
         .modal-header h3 {
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             color: var(--pink);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .close-modal {
             color: var(--text-muted);
-            padding: 5px;
-            border-radius: 50%;
+            padding: 4px;
         }
 
-        .close-modal:hover {
-            color: var(--pink);
-            background-color: var(--bg-lighter);
-        }
-
-        /* تفاصيل المنتج داخل النافذة */
         .product-detail-layout {
             display: grid;
             grid-template-columns: 1fr 1.1fr;
-            gap: 24px;
+            gap: 18px;
         }
 
         .product-detail-img {
             width: 100%;
-            height: 280px;
+            height: 240px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
         }
 
         .option-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .option-group label {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .chips-container {
@@ -577,13 +545,12 @@
         }
 
         .chip {
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-size: 0.85rem;
-            cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .chip.selected {
@@ -599,46 +566,39 @@
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            overflow: hidden;
         }
 
         .qty-control button {
             color: var(--text-main);
-            padding: 8px 14px;
+            padding: 6px 14px;
             font-size: 1.1rem;
         }
 
-        .qty-control button:hover {
-            background-color: var(--bg-lighter);
-            color: var(--pink);
-        }
-
         .qty-control span {
-            padding: 0 15px;
+            padding: 0 12px;
             font-weight: 700;
         }
 
-        /* سلة المشتريات */
         .cart-items-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
 
         .cart-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             background-color: var(--bg-dark);
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
         .cart-item img {
-            width: 65px;
-            height: 65px;
+            width: 55px;
+            height: 55px;
             border-radius: 8px;
             object-fit: cover;
         }
@@ -649,70 +609,68 @@
 
         .cart-item-title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .cart-item-meta {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
         .cart-item-price {
             color: var(--pink);
             font-weight: 700;
-            margin-top: 4px;
+            font-size: 0.9rem;
         }
 
         .cart-summary {
             background-color: var(--bg-dark);
-            padding: 16px;
+            padding: 14px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.15rem;
             font-weight: 700;
         }
 
         .cart-summary span:last-child {
             color: var(--pink);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
         .location-box {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            gap: 8px;
         }
 
-        /* لوحة التحكم */
         .admin-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
         .admin-tab-btn {
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 8px;
             color: var(--text-muted);
             background-color: var(--bg-dark);
             font-weight: 600;
+            font-size: 0.85rem;
         }
 
         .admin-tab-btn.active {
@@ -723,12 +681,12 @@
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.9rem;
+            margin-top: 12px;
+            font-size: 0.85rem;
         }
 
         .admin-table th, .admin-table td {
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid rgba(255,255,255,0.07);
             text-align: right;
         }
@@ -741,56 +699,72 @@
             background-color: rgba(231, 76, 60, 0.15);
             color: var(--danger);
             border: 1px solid var(--danger);
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        .btn-danger-sm:hover {
-            background-color: var(--danger);
-            color: #fff;
-        }
-
-        /* الفوتر */
         footer {
             background-color: #110e10;
             border-top: 1px solid var(--border-color);
-            padding: 40px 0;
+            padding: 25px 0;
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* التجاوب مع الشاشات الصغيرة */
+        /* ==========================================
+           تحسينات خاصة لشاشة الجوال (Responsive Mobile)
+           ========================================== */
         @media (max-width: 768px) {
+            /* جعل الشعار في اليمين والسلة في اليسار في سطر واحد */
+            .logo {
+                order: 1;
+                font-size: 1.35rem;
+            }
+            .header-actions {
+                order: 2;
+            }
+            /* جعل شريط البحث أسفلهما بعرض كامل */
+            .search-bar {
+                order: 3;
+                flex: 1 1 100%;
+                max-width: 100%;
+                margin-top: 4px;
+            }
+
+            /* تقليص ارتفاع البانر في الجوال لتظهر المنتجات تحته مباشرة */
+            .hero {
+                padding: 28px 0;
+                text-align: right;
+            }
+
+            /* عرض منتجين بجانب بعض في الجوال */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .product-img-wrapper {
+                height: 155px;
+            }
+
             .product-detail-layout {
                 grid-template-columns: 1fr;
             }
-            .header-inner {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .logo {
-                justify-content: center;
-            }
-            .search-bar {
-                max-width: 100%;
-            }
-            .header-actions {
-                justify-content: center;
+
+            .product-detail-img {
+                height: 200px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================
-         الهيدر (Header)
-         ========================================== -->
     <header>
         <div class="container header-inner">
             <a href="#" class="logo">
-                <svg class="icon" style="width:28px;height:28px;stroke:var(--gold);" viewBox="0 0 24 24">
+                <svg class="icon" style="width:24px;height:24px;stroke:var(--gold);" viewBox="0 0 24 24">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -807,7 +781,6 @@
             </div>
 
             <div class="header-actions">
-                <!-- زر يظهر عند تسجيل دخول المدير أو الموظف -->
                 <button id="openAdminBtn" class="admin-indicator" onclick="openModal('adminDashboardModal')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="7" height="7"></rect>
@@ -815,7 +788,7 @@
                         <rect x="14" y="14" width="7" height="7"></rect>
                         <rect x="3" y="14" width="7" height="7"></rect>
                     </svg>
-                    <span id="adminRoleLabel">لوحة التحكم</span>
+                    <span id="adminRoleLabel">الإدارة</span>
                 </button>
 
                 <button class="cart-btn" onclick="openCartModal()">
@@ -831,9 +804,6 @@
         </div>
     </header>
 
-    <!-- ==========================================
-         البانر الرئيسي (Hero Section)
-         ========================================== -->
     <section class="hero">
         <div class="hero-watermark">SH</div>
         <div class="container hero-content">
@@ -850,27 +820,15 @@
         </div>
     </section>
 
-    <!-- ==========================================
-         أقسام المتجر (Categories)
-         ========================================== -->
     <section class="categories-section container" id="productsSection">
-        <div class="categories-list" id="categoriesContainer">
-            <!-- يتم توليد الأزرار بالجافاسكربت -->
-        </div>
+        <div class="categories-list" id="categoriesContainer"></div>
     </section>
 
-    <!-- ==========================================
-         شبكة المنتجات (Products Grid)
-         ========================================== -->
     <section class="products-section container">
-        <div class="products-grid" id="productsGrid">
-            <!-- يتم توليد المنتجات بالجافاسكربت -->
-        </div>
+        <div class="products-grid" id="productsGrid"></div>
     </section>
 
-    <!-- ==========================================
-         النافذة 1: تفاصيل المنتج (Product Modal)
-         ========================================== -->
+    <!-- نافذة تفاصيل المنتج -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -885,8 +843,8 @@
                 </div>
                 <div>
                     <div id="modalProdCat" class="product-cat"></div>
-                    <div class="prices" style="margin: 10px 0 18px;">
-                        <span class="current-price" id="modalProdPrice"></span>
+                    <div style="display:flex; gap:10px; align-items:baseline; margin: 6px 0 14px;">
+                        <span class="current-price" id="modalProdPrice" style="font-size:1.25rem;"></span>
                         <span class="old-price" id="modalProdOldPrice"></span>
                     </div>
 
@@ -909,13 +867,7 @@
                         </div>
                     </div>
 
-                    <button class="btn-primary" style="width:100%; justify-content:center; margin-top:15px;" onclick="addCurrentProductToCart()">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="12" y1="10" x2="12" y2="16"></line>
-                            <line x1="9" y1="13" x2="15" y2="13"></line>
-                        </svg>
+                    <button class="btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="addCurrentProductToCart()">
                         <span>إضافة إلى السلة</span>
                     </button>
                 </div>
@@ -923,16 +875,11 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         النافذة 2: سلة المشتريات وإتمام الطلب (Cart Modal)
-         ========================================== -->
+    <!-- نافذة السلة -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    سلة المشتريات وإتمام الطلب
-                </h3>
+                <h3>سلة المشتريات وإتمام الطلب</h3>
                 <button class="close-modal" onclick="closeModal('cartModal')">
                     <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -946,7 +893,7 @@
                     <span id="cartTotalAmount">0 ر.ي</span>
                 </div>
 
-                <h4 style="margin-bottom: 12px; color: var(--gold);">بيانات التوصيل</h4>
+                <h4 style="margin-bottom: 10px; color: var(--gold);">بيانات التوصيل</h4>
                 <div class="form-group">
                     <label>الاسم الكامل *</label>
                     <input type="text" id="custName" placeholder="أدخلي اسمك الكامل">
@@ -962,38 +909,29 @@
                 <div class="form-group">
                     <label>الموقع الجغرافي (GPS)</label>
                     <div class="location-box">
-                        <input type="text" id="custLocationUrl" placeholder="اضغطي على زر تحديد الموقع..." readonly>
+                        <input type="text" id="custLocationUrl" placeholder="اضغطي زر تحديد الموقع..." readonly>
                         <button type="button" class="btn-outline" onclick="detectUserLocation()" style="white-space:nowrap;">
                             <svg class="icon" viewBox="0 0 24 24">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                 <circle cx="12" cy="10" r="3"></circle>
                             </svg>
-                            <span>تحديد الموقع</span>
+                            <span>موقعي</span>
                         </button>
                     </div>
                 </div>
 
-                <button class="btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="submitOrderToWhatsApp()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M22 2L11 13"></path>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
+                <button class="btn-primary" style="width:100%; justify-content:center; margin-top:8px;" onclick="submitOrderToWhatsApp()">
                     <span>تأكيد الطلب عبر واتساب</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- ==========================================
-         النافذة 3: عرض سلة العميل المشفرة (Shared Order Viewer)
-         ========================================== -->
+    <!-- نافذة عرض طلب العميل المشفر -->
     <div class="modal-overlay" id="sharedOrderModal">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                    تفاصيل فاتورة الطلب
-                </h3>
+                <h3>تفاصيل فاتورة الطلب</h3>
                 <button class="close-modal" onclick="closeSharedOrderModal()">
                     <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -1002,16 +940,11 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         النافذة 4: تسجيل الدخول للوحة التحكم (Login Modal)
-         ========================================== -->
+    <!-- نافذة تسجيل الدخول -->
     <div class="modal-overlay" id="loginModal">
-        <div class="modal-box" style="max-width: 420px;">
+        <div class="modal-box" style="max-width: 400px;">
             <div class="modal-header">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    دخول الإدارة والموظفين
-                </h3>
+                <h3>دخول الإدارة والموظفين</h3>
                 <button class="close-modal" onclick="closeModal('loginModal')">
                     <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -1024,22 +957,17 @@
                 <label>كلمة المرور</label>
                 <input type="password" id="loginPassword" placeholder="••••••">
             </div>
-            <button class="btn-gold" style="width:100%; margin-top:10px;" onclick="handleAdminLogin()">تسجيل الدخول</button>
+            <button class="btn-gold" style="width:100%; margin-top:8px;" onclick="handleAdminLogin()">تسجيل الدخول</button>
         </div>
     </div>
 
-    <!-- ==========================================
-         النافذة 5: لوحة التحكم (Admin & Staff Dashboard)
-         ========================================== -->
+    <!-- نافذة لوحة التحكم -->
     <div class="modal-overlay" id="adminDashboardModal">
-        <div class="modal-box" style="max-width: 800px;">
+        <div class="modal-box" style="max-width: 780px;">
             <div class="modal-header">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                    لوحة إدارة المتجر (<span id="dashboardUserTitle"></span>)
-                </h3>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn-danger-sm" onclick="logoutAdmin()">تسجيل خروج</button>
+                <h3>لوحة التحكم (<span id="dashboardUserTitle"></span>)</h3>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-danger-sm" onclick="logoutAdmin()">خروج</button>
                     <button class="close-modal" onclick="closeModal('adminDashboardModal')">
                         <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -1051,34 +979,33 @@
                 <button class="admin-tab-btn" id="tabStaffBtn" onclick="switchAdminTab('staff')" style="display:none;">إدارة الموظفين</button>
             </div>
 
-            <!-- قسم إدارة المنتجات -->
             <div id="adminProductsSection">
-                <h4 style="color:var(--gold); margin-bottom:12px;">إضافة منتج جديد</h4>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:15px;">
+                <h4 style="color:var(--gold); margin-bottom:10px;">إضافة منتج جديد</h4>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:12px;">
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">اسم المنتج *</label>
-                        <input type="text" id="newProdName" placeholder="مثال: عباية مخمل ملكي">
+                        <label style="font-size:0.75rem; color:var(--text-muted);">اسم المنتج *</label>
+                        <input type="text" id="newProdName" placeholder="اسم المنتج">
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">القسم *</label>
+                        <label style="font-size:0.75rem; color:var(--text-muted);">القسم *</label>
                         <select id="newProdCategory"></select>
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">السعر الحالي (ر.ي) *</label>
+                        <label style="font-size:0.75rem; color:var(--text-muted);">السعر الحالي *</label>
                         <input type="number" id="newProdPrice" placeholder="8500">
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">السعر القديم (اختياري)</label>
+                        <label style="font-size:0.75rem; color:var(--text-muted);">السعر القديم</label>
                         <input type="number" id="newProdOldPrice" placeholder="10000">
                     </div>
                     <div style="grid-column: 1 / -1;">
-                        <label style="font-size:0.8rem; color:var(--text-muted);">رابط صورة المنتج (URL) *</label>
-                        <input type="url" id="newProdImg" placeholder="https://images.unsplash.com/...">
+                        <label style="font-size:0.75rem; color:var(--text-muted);">رابط صورة المنتج (URL) *</label>
+                        <input type="url" id="newProdImg" placeholder="https://...">
                     </div>
                 </div>
                 <button class="btn-gold" onclick="addNewProduct()">+ حفظ وإضافة المنتج</button>
 
-                <h4 style="color:var(--gold); margin:25px 0 10px;">قائمة المنتجات المتاحة لك</h4>
+                <h4 style="color:var(--gold); margin:20px 0 8px;">المنتجات الحالية</h4>
                 <div style="overflow-x:auto;">
                     <table class="admin-table">
                         <thead>
@@ -1095,20 +1022,19 @@
                 </div>
             </div>
 
-            <!-- قسم إدارة الموظفين (خاص بالمدير فقط) -->
             <div id="adminStaffSection" style="display:none;">
-                <h4 style="color:var(--gold); margin-bottom:12px;">إضافة موظف جديد وتحديد صلاحية القسم</h4>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:15px;">
+                <h4 style="color:var(--gold); margin-bottom:10px;">إضافة موظف جديد</h4>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:10px; margin-bottom:12px;">
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">اسم المستخدم للموظف *</label>
-                        <input type="text" id="staffUsername" placeholder="مثال: sara">
+                        <label style="font-size:0.75rem; color:var(--text-muted);">اسم المستخدم *</label>
+                        <input type="text" id="staffUsername" placeholder="sara">
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">كلمة المرور *</label>
+                        <label style="font-size:0.75rem; color:var(--text-muted);">كلمة المرور *</label>
                         <input type="text" id="staffPassword" placeholder="12345">
                     </div>
                     <div>
-                        <label style="font-size:0.8rem; color:var(--text-muted);">صلاحية القسم فقط *</label>
+                        <label style="font-size:0.75rem; color:var(--text-muted);">صلاحية القسم *</label>
                         <select id="staffCategorySelect">
                             <option value="ملابس">ملابس</option>
                             <option value="مفروشات">مفروشات</option>
@@ -1120,13 +1046,13 @@
                 </div>
                 <button class="btn-gold" onclick="addNewStaff()">+ إضافة موظف</button>
 
-                <h4 style="color:var(--gold); margin:25px 0 10px;">الموظفون المسجلون</h4>
+                <h4 style="color:var(--gold); margin:20px 0 8px;">الموظفون المسجلون</h4>
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>اسم المستخدم</th>
+                            <th>المستخدم</th>
                             <th>كلمة المرور</th>
-                            <th>القسم المخصص</th>
+                            <th>القسم</th>
                             <th>إجراء</th>
                         </tr>
                     </thead>
@@ -1136,20 +1062,13 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         الفوتر (Footer)
-         ========================================== -->
     <footer>
         <div class="container">
             <p>جميع الحقوق محفوظة &copy; متجر شعيبيه للتسوق الإلكتروني</p>
         </div>
     </footer>
 
-    <!-- ==========================================
-         الأكواد البرمجية (Vanilla JavaScript)
-         ========================================== -->
     <script>
-        /* 1. البيانات الأساسية والافتراضية */
         const WHATSAPP_NUMBER = "967776371235";
         const CATEGORIES = ["الكل", "ملابس", "مفروشات", "تجميل", "بهارات", "أدوات منزلية"];
 
@@ -1176,7 +1095,7 @@
             },
             {
                 id: 103,
-                name: "مجموعة العناية بالبشرة والإشراقة الطبيعية",
+                name: "مجموعة العناية بالبشرة والإشراقة",
                 category: "تجميل",
                 price: 8500,
                 oldPrice: 11000,
@@ -1196,7 +1115,7 @@
             },
             {
                 id: 105,
-                name: "طقم قدور جرانيت تركي غير قابل للالتصاق",
+                name: "طقم قدور جرانيت تركي 10 قطع",
                 category: "أدوات منزلية",
                 price: 34000,
                 oldPrice: 40000,
@@ -1206,7 +1125,6 @@
             }
         ];
 
-        /* 2. إدارة الحالة والتخزين المحلي (State & LocalStorage) */
         let products = JSON.parse(localStorage.getItem("shuaibiya_products")) || DEFAULT_PRODUCTS;
         let staffList = JSON.parse(localStorage.getItem("shuaibiya_staff")) || [];
         let cart = JSON.parse(localStorage.getItem("shuaibiya_cart")) || [];
@@ -1217,29 +1135,21 @@
         let selectedColor = "";
         let selectedSize = "";
         let detailQty = 1;
-        let currentUser = null; // { username, role: 'admin' | 'staff', category: 'الكل' | '...' }
+        let currentUser = null;
 
-        function saveProducts() {
-            localStorage.setItem("shuaibiya_products", JSON.stringify(products));
-        }
-
-        function saveStaff() {
-            localStorage.setItem("shuaibiya_staff", JSON.stringify(staffList));
-        }
-
+        function saveProducts() { localStorage.setItem("shuaibiya_products", JSON.stringify(products)); }
+        function saveStaff() { localStorage.setItem("shuaibiya_staff", JSON.stringify(staffList)); }
         function saveCart() {
             localStorage.setItem("shuaibiya_cart", JSON.stringify(cart));
             updateCartBadge();
         }
 
-        /* 3. التهيئة عند تحميل الصفحة */
         window.addEventListener("DOMContentLoaded", () => {
             renderCategories();
             renderProducts();
             updateCartBadge();
             checkSharedOrderInURL();
 
-            // مراقبة شريط البحث (للبحث العادي + الكلمة السرية "هارفكس")
             const searchInput = document.getElementById("searchInput");
             searchInput.addEventListener("input", (e) => {
                 const val = e.target.value.trim();
@@ -1247,11 +1157,8 @@
                     e.target.value = "";
                     currentSearch = "";
                     renderProducts();
-                    if (currentUser) {
-                        openAdminDashboard();
-                    } else {
-                        openModal("loginModal");
-                    }
+                    if (currentUser) openAdminDashboard();
+                    else openModal("loginModal");
                     return;
                 }
                 currentSearch = val;
@@ -1259,16 +1166,10 @@
             });
         });
 
-        /* 4. عرض الأقسام والمنتجات */
         function renderCategories() {
             const container = document.getElementById("categoriesContainer");
             container.innerHTML = CATEGORIES.map(cat => `
                 <button class="cat-btn ${cat === currentCategory ? 'active' : ''}" onclick="selectCategory('${cat}')">
-                    <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
                     <span>${cat}</span>
                 </button>
             `).join("");
@@ -1289,7 +1190,7 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:50px; color:var(--text-muted);">لا توجد منتجات مطابقة لبحثك حالياً.</div>`;
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-muted);">لا توجد منتجات مطابقة.</div>`;
                 return;
             }
 
@@ -1311,7 +1212,7 @@
                                 <span class="current-price">${p.price.toLocaleString()} ر.ي</span>
                                 ${hasDiscount ? `<span class="old-price">${p.oldPrice.toLocaleString()}</span>` : ''}
                             </div>
-                            <button class="add-quick-btn" title="عرض التفاصيل والإضافة" onclick="openProductDetail(${p.id})">
+                            <button class="add-quick-btn" onclick="openProductDetail(${p.id})">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1324,7 +1225,6 @@
             }).join("");
         }
 
-        /* 5. نافذة تفاصيل المنتج وإضافته للسلة */
         function openProductDetail(productId) {
             const prod = products.find(p => p.id === productId);
             if (!prod) return;
@@ -1397,7 +1297,6 @@
             openCartModal();
         }
 
-        /* 6. إدارة سلة المشتريات والطلب */
         function updateCartBadge() {
             const count = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById("cartCount").textContent = count;
@@ -1413,7 +1312,7 @@
             const checkoutSec = document.getElementById("cartCheckoutSection");
 
             if (cart.length === 0) {
-                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:30px 0;">سلة المشتريات فارغة حالياً.</p>`;
+                container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:25px 0;">سلة المشتريات فارغة حالياً.</p>`;
                 checkoutSec.style.display = "none";
                 return;
             }
@@ -1429,15 +1328,10 @@
                     <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-meta">اللون: ${item.color} | المقاس: ${item.size} | الكمية: ${item.qty}</div>
+                        <div class="cart-item-meta">${item.color} | ${item.size} | الكمية: ${item.qty}</div>
                         <div class="cart-item-price">${subTotal.toLocaleString()} ر.ي</div>
                     </div>
-                    <button class="btn-danger-sm" onclick="removeCartItem(${idx})" title="حذف">
-                        <svg class="icon" style="width:18px;height:18px;" viewBox="0 0 24 24">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                    </button>
+                    <button class="btn-danger-sm" onclick="removeCartItem(${idx})">حذف</button>
                 </div>
                 `;
             }).join("");
@@ -1451,28 +1345,24 @@
             renderCartItems();
         }
 
-        /* 7. تحديد الموقع الجغرافي (Geolocation API) */
         function detectUserLocation() {
             const locInput = document.getElementById("custLocationUrl");
             if (!navigator.geolocation) {
-                alert("متصفحك لا يدعم ميزة تحديد الموقع الجغرافي.");
+                alert("متصفحك لا يدعم تحديد الموقع.");
                 return;
             }
             locInput.value = "جاري جلب الموقع...";
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
-                    const lat = pos.coords.latitude;
-                    const lng = pos.coords.longitude;
-                    locInput.value = `https://www.google.com/maps?q=${lat},${lng}`;
+                    locInput.value = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
                 },
                 () => {
                     locInput.value = "";
-                    alert("تعذر الحصول على الموقع، يرجى التأكد من تفعيل صلاحية الموقع (GPS).");
+                    alert("يرجى تفعيل صلاحية الموقع (GPS) في الجوال.");
                 }
             );
         }
 
-        /* 8. تشفير Base64 للطلب وإرساله عبر واتساب */
         function encodeBase64Unicode(str) {
             return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode('0x' + p1)));
         }
@@ -1488,7 +1378,7 @@
             const mapUrl = document.getElementById("custLocationUrl").value.trim();
 
             if (!name || !phone || !address) {
-                alert("يرجى تعبئة الاسم، رقم الجوال، والعنوان لإتمام الطلب.");
+                alert("يرجى تعبئة الاسم، رقم الجوال، والعنوان.");
                 return;
             }
 
@@ -1500,43 +1390,36 @@
                 date: new Date().toLocaleDateString("ar-YE")
             };
 
-            // إنشاء رابط يحتوي على بيانات السلة مشفرة بـ Base64
             const encodedOrder = encodeBase64Unicode(JSON.stringify(orderPayload));
             const baseUrl = window.location.origin + window.location.pathname;
             const orderViewLink = `${baseUrl}?order=${encodeURIComponent(encodedOrder)}`;
 
-            // تجهيز نص رسالة الواتساب
             let msg = `*طلب جديد من متجر شعيبيه*\n`;
             msg += `--------------------------------\n`;
             msg += `*العميل:* ${name}\n`;
             msg += `*الجوال:* ${phone}\n`;
             msg += `*العنوان:* ${address}\n`;
-            if (mapUrl) msg += `*الموقع على الخريطة:* ${mapUrl}\n`;
+            if (mapUrl) msg += `*الموقع:* ${mapUrl}\n`;
             msg += `--------------------------------\n`;
-            msg += `*المنتجات المطلوبة:*\n`;
             cart.forEach((item, idx) => {
                 msg += `${idx + 1}. ${item.name} (${item.color} - ${item.size}) × ${item.qty} = ${(item.price * item.qty).toLocaleString()} ر.ي\n`;
             });
             msg += `--------------------------------\n`;
-            msg += `*الإجمالي الكلي:* ${total.toLocaleString()} ر.ي\n\n`;
-            msg += `*رابط استعراض سلة العميل بالصور:*\n${orderViewLink}`;
+            msg += `*الإجمالي:* ${total.toLocaleString()} ر.ي\n\n`;
+            msg += `*رابط عرض سلة العميل بالصور:*\n${orderViewLink}`;
 
-            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-            window.open(waUrl, "_blank");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
         }
 
-        /* 9. قراءة رابط سلة العميل المشفر عند فتح الرابط (?order=...) */
         function checkSharedOrderInURL() {
             const params = new URLSearchParams(window.location.search);
             const orderParam = params.get("order");
             if (!orderParam) return;
-
             try {
-                const decodedStr = decodeBase64Unicode(orderParam);
-                const orderData = JSON.parse(decodedStr);
+                const orderData = JSON.parse(decodeBase64Unicode(orderParam));
                 renderSharedOrderModal(orderData);
             } catch (e) {
-                console.error("خطأ في قراءة بيانات الطلب المشفرة:", e);
+                console.error(e);
             }
         }
 
@@ -1547,92 +1430,61 @@
                     <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-title">${item.name}</div>
-                        <div class="cart-item-meta">اللون: ${item.color} | المقاس: ${item.size} | الكمية: ${item.qty}</div>
+                        <div class="cart-item-meta">${item.color} | ${item.size} | الكمية: ${item.qty}</div>
                         <div class="cart-item-price">${(item.price * item.qty).toLocaleString()} ر.ي</div>
                     </div>
                 </div>
             `).join("");
 
             container.innerHTML = `
-                <div style="background:var(--bg-dark); padding:15px; border-radius:10px; margin-bottom:15px; border:1px solid var(--border-color);">
-                    <p><strong>اسم العميل:</strong> ${order.customer?.name || '-'}</p>
-                    <p><strong>رقم الجوال:</strong> ${order.customer?.phone || '-'}</p>
+                <div style="background:var(--bg-dark); padding:12px; border-radius:10px; margin-bottom:12px; border:1px solid var(--border-color); font-size:0.9rem;">
+                    <p><strong>العميل:</strong> ${order.customer?.name || '-'}</p>
+                    <p><strong>الجوال:</strong> ${order.customer?.phone || '-'}</p>
                     <p><strong>العنوان:</strong> ${order.customer?.address || '-'}</p>
-                    <p><strong>التاريخ:</strong> ${order.date || '-'}</p>
-                    ${order.customer?.mapUrl ? `
-                        <div style="margin-top:10px;">
-                            <a href="${order.customer.mapUrl}" target="_blank" class="btn-gold" style="font-size:0.85rem;">
-                                <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                فتح موقع العميل على Google Maps
-                            </a>
-                        </div>
-                    ` : ''}
+                    ${order.customer?.mapUrl ? `<div style="margin-top:8px;"><a href="${order.customer.mapUrl}" target="_blank" class="btn-gold" style="font-size:0.8rem; padding:6px 12px;">فتح الموقع على الخريطة</a></div>` : ''}
                 </div>
-                <h4 style="color:var(--gold); margin-bottom:10px;">المنتجات داخل السلة:</h4>
                 <div class="cart-items-list">${itemsHtml}</div>
                 <div class="cart-summary">
                     <span>إجمالي الفاتورة:</span>
                     <span>${(order.total || 0).toLocaleString()} ر.ي</span>
                 </div>
             `;
-
             openModal("sharedOrderModal");
         }
 
         function closeSharedOrderModal() {
             closeModal("sharedOrderModal");
-            // تنظيف الرابط بدون إعادة تحميل الصفحة
-            const cleanUrl = window.location.origin + window.location.pathname;
-            window.history.replaceState({}, document.title, cleanUrl);
+            window.history.replaceState({}, document.title, window.location.origin + window.location.pathname);
         }
 
-        /* 10. نظام لوحة التحكم وصلاحيات الموظفين (Admin & Staff System) */
         function handleAdminLogin() {
             const user = document.getElementById("loginUsername").value.trim();
             const pass = document.getElementById("loginPassword").value.trim();
 
             if (user === "admin" && pass === "123") {
-                currentUser = { username: "المدير العام (admin)", role: "admin", category: "الكل" };
+                currentUser = { username: "المدير", role: "admin", category: "الكل" };
             } else {
                 const foundStaff = staffList.find(s => s.username === user && s.password === pass);
                 if (foundStaff) {
-                    currentUser = {
-                        username: foundStaff.username,
-                        role: "staff",
-                        category: foundStaff.category
-                    };
+                    currentUser = { username: foundStaff.username, role: "staff", category: foundStaff.category };
                 } else {
                     alert("بيانات الدخول غير صحيحة!");
                     return;
                 }
             }
-
-            document.getElementById("loginUsername").value = "";
-            document.getElementById("loginPassword").value = "";
             closeModal("loginModal");
             openAdminDashboard();
         }
 
         function openAdminDashboard() {
             if (!currentUser) return;
-
             document.getElementById("openAdminBtn").style.display = "inline-flex";
-            document.getElementById("adminRoleLabel").textContent = currentUser.role === "admin" ? "لوحة المدير" : `قسم ${currentUser.category}`;
-            document.getElementById("dashboardUserTitle").textContent = currentUser.role === "admin" ? "صلاحية كاملة" : `موظف قسم: ${currentUser.category}`;
+            document.getElementById("dashboardUserTitle").textContent = currentUser.role === "admin" ? "المدير العام" : `قسم ${currentUser.category}`;
+            document.getElementById("tabStaffBtn").style.display = currentUser.role === "admin" ? "inline-block" : "none";
 
-            // إظهار أو إخفاء تبويب الموظفين بناءً على الصلاحية
-            const staffTabBtn = document.getElementById("tabStaffBtn");
-            if (currentUser.role === "admin") {
-                staffTabBtn.style.display = "inline-block";
-            } else {
-                staffTabBtn.style.display = "none";
-            }
-
-            // ضبط خيارات الأقسام المسموح بها عند إضافة منتج
             const catSelect = document.getElementById("newProdCategory");
             if (currentUser.role === "admin") {
-                const validCats = CATEGORIES.filter(c => c !== "الكل");
-                catSelect.innerHTML = validCats.map(c => `<option value="${c}">${c}</option>`).join("");
+                catSelect.innerHTML = CATEGORIES.filter(c => c !== "الكل").map(c => `<option value="${c}">${c}</option>`).join("");
                 catSelect.disabled = false;
             } else {
                 catSelect.innerHTML = `<option value="${currentUser.category}">${currentUser.category}</option>`;
@@ -1646,75 +1498,44 @@
         }
 
         function switchAdminTab(tabName) {
-            const prodSec = document.getElementById("adminProductsSection");
-            const staffSec = document.getElementById("adminStaffSection");
-            const prodBtn = document.getElementById("tabProductsBtn");
-            const staffBtn = document.getElementById("tabStaffBtn");
-
-            if (tabName === "staff" && currentUser.role === "admin") {
-                prodSec.style.display = "none";
-                staffSec.style.display = "block";
-                prodBtn.classList.remove("active");
-                staffBtn.classList.add("active");
-            } else {
-                prodSec.style.display = "block";
-                staffSec.style.display = "none";
-                prodBtn.classList.add("active");
-                staffBtn.classList.remove("active");
-            }
+            const isStaffTab = (tabName === "staff" && currentUser.role === "admin");
+            document.getElementById("adminProductsSection").style.display = isStaffTab ? "none" : "block";
+            document.getElementById("adminStaffSection").style.display = isStaffTab ? "block" : "none";
+            document.getElementById("tabProductsBtn").classList.toggle("active", !isStaffTab);
+            document.getElementById("tabStaffBtn").classList.toggle("active", isStaffTab);
         }
 
         function renderAdminProductsTable() {
             const tbody = document.getElementById("adminProductsTableBody");
-            const visibleProducts = currentUser.role === "admin"
-                ? products
-                : products.filter(p => p.category === currentUser.category);
-
-            if (visibleProducts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">لا توجد منتجات مسجلة في هذا القسم.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = visibleProducts.map(p => `
+            const list = currentUser.role === "admin" ? products : products.filter(p => p.category === currentUser.category);
+            tbody.innerHTML = list.map(p => `
                 <tr>
-                    <td><img src="${p.image}" style="width:45px;height:45px;border-radius:6px;object-fit:cover;"></td>
+                    <td><img src="${p.image}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;"></td>
                     <td>${p.name}</td>
                     <td>${p.category}</td>
-                    <td>${p.price.toLocaleString()} ر.ي</td>
-                    <td>
-                        <button class="btn-danger-sm" onclick="deleteProduct(${p.id})">حذف</button>
-                    </td>
+                    <td>${p.price.toLocaleString()}</td>
+                    <td><button class="btn-danger-sm" onclick="deleteProduct(${p.id})">حذف</button></td>
                 </tr>
             `).join("");
         }
 
         function addNewProduct() {
             const name = document.getElementById("newProdName").value.trim();
-            const category = currentUser.role === "admin"
-                ? document.getElementById("newProdCategory").value
-                : currentUser.category;
+            const category = currentUser.role === "admin" ? document.getElementById("newProdCategory").value : currentUser.category;
             const price = parseFloat(document.getElementById("newProdPrice").value);
             const oldPriceVal = document.getElementById("newProdOldPrice").value;
             const oldPrice = oldPriceVal ? parseFloat(oldPriceVal) : null;
             const image = document.getElementById("newProdImg").value.trim();
 
             if (!name || isNaN(price) || !image) {
-                alert("يرجى إدخال اسم المنتج، السعر، ورابط الصورة.");
+                alert("يرجى تعبئة الحقول المطلوبة.");
                 return;
             }
 
-            const newProd = {
-                id: Date.now(),
-                name,
-                category,
-                price,
-                oldPrice,
-                image,
-                colors: ["الافتراضي", "أسود", "ذهبي"],
-                sizes: ["موحد", "S", "M", "L"]
-            };
-
-            products.unshift(newProd);
+            products.unshift({
+                id: Date.now(), name, category, price, oldPrice, image,
+                colors: ["الافتراضي", "أسود", "ذهبي"], sizes: ["موحد", "S", "M", "L"]
+            });
             saveProducts();
             renderProducts();
             renderAdminProductsTable();
@@ -1726,15 +1547,6 @@
         }
 
         function deleteProduct(id) {
-            const target = products.find(p => p.id === id);
-            if (!target) return;
-
-            // حماية إضافية: الموظف لا يحذف إلا من قسمه
-            if (currentUser.role !== "admin" && target.category !== currentUser.category) {
-                alert("غير مصرح لك بحذف منتجات خارج قسمك.");
-                return;
-            }
-
             products = products.filter(p => p.id !== id);
             saveProducts();
             renderProducts();
@@ -1744,44 +1556,24 @@
         function renderAdminStaffTable() {
             if (currentUser.role !== "admin") return;
             const tbody = document.getElementById("adminStaffTableBody");
-
-            if (staffList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">لم يتم إضافة موظفين بعد.</td></tr>`;
-                return;
-            }
-
             tbody.innerHTML = staffList.map((s, idx) => `
                 <tr>
                     <td>${s.username}</td>
                     <td>${s.password}</td>
-                    <td><span style="color:var(--pink);">${s.category}</span></td>
-                    <td>
-                        <button class="btn-danger-sm" onclick="deleteStaff(${idx})">إلغاء الحساب</button>
-                    </td>
+                    <td>${s.category}</td>
+                    <td><button class="btn-danger-sm" onclick="deleteStaff(${idx})">حذف</button></td>
                 </tr>
             `).join("");
         }
 
         function addNewStaff() {
-            if (currentUser.role !== "admin") return;
             const username = document.getElementById("staffUsername").value.trim();
             const password = document.getElementById("staffPassword").value.trim();
             const category = document.getElementById("staffCategorySelect").value;
-
-            if (!username || !password) {
-                alert("يرجى إدخال اسم المستخدم وكلمة المرور للموظف.");
-                return;
-            }
-
-            if (username === "admin" || staffList.some(s => s.username === username)) {
-                alert("اسم المستخدم هذا مستخدم مسبقاً.");
-                return;
-            }
-
+            if (!username || !password) return;
             staffList.push({ username, password, category });
             saveStaff();
             renderAdminStaffTable();
-
             document.getElementById("staffUsername").value = "";
             document.getElementById("staffPassword").value = "";
         }
@@ -1798,14 +1590,8 @@
             closeModal("adminDashboardModal");
         }
 
-        /* 11. دوال مساعدة لفتح وإغلاق النوافذ */
-        function openModal(id) {
-            document.getElementById(id).classList.add("active");
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove("active");
-        }
+        function openModal(id) { document.getElementById(id).classList.add("active"); }
+        function closeModal(id) { document.getElementById(id).classList.remove("active"); }
     </script>
 </body>
 </html>
